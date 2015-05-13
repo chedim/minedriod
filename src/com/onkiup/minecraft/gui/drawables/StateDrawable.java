@@ -8,16 +8,10 @@ import com.onkiup.minecraft.gui.themes.Theme;
  * Created by chedim on 4/25/15.
  */
 public class StateDrawable implements Drawable {
-    protected Drawable[] drawables = new Drawable[4];
+    protected Drawable[] drawables = new Drawable[5];
     protected State state = State.DEFAULT;
 
     public StateDrawable() {
-    }
-
-    public StateDrawable(Drawable drawable, Drawable hover, Drawable pressed) {
-        drawables[0] = drawable;
-        drawables[1] = hover;
-        drawables[2] = pressed;
     }
 
     @Override
@@ -48,6 +42,16 @@ public class StateDrawable implements Drawable {
         drawables[1] = node.getDrawableAttr("mc", "hover", drawables[0]);
         drawables[2] = node.getDrawableAttr("mc", "pressed", drawables[0]);
         drawables[3] = node.getDrawableAttr("mc", "selected", drawables[0]);
+        drawables[4] = node.getDrawableAttr("mc", "focused", drawables[0]);
+    }
+
+    public void setDrawableForState(State state, Drawable drawable) {
+        drawables[state.ordinal()] = drawable;
+        if (state == State.DEFAULT) {
+            for (int i=0; i<drawables.length; i++) {
+                if (drawables[i] == null) drawables[i] = drawable;
+            }
+        }
     }
 
     public void setState(State state) {
@@ -58,6 +62,6 @@ public class StateDrawable implements Drawable {
     }
 
     public enum State {
-        DEFAULT, HOVER, PRESSED, SELECTED
+        DEFAULT, HOVER, PRESSED, SELECTED, FOCUSED
     }
 }

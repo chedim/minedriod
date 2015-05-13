@@ -10,6 +10,9 @@ import com.onkiup.minecraft.gui.themes.Theme;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by chedim on 4/30/15.
  */
@@ -118,5 +121,13 @@ public class ScrollView extends ContentView {
     public View findViewById(int id) {
         if (child.getId() == id) return child;
         return child.findViewById(id);
+    }
+
+    public List<View> getFocusables() {
+        List<View> result = new ArrayList<View>();
+        if (child.isFocusable()) result.add(child);
+        if (child instanceof ViewGroup) result.addAll(((ViewGroup) child).getFocusables());
+
+        return result;
     }
 }

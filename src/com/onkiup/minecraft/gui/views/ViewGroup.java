@@ -1,6 +1,7 @@
 package com.onkiup.minecraft.gui.views;
 
 import com.onkiup.minecraft.gui.OnkiupGuiManager;
+import com.onkiup.minecraft.gui.Overlay;
 import com.onkiup.minecraft.gui.XmlHelper;
 import com.onkiup.minecraft.gui.events.MouseEvent;
 import com.onkiup.minecraft.gui.primitives.Rect;
@@ -21,12 +22,14 @@ public abstract class ViewGroup extends ContentView {
         children.add(child);
         child.setDebugDraw(drawRect);
         child.setParent(this);
+        child.setOverlay(getOverlay());
     }
 
     public void addChildAt(int position, View child) {
         children.add(position, child);
         child.setDebugDraw(drawRect);
         child.setParent(this);
+        child.setOverlay(getOverlay());
     }
 
     public int getChildrenCount() {
@@ -37,6 +40,7 @@ public abstract class ViewGroup extends ContentView {
         children.remove(child);
         child.setDebugDraw(false);
         child.setParent(null);
+        child.setOverlay(null);
     }
 
     public void removeChildAt(int position) {
@@ -44,6 +48,7 @@ public abstract class ViewGroup extends ContentView {
         child.setDebugDraw(false);
         children.remove(position);
         child.setParent(null);
+        child.setOverlay(null);
     }
 
     @Override
@@ -146,5 +151,31 @@ public abstract class ViewGroup extends ContentView {
 
     public View findViewById(String id) {
         return findViewById(OnkiupGuiManager.getId(id));
+    }
+
+    public List<View> getFocusables() {
+        List<View> result = new ArrayList<View>();
+        for (int i = 0; i<getChildrenCount(); i++) {
+            View child = getChildAt(i);
+            if (child instanceof ViewGroup) {
+                result.addAll(((ViewGroup) child).getFocusables());
+            } else if (child.isFocusable()) {
+                result.add(child);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public void setOverlay(Overlay o) {
+        super.setOverlay(o);
+        for (int i=0; i<getChildrenCount(); i++) {
+            getChildAt(i).setOverlay(o);
+        }
+    }
+
+    public void removeAllChildren() {
+        children.clear();
     }
 }

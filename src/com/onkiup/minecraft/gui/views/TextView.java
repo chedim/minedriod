@@ -24,14 +24,18 @@ public class TextView extends ContentView {
         this.text.setText(text);
     }
 
+    protected Point getTextSize() {
+        int height = text.calculateEndPoint(resolvedLayout.getInnerWidth()).y;
+        Point textSize = new Point(resolvedLayout.getInnerWidth(), height);
+        return textSize;
+    }
+
     @Override
     public void drawContents() {
-        Point textSize = text.getOriginalSize().clone();
-        Point mySize = resolvedLayout.getInnerSize();
-        if (textSize.x > mySize.x) textSize.x = mySize.x;
-        if (textSize.y > mySize.y) textSize.y = mySize.y;
+        Point textSize = getTextSize();
         text.setSize(textSize);
         Point offset = getGravityOffset(textSize);
+        if (textSize.y > resolvedLayout.getInnerHeight()) offset.y = resolvedLayout.getInnerHeight() - textSize.y;
 
         text.draw(position.add(offset).add(resolvedLayout.padding.coords()));
     }

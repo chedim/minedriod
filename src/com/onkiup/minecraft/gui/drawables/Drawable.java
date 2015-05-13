@@ -7,7 +7,7 @@ import com.onkiup.minecraft.gui.themes.Theme;
 /**
  * Created by chedim on 4/25/15.
  */
-public interface    Drawable {
+public interface Drawable {
     public void draw(Point where);
     public void setSize(Point size);
     public Point getSize();

@@ -27,8 +27,11 @@ public class DefaultTheme implements Theme {
             throw new RuntimeException(e);
         }
 
-        buttonBackground = new StateDrawable(new ColorDrawable(0xff21aae0), new ColorDrawable(0xff61c7f7),
-                new ColorDrawable(0xff5faed5));
+        buttonBackground = new StateDrawable();
+        buttonBackground.setDrawableForState(StateDrawable.State.DEFAULT, new ColorDrawable(0xff21aae0));
+        buttonBackground.setDrawableForState(StateDrawable.State.HOVER, new ColorDrawable(0xff61c7f7));
+        buttonBackground.setDrawableForState(StateDrawable.State.PRESSED, new ColorDrawable(0xff5faed5));
+
     }
 
     @Override

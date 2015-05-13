@@ -151,9 +151,9 @@ public class RelativeLayout extends ViewGroup {
 
     protected Layout getMeasured(View view) {
         if (!measured.containsKey(view)) {
-            Layout childLayout = (Layout) view.getLayout();
+            Layout childLayout = (Layout) view.getLayout().clone();
             if (childLayout.shouldBeMeasured()) {
-                Layout result = (Layout) view.getLayout().clone();
+                Layout result = childLayout;
                 View.Layout m = view.measure(null);
                 result.width = m.width;
                 result.height = m.height;

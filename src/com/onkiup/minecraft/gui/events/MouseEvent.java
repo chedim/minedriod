@@ -20,6 +20,8 @@ public class MouseEvent {
     public boolean cancel = false;
     public Point wheel;
 
+    public boolean shift, control, alt;
+
     public MouseEvent clone() {
         MouseEvent result = new MouseEvent();
         result.type = type;
@@ -28,6 +30,11 @@ public class MouseEvent {
         result.source = source;
         result.button = button;
         result.diff = diff;
+        result.cancel = cancel;
+        result.wheel = wheel.clone();
+        result.shift = shift;
+        result.control = control;
+        result.alt = alt;
 
         return result;
     }

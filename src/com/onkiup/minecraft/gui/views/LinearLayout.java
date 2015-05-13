@@ -84,7 +84,7 @@ public class LinearLayout extends ViewGroup {
         for (int i=0; i< getChildrenCount(); i++) {
             View child = getChildAt(i);
             Layout childLayout = child.getResolvedLayout();
-            Point childTarget = target.clone().add(childLayout.margin.coords());
+            Point childTarget = target.add(childLayout.margin.coords());
             child.setPosition(childTarget);
             child.onDraw();
             if (orientation == Orientation.HORIZONTAL) {

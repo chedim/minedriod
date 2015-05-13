@@ -44,13 +44,13 @@ public class XmlHelper {
     }
 
     public Drawable getDrawableAttr(String ns, String name, Drawable def) {
-        ResourceLocation rl = (ResourceLocation) getResourceAttr(ns, name, def);
+        ResourceLocation rl = (ResourceLocation) getResourceAttr(ns, name, null);
         if (rl == null) return def;
 
         return OnkiupGuiManager.inflateDrawable(rl);
     }
 
-    public Object getResourceAttr(String ns, String name, Object o) {
+    public ResourceLocation getResourceAttr(String ns, String name, ResourceLocation o) {
         Node attr = getAttr(ns, name);
         if (attr == null) return o;
 

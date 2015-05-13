@@ -7,6 +7,7 @@ import com.onkiup.minecraft.gui.themes.DefaultTheme;
 import com.onkiup.minecraft.gui.themes.Theme;
 import com.onkiup.minecraft.gui.views.View;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -161,10 +162,34 @@ public class OnkiupGuiManager {
 
     public static int getId(String id) {
         if (!ids.containsKey(id)) {
-            ids.put(id, idCount++);
+            ids.put(id, ++idCount);
         }
 
         return ids.get(id);
     }
 
+    protected static ArrayList<Class<? extends Gui>> screens = new ArrayList<Class<? extends Gui>>();
+    public static int getScreenId(Class<? extends Gui> c) {
+        int id = screens.indexOf(c);
+        if (id == -1) {
+            id = screens.size();
+            screens.add(c);
+        }
+        return id;
+    }
+
+    public static Class<? extends Gui> getScreenClass(int id) {
+        if (id < 0 || id > screens.size()) return null;
+        return screens.get(id);
+    }
+
+    public static Gui getScreen(int id) {
+        Class<? extends Gui> c = getScreenClass(id);
+        if (c != null) try {
+            return c.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

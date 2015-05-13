@@ -1,6 +1,7 @@
 package com.onkiup.minecraft.gui.views;
 
 import com.onkiup.minecraft.gui.OnkiupGuiManager;
+import com.onkiup.minecraft.gui.Overlay;
 import com.onkiup.minecraft.gui.XmlHelper;
 import com.onkiup.minecraft.gui.drawables.BorderDrawable;
 import com.onkiup.minecraft.gui.drawables.Drawable;
@@ -8,6 +9,7 @@ import com.onkiup.minecraft.gui.drawables.StateDrawable;
 import com.onkiup.minecraft.gui.drawables.TextDrawable;
 import com.onkiup.minecraft.gui.events.Event;
 import com.onkiup.minecraft.gui.events.EventBase;
+import com.onkiup.minecraft.gui.events.KeyEvent;
 import com.onkiup.minecraft.gui.events.MouseEvent;
 import com.onkiup.minecraft.gui.primitives.Color;
 import com.onkiup.minecraft.gui.primitives.Point;
@@ -25,6 +27,9 @@ public class View extends EventBase {
     protected Drawable background;
     protected int layoutWeight = 0;
     protected boolean drawRect;
+    protected Overlay screen;
+
+    protected ViewHolder mHolder;
 
     protected ContentView parent;
 
@@ -172,7 +177,16 @@ public class View extends EventBase {
     }
 
     public View findViewById(int id) {
+        if (id == this.id) return this;
         return null;
+    }
+
+    public void handleKeyboardEvent(KeyEvent event) {
+        this.fireEvent(event.type, event);
+        if (!event.cancel) {
+            event.target = getParent();
+            getParent().fireEvent(event.type, event);
+        }
     }
 
     public static class Layout {
@@ -311,6 +325,18 @@ public class View extends EventBase {
     public static interface OnMouseOut extends Event<MouseEvent> {
     }
 
+    public static interface OnKeyDown extends Event<KeyEvent> {
+
+    }
+
+    public static interface OnKeyUp extends Event<KeyEvent> {
+
+    }
+
+    public static interface OnKeyPress extends Event<KeyEvent> {
+
+    }
+
     public void setDebugDraw(boolean debugDraw) {
         drawRect = debugDraw;
     }
@@ -351,5 +377,36 @@ public class View extends EventBase {
     }
 
     public static interface OnScroll extends Event<MouseEvent> {
+    }
+
+    public boolean isFocusable() {
+        return false;
+    }
+
+    public void handleFocus(boolean focused) {
+        if (background instanceof StateDrawable) {
+            ((StateDrawable) background).setState(focused ? StateDrawable.State.FOCUSED : StateDrawable.State.DEFAULT);
+        }
+    }
+
+    public void setOverlay(Overlay o) {
+        screen = o;
+    }
+
+    public Overlay getOverlay() {
+        return screen;
+    }
+
+    public void focus() {
+        getOverlay().focusItem(this);
+    }
+
+    public void setHolder(ViewHolder holder) {
+        mHolder = holder;
+        mHolder.setView(this);
+    }
+
+    public ViewHolder getHolder() {
+        return mHolder;
     }
 }
