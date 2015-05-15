@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e5a700f-fe46-4fe8-ac45-b942546dbe93" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/drawables/page.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/events/page.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/lists/page.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/overlays/page.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/views/page.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/style.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/page.html" afterPath="$PROJECT_DIR$/pages/docs/page.html" />
     </list>
     <ignored path="minedriod.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,10 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="32" selection-start="124" selection-end="124" vertical-scroll-proportion="0.1744186" vertical-offset="0" max-vertical-offset="430">
+            <state line="14" column="30" selection-start="418" selection-end="418" vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="405">
               <folding />
             </state>
           </provider>
@@ -57,6 +50,15 @@
               <folding>
                 <element signature="n#style#0;n#li#7;n#ul#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="13" selection-start="774" selection-end="774" vertical-scroll-proportion="0.2883721" vertical-offset="161" max-vertical-offset="600">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,7 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/pages/docs/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/themes/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/style.less" />
         <option value="$PROJECT_DIR$/interfaces/docs/style.less" />
@@ -122,6 +123,7 @@
         <option value="$PROJECT_DIR$/pages/docs/lists/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/drawables/page.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/pages/docs/page.html" />
       </list>
     </option>
   </component>
@@ -579,13 +581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1013" selection-end="1528" vertical-scroll-proportion="0.7275321" vertical-offset="0" max-vertical-offset="701">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/interfaces/docs/style.less">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="-1.0" vertical-offset="0" max-vertical-offset="2865">
@@ -639,7 +634,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="32" selection-start="124" selection-end="124" vertical-scroll-proportion="0.1744186" vertical-offset="0" max-vertical-offset="430">
+        <state line="14" column="30" selection-start="418" selection-end="418" vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="405">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="13" selection-start="774" selection-end="774" vertical-scroll-proportion="0.2883721" vertical-offset="161" max-vertical-offset="600">
           <folding />
         </state>
       </provider>
