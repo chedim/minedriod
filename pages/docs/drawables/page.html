@@ -1,0 +1,56 @@
+<h1>Drawables</h1>
+
+<p>Just as Android, MineDroid uses Drawable classes to draw any graphic elements on the screen. Drawables are mostly
+    used as Views backgrounds and other elements.</p>
+
+<p>
+    Currently MineDroid has these Drawables:
+<ul>
+    <li><b>BitmapDrawable</b> — draws any supported by Minecraft image;</li>
+    <li><b>ColorDrawable</b> — draws a colored square;</li>
+    <li><b>EllipseDrawable</b> — draws a colored ellipse (circle in some cases ;-)</li>
+    <li><b>NinePatchDrawable</b> — draws nine-patch;</li>
+    <li><b>RoundedCornerDrawable</b> — utilizes ColorDrawable and EllipseDrawable to draw a colored rectangle with
+        rounded corners;
+    </li>
+    <li><b>StateDrawable</b> — draws different drawables for different view states (pressed, hover, etc);</li>
+    <li><b>TextDrawable</b> — draws text;</li>
+    <li style="color: red"><b>TextureDrawable</b> — not implemented yet;</li>
+    <li><b>BorderDrawable</b> — used to draw view borders in debug mode</li>
+</ul>
+</p>
+
+<h2>Nine patches</h2>
+<p>
+    NinePatchDrawable uses nine pictures to display a drawable with properly resized border. To use this drawable you
+    should create a folder with nine png images named like this:
+</p>
+<center>
+    <table width="400" height="200" border="1" cellspacing="0">
+        <tr>
+            <td align="center" valign="middle">0.0.png</td>
+            <td align="center" valign="middle">0.1.png</td>
+            <td align="center" valign="middle">0.2.png</td>
+        </tr>
+        <tr>
+            <td align="center" valign="middle">1.0.png</td>
+            <td align="center" valign="middle">1.1.png</td>
+            <td align="center" valign="middle">1.2.png</td>
+        </tr>
+        <tr>
+            <td align="center" valign="middle">2.0.png</td>
+            <td align="center" valign="middle">2.1.png</td>
+            <td align="center" valign="middle">2.2.png</td>
+        </tr>
+    </table>
+</center>
+<p>
+    Current 9patch realization doesn't support image paddings so you should set paddings manually in your view.
+    Ninepatch border size will be taken from corner images sizes (0.0.png, 0.2.png, 2.0.png, 2.2.png). It's very
+    convenient to use Photoshop slices to create nine-patches.
+</p>
+
+<p>
+    When initializing NinePatchDrawable, you should pass it ResourceLocation of the folder that contains nine-patch
+    images.
+</p>

@@ -1,0 +1,30 @@
+<form xmlns="http://www.w3.org/1999/html">
+    Your task: <input type="text" class="description"/><br/>
+    Tags & type:
+    <div widget="tagbox" class="tagbox"/>
+    <br/>
+
+    <div class="date-info">
+        <div class="date-holder">
+            <div widget="picker/date" class="date"/>
+            Date
+        </div>
+        <div widget="picker/time/interval" class="duration"/>
+    </div>
+    <br/>
+
+    <div class="form-controls">
+        <input type="submit" class="submit"/>
+        or <a href="javascript:void(0)" class="cancel noopen">Cancel</a>
+        <div class="del-holder openable">
+            <div class="hidden">
+                Do you really want to delete it?
+                <input type="button" class="delete small" value="Yes, delete it."></input>
+            </div>
+            <a href="javascript:void(0)" class="delete-opener">Delete</a>
+        </div>
+    </div>
+    <div class="request-layer">
+
+    </div>
+</form>

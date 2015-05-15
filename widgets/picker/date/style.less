@@ -1,0 +1,173 @@
+& {
+  .holder {
+    display: inline-block;
+    overflow: visible;
+    position: relative;
+    font-size: xx-large;
+    padding: 5px;
+    margin: -5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    .hidden {
+      display: none;
+    }
+
+    .hidden {
+      position: absolute;
+      background-color: rgba(238, 238, 238, 0.7);
+      width: 100%;
+      padding: 5px;
+      left: 0px;
+      border: 0px solid #cccccc;
+      border-left-width: 1px;
+    }
+
+    a#date-value {
+      border-bottom: 1px dashed lightblue;
+      vertical-align: middle;
+    }
+
+    a#date-value:focus {
+      background-color: rgba(255, 69, 0, 0.1);
+    }
+
+    .prev {
+      border-top-width: 1px;
+      bottom: 100%;
+      margin-bottom: 1px;
+      border-top-left-radius: 5px;
+      color: #000000 !important;
+    }
+    .next {
+      border-bottom-width: 1px;
+      top: 100%;
+      margin-top: 1px;
+      border-bottom-left-radius: 5px;
+      border-bottom-width: 1px;
+      color: black !important;
+    }
+
+    .calendar {
+      display: none;
+      position: absolute;
+      width: 200px;
+      height: 300%;
+      left: 100%;
+      top: -100%;
+      margin-top: -2px;
+      border: 0px solid #cccccc;
+      border-top-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      font-size: small;
+      text-align: center;
+      .controls {
+        font-size: small;
+        display: block;
+        width: 100%;
+        background-color: #cccccc;
+        border-top-right-radius: 5px;
+        a {
+          display: inline-block;
+          padding: 5px;
+          margin: 0px;
+          height: 100%;
+          &.prevMonth {
+            float: left;
+          }
+          &.nextMonth {
+            float: right;
+          }
+        }
+      }
+      .days {
+        position: absolute;
+        bottom: 0%;
+        width: 100%;
+        .day {
+          position: absolute;
+          text-align: center;
+          color: #000000;
+          &:hover {
+            color: #ccc;
+          }
+
+          > p {
+            display: inline-block;
+            position: absolute;
+            padding-left: 3px;
+            padding-right: 3px;
+            margin: 0px;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+          }
+
+          &.sat, &.sun {
+            color: darkred;
+            font-weight: bold;
+          }
+
+          &.selected p {
+            background-color: orangered;
+            color: white;
+            font-weight: bolder;
+            border-radius: 5px;
+          }
+
+        }
+      }
+    }
+
+    &.open {
+      z-index: 1000;
+      border-color: #cccccc;
+      &.date {
+        background-color: orangered;
+      }
+      & > .hidden {
+        z-index: 999;
+        display: block;
+      }
+
+      a#date-value {
+        color: white;
+        border-bottom: 1px rgba(0, 0, 0, 0) dashed;
+      }
+      a#date-value {
+        background: none;
+      }
+
+      .calendar {
+        display: block;
+      }
+    }
+  }
+
+  a, a:hover, a:focus {
+    outline: none;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    line-height: initial;
+  }
+
+  .keyfocus {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0px;
+    margin: 0px;
+    border: none;
+  }
+}

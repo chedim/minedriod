@@ -1,0 +1,40 @@
+<h1>Events</h1>
+
+<h2>Keyboard and Mouse events</h2>
+<p>
+    MineDroid keyboard and mouse event system was written from HTML5 event system. Every event propagates downwards in
+    views tree until it will reach the targeted element and, after it, it starts to bubble to the top of the elements
+    hierarchy. Event can be cancelled at any time — it will prevent calling any event handler that are higher on view
+    hierarchy or had been registered later than current event handler.
+</p>
+
+<h2>Subscribing/unsubscribing to an event</h2>
+<p>
+    To subscribe on keyboard events, you should create an instance of desired event listener interface and pass it to
+    the <b>on(Event)</b> method of the view. <i>You should save your event listener on a field of your class</i> because
+    EventBase uses WeakReference to store your listener. That means your event listener will be unsubscribed and
+    destroyed as soon as the last reference outside of the EventBase (View) class will be removed. If you want to
+    unsubscribe your event listener earlier, you can pass it to the <b>off(Event)</b> method of the View.
+</p>
+
+<h2>Keyboard and Mouse event interfaces</h2>
+<ul>
+    <li><b>OnKeyDown</b></li>
+    <li><b>OnKeyUp</b></li>
+    <li><b>OnKeyPress</b></li>
+    <li><b>OnMouseIn</b></li>
+    <li><b>OnMouseMove</b></li>
+    <li><b>OnClick</b></li>
+    <li><b>OnDblClick</b></li>
+    <li><b>OnMouseDown</b></li>
+    <li><b>OnMouseUp</b></li>
+    <li><b>OnMouseOut</b></li>
+</ul>
+</p>
+
+
+<h2>Other events</h2>
+<p>
+    Class EventBase is a simplified version of OnKiUp android library EventHub class. It allows you to send and receive
+    any events derived from Event class. To use EventBase on your class, you should extend EventBase class.
+</p>

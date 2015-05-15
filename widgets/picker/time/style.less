@@ -1,0 +1,147 @@
+& {
+  .holder {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    font-size: xx-large;
+    display: inline-block;
+    margin: -5px;
+    padding: 5px;
+
+    .hidden {
+      display: none;
+    }
+
+    .time-value {
+      position: relative;
+      z-index: 990;
+      outline: none;
+      border: none;
+      text-shadow: 0px 0px 1px rgba(255, 255, 255, 1);
+      white-space: nowrap;
+      border-bottom: 1px dashed lightblue;
+    }
+    .time-value:focus {
+      background-color: rgba(255, 69, 0, 0.1);
+    }
+
+    .time-period {
+      font-size: medium;
+      display: inline-block;
+      text-align: center;
+      border-bottom: 1px dashed lightblue;
+      outline: none;
+      width: 28px;
+      padding-top: 4px;
+    }
+
+    .clock {
+      position: absolute;
+      z-index: 900;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 1);
+      border-color: rgba(0, 0, 0, 0.2);
+      border-width: 3px;
+      border-style: solid;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      .pimp {
+        background-color: orangered;
+        opacity: 0.2;
+        position: absolute;
+        z-index: 860;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        top: 50%;
+        left: 50%;
+        margin-top: -4px;
+        margin-left: -4px;
+      }
+      .mark {
+        color: #cccccc;
+        text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
+      }
+      .hour {
+        position: absolute;
+        //        background-color: #EEEEEE;
+        width: 24px;
+        height: 24px;
+        transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        border-radius: 12px;
+        font-size: small;
+        text-align: center;
+        cursor: pointer;
+      }
+      .minute {
+        position: absolute;
+        //        background-color: rgba(238, 238, 238, 0.7);
+        width: 24px;
+        height: 24px;
+        transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        border-radius: 12px;
+        font-size: small;
+        text-align: center;
+        cursor: pointer;
+      }
+      .arrow {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 850;
+        top: 50%;
+        left: 50%;
+        height: 4px;
+        margin-top: -2px;
+        transform: none;
+        transform-origin: 0% 50%;
+        -webkit-transform-origin: 0% 50%;
+        &.hour {
+          width: 30%;
+          height: 6px;
+          margin-top: -3px;
+        }
+        &.min {
+          width: 41%;
+        }
+        .value {
+          position: absolute;
+          z-index: 950;
+          width: 24px;
+          height: 24px;
+          border-radius: 12px;
+          background-color: rgba(255, 69, 0, 1);
+          color: white;
+          font-size: medium;
+          left: 100%;
+          margin-left: -12px;
+          top: 50%;
+          margin-top: -12px;
+          text-align: center;
+          line-height: 24px;
+          cursor: move;
+        }
+      }
+    }
+    &.open {
+      .hidden {
+        display: block;
+      }
+
+      .time-value {
+        outline: none;
+        color: black;
+        border-bottom-color: rgba(0, 0, 0, 0);
+        &:hover {
+          color: black;
+        }
+      }
+      .time-value:focus {
+        background: none !important;
+      }
+    }
+  }
+}

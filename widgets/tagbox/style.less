@@ -1,0 +1,130 @@
+.tagbox {
+  padding: 3px;
+  border: 1px inset #ccc;
+  outline-color: #EEEEEE;
+  cursor: text;
+  background: #eee;
+  border-radius: 4px;
+  position: relative;
+
+  ul {
+    li {
+      input {
+        display: inline-block;
+        width: 20%;
+      }
+    }
+  }
+}
+
+.tagbox input {
+  padding: 5px;
+  border: none;
+  outline: none;
+  background: none;
+  box-shadow: none;
+  margin-left: 5px;
+  margin-bottom: 0px;
+}
+
+.tagbox .controls {
+  display: inline-block;
+}
+
+.tagbox ul {
+  width: 100%;
+  max-height: 600%;
+  overflow: auto;
+  margin: 0px;
+  padding: 0px;
+  display: none;
+  border-radius-bottom: 5px;
+  border: 1px ridge #eee;
+  margin-top: 1px;
+  margin-left: -1px;
+  position: absolute;
+  z-index: 1000;
+  padding-left: -5px;
+  color: #444;
+  background: white;
+  cursor: default;
+}
+
+.tagbox ul i {
+  width: 100;
+  display: block;
+  position: relative;
+  font-style: normal;
+  text-align: center;
+  color: #ccc;
+}
+
+.tagbox li {
+  background: white;
+  margin: none;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  padding: none;
+}
+
+.tagbox p {
+  padding-left: 10px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.tagbox li p {
+  padding: 5px;
+  padding-left: 20px;
+}
+
+.tagbox ul div {
+  border-bottom: 1px solid #ccc;
+  font-size: small;
+  padding-top: 10px;
+  margin-left: -5px;
+  padding: 5px;
+  padding-bottom: 0px;
+  color: #ccc;
+}
+
+.tagbox li.selected {
+  background: #eee;
+  color: #000;
+}
+
+.tagbox .sel {
+
+}
+
+.tagbox .sel span {
+  cursor: pointer;
+  display: inline-block;
+  padding: 3px;
+  background-color: lightblue;
+  border-radius: 3px;
+  margin-left: 3px;
+  /*margin-top: 3px;*/
+}
+
+zm\:ts {
+  display: inline-block;
+  font-size: 25px;
+  height: 12px;
+  overflow: visible;
+  position: relative;
+  top: -8px;
+  font-weight: lighter;
+  color: #666;
+}
+
+.hidden {
+  display: none;
+}
+
+.open {
+  .hidden {
+    display: block;
+  }
+}

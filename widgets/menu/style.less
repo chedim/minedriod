@@ -1,0 +1,66 @@
+& {
+  position: relative;
+  margin-bottom: 10px;
+
+  .button {
+    display: inline-block;
+    width: 19%;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5%;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+
+    &.red {
+      background-color: red;
+      &:hover {
+        background-color: orange;
+      }
+    }
+
+    &.blue {
+      background-color: blue;
+      &:hover {
+        background-color: cornflowerblue;
+      }
+    }
+  }
+
+  #add {
+    width: 19%;
+    .button {
+    }
+
+    > .hidden {
+      position: absolute;
+      z-index: 100;
+      background-color: rgba(200, 200, 200, 0.5);
+      width: 100%;
+      box-shadow: 0px 0px 5px black;
+      z-index: 30;
+      border-radius: 5px;
+      position: absolute;
+      transform: translateY(-20%);
+
+      form {
+        margin: 10px;
+        background-color: white;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  }
+
+  .filter {
+    width: 50%;
+    position: relative;
+    display: inline-block;
+    #description_filter {
+      width: 100%;
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+  }
+}

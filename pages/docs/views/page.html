@@ -1,0 +1,69 @@
+<h1>Views</h1>
+<p>
+    View is a basic MineDroid gui class. Views allow you to interact with player and handle mouse and/or key events and
+    represent different states of your mod.
+</p>
+
+<h2>View basic properties</h2>
+<ul>
+    <li><b>int id</b> — id of the view. <a href="#docs/views/ids">Read more about view ids</a>;</li>
+    <li><b>Point position</b> — position on the screen where the View should appear;</li>
+    <li><b>Drawable background</b> — View's background drawable;</li>
+    <li><b>Layout layout</b> — View's layout parameters (size, margin, padding, etc). <a href="#docs/views/layouts">Read
+        more about layouts</a>;
+    </li>
+    <li><b>Layout resolvedLayout</b> — View's layout after it had been measured by it's container;</li>
+    <li><b>int layoutWeight</b> — View's weight for automatic width/height;</li>
+    <li><b>boolean debug</b> — this flag forces the view to draw some debug information</li>
+    <li><b>overlay Screen</b> — link to overlay on which the View is being shown;</li>
+    <li><b>ViewHolder holder</b> — link to a <a href="#docs/lists">ViewHolder</a> that controls this view;</li>
+    <li><b>ContentView parent</b> — link to the view's container;</li>
+    <!--<li><b></b> — </li>-->
+</ul>
+
+<h2>View measuring</h2>
+<p>
+    When one of the view's layout width or height parameters are set to <b>wrap_content</b>, parent view should call
+    <b>Layout measure(Point)</b> method of the view. This method accepts maximum available for view width and height (as
+    a Point)
+    and returns measured layout with width and/or height set to values that view desires to have. These values later
+    will be used by parent view to calculate resolved layout of the view which will be passed to the view via
+    <b>void resolveLayout(Layout)</b> method.
+</p>
+
+<h2>Drawing view contents</h2>
+<p>
+    When parent draws view, it calls it's <b>onDraw</b> method which setups draw area limits for view and calls <b>drawContents</b>
+    method of the view.<br/>
+    When drawing your view, be sure that you use <b>position</b> property for a right placement of the view.
+</p>
+
+<h2>Descendants</h2>
+<ul>
+    <li><b><a href="#docs/views/contentview">ContentView</a></b> — parent class for all views that have content inside
+        of it:
+        <ul>
+            <li>
+                <b><a href="#docs/views/textview">TextView</a></b> — displays text
+                <ul>
+                    <li><b><a href="#docs/views/button">Button</a></b></li>
+                    <li><b><a href="#docs/views/edittext">EditText</a></b></li>
+                </ul>
+            </li>
+            <li><b><a href="#docs/views/viewgroup">ViewGroup</a></b> — parent for all layout
+                views:
+                <ul>
+                    <li>
+                        <b><a href="#docs/views/linearlayout">LinearLayout</a></b> — This view positions it's children in a line;
+                        <ul>
+                            <li><b><a href="#docs/lists">ListView</a></b> — displays scrollable lists;</li>
+                        </ul>
+                    </li>
+                    <li><b><a href="#docs/view/relativelayout">RelativeLayout</a></b> — This view provides possibility to position child views relatively to each other;</li>
+                </ul>
+            </li>
+            <li><b><a href="#docs/views/scrollview">ScrollView</a></b> — provides vertical scroll for it's content view
+            </li>
+        </ul>
+    </li>
+</ul>

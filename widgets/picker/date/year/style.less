@@ -1,0 +1,27 @@
+& {
+  display: inline-block;
+  position: relative;
+
+  a {
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: block;
+    border: 1px solid #EEEEEE;
+    position: absolute;
+    z-index: 20;
+    background-color: white;
+    padding: 10px;
+    max-width: 250px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px black;
+
+    input {
+      &.error {
+        background-color: red;
+        color: white;
+      }
+    }
+  }
+}

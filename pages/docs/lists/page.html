@@ -1,0 +1,28 @@
+<h1>Lists</h1>
+
+<p>
+    Work with ListView in MineDroid is a slightly different task than working with it in Android. Unlike Android's
+    ListView, MineDroid's realization doesn't require you to create Adapters — it accepts any Lists of data. However, it
+    uses ViewHolders to create, fill and control views. Every ViewHolder takes responsibility for displaying Views for
+    different list item classes so, every ViewHolder should be registered in ListView with it's class by <b>setHolder(Holder)</b>
+    method. ListView ViewHolders have some additional information so they should be derived from ListView.Holder
+    class.
+</p>
+<p>
+    <i>If ListView will meet any item with class that cannot be processed by any of registered ViewHolders, ListView will omit
+        the item and it will not be shown.</i>
+</p>
+
+<h1>Creating ViewHolder</h1>
+<p>
+    To create a ViewHolder for ListView, you should extend ListView.Holder class and implement some importants methods:
+<ul>
+    <li><b>ResourceLocation getViewLocation</b> — returns location of views XML layout file (if you want to create your
+        view in code, you can override <b>View getView()</b> method of the Holder class);
+    </li>
+    <li><b>void link(View)</b> — here you should accept a new view with which your holder will be associated;</li>
+    <li><b>void fill(Object)</b> — here you should accept a new object with which your holder will be associated and
+        populate your view with values from this object;
+    </li>
+</ul>
+</p>

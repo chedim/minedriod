@@ -1,2 +1,2 @@
-# minedriod
-Minecraft Android-like GUI library
+# jendri
+Javascript application engine

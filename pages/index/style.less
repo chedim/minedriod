@@ -1,0 +1,205 @@
+& {
+  position: relative;
+  .list {
+    position: relative;
+    &:empty:before {
+      content: 'No time records found';
+      color: #eee;
+    }
+    > .time {
+      text-decoration: none;
+      position: relative;
+      right: 0px;
+      &, .tags * {
+        cursor: pointer;
+        vertical-align: top;
+      }
+      display: inline-block;
+      border: 1px solid transparent;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      box-shadow: 0px 0px 5px white;
+      padding: 10px;
+      width: 100%;
+      overflow: visible;
+      background-color: white;
+
+      &.A {
+        color: white;
+        background-color: coral;
+      }
+
+      &.B {
+        color: white;
+          background-color: deepskyblue;
+      }
+
+      &.C {
+        color: white;
+        background-color: mediumaquamarine;
+      }
+
+      &.D {
+        color: white;
+        background-color: darkorchid;
+      }
+
+      &.E {
+        color: white;
+        background-color: palevioletred;
+      }
+
+      &:hover {
+        box-shadow: 0px 0px 5px black;
+        z-index: 10;
+        outline: none;
+        text-decoration: none;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &.open {
+        box-shadow: 0px 0px 5px black;
+        z-index: 30;
+        border-radius: 5px;
+        position: absolute;
+        transform: translateY(-30%);
+      }
+
+      .left {
+        display: inline-block;
+        text-align: right;
+        padding-right: 5px;
+        font-size: small;
+        vertical-align: middle;
+      }
+      .center {
+        display: inline-block;
+        .title {
+          vertical-align: middle;
+          margin: 0px;
+          padding: 0px;
+          &:empty:before {
+            color: #eee;
+            content: 'No title';
+          }
+        }
+      }
+
+      .tags {
+        font-size: small;
+        position: absolute;
+        white-space: nowrap;
+        right: 0px;
+        top: 0px;
+        padding: 10px;
+
+        &:empty:before {
+          content: 'No tags';
+          color: #eee;
+          height: 100%;
+          line-height: 100%;
+        }
+
+        > div {
+          height: 24px;
+          display: inline-block;
+          vertical-align: middle;
+          &:before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 1px;
+            overflow: visible;
+            color: white;
+            padding-top: -9px;
+            border: 9px solid #eee;
+            border-left-color: rgba(0, 0, 0, 0);
+            border-top-color: rgba(0, 0, 0, 0);
+            border-bottom-color: rgba(0, 0, 0, 0);
+          }
+          > i {
+            display: inline-block;
+            color: #000000;
+            height: 18px;
+            padding-right: 6px;
+            padding-left: 6px;
+            line-height: 18px;
+            background-color: #eee;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+          }
+          &:hover {
+            &:before {
+              border-right-color: #777;
+            }
+            > i {
+              background-color: #777;
+              color: white;
+            }
+          }
+        }
+      }
+
+      &.add {
+        > .date {
+          display: none;
+        }
+        .tags {
+          display: none !important;
+        }
+        text-align: center !important;
+        > * {
+          text-align: left;
+        }
+      }
+
+      .editor {
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: white;
+        color: black;
+        z-index: 40;
+      }
+
+      a {
+        color: black;
+        &:hover {
+          text-decoration: none;
+          color: #eee;
+        }
+      }
+
+      &.no-duration {
+        background-image: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 10px, rgba(255, 255, 255, 0.2) 10px, rgba(255, 255, 255, 0.2) 20px);
+      }
+    }
+  }
+
+  .loader {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: none;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  &.loading {
+    .loader {
+      display: block;
+      z-index: 15;
+    }
+  }
+
+  .loadmore {
+    margin-top: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+}

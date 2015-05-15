@@ -1,0 +1,80 @@
+& {
+  .menu {
+    #add {
+      display: none;
+    }
+  }
+  .chart-holder {
+    position: relative;
+    height: 300px;
+    cursor: pointer;
+    &.open {
+      cursor: auto;
+      height: 300px;
+    }
+    .graph {
+      cursor: hand;
+      .label {
+        display: none;
+      }
+      .group {
+        width: 15px;
+        .bar {
+          height: 100%;
+          width: 100%;
+          border-left: 1px solid white;
+          border-radius: 2px;
+          .value {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+          }
+
+          &.label-A {
+            &.value, .value {
+              background-color: coral;
+            }
+          }
+          &.label-B {
+            &.value, .value {
+              background-color: deepskyblue;
+            }
+          }
+
+          &.label-C {
+            &.value, .value {
+              background-color: mediumaquamarine;
+            }
+          }
+
+          &.label-D {
+            &.value, .value {
+              background-color: darkorchid;
+            }
+          }
+
+          &.label-E {
+            &.value, .value {
+              background-color: palevioletred;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .month-picker {
+    text-align: right;
+    #month {
+      .hidden {
+        right: -25%;
+        width: 250px;
+      }
+    }
+    #year {
+      .hidden {
+        right: -25%;
+      }
+    }
+  }
+}
+

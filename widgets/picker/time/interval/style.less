@@ -1,0 +1,50 @@
+& {
+  vertical-align: middle;
+  label {
+    display: inline-table;
+    padding-left: 5px;
+    padding-right: 5px;
+    > .start, > .end, > .interval {
+      position: relative !important;
+    }
+    > .label {
+      text-align: center;
+      width: 100%;
+
+    }
+
+    > .interval {
+      font-size: xx-large;
+      width: 100px;
+      text-align: center;
+      &.negative {
+        color: red;
+      }
+    }
+  }
+
+  .add-duration {
+    display: none;
+  }
+
+  .del-duration {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+  &.no-interval {
+    vertical-align: middle !important;
+    .add-duration {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle !important;
+    }
+    .del-duration {
+      display: none;
+    }
+    > .interval-holder, > .end-holder {
+      display: none;
+    }
+  }
+}

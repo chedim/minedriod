@@ -1,0 +1,53 @@
+& {
+  width: 100%;
+  height: 100%;
+  border-top: 1px dotted black;
+  border-bottom: 1px dotted black;
+  .graph {
+    width: 90%;
+    height: 100%;
+    position: relative;
+    margin-bottom: 50px;
+    .group {
+      height: 100%;
+      display: inline-block;
+      vertical-align: bottom;
+      position: relative;
+      overflow: visible;
+      .bar {
+        vertical-align: bottom;
+        .value {
+          background-color: black;
+        }
+      }
+
+      .label {
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        padding-top: 5px;
+      }
+    }
+  }
+
+  .abscissa {
+    background-color: white;
+  }
+  .ordinate {
+    width: 50px;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    float: left;
+    .max {
+      width: 100%;
+      position: absolute;
+      right: 0px;
+    }
+    .min {
+      width: 100%;
+      position: absolute;
+      right: 0px;
+    }
+  }
+}

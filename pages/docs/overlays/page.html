@@ -1,0 +1,12 @@
+<h1>Overlays</h1>
+<p>
+    Overlay is a window (or, in Android — Activity) that can be shown on users screen.
+    To create overlay, you should extend class com.onkiup.minecraft.gui.Overlay and register it with
+    MineDroid.addScreen();
+</p>
+
+<h2>Overlay lifecycle</h2>
+<p>
+    To create overlay, MineDroid will call it's methods <b>View getContent()</b> and <b>Drawable getBackgroundDrawable()</b>. <br/>
+    When overlay is being shown, MineDroid will call it's method <b>onStart</b> and <b>onStop</b> — when it is being dismissed.
+</p>

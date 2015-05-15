@@ -1,0 +1,27 @@
+<h1>Themes</h1>
+
+<p>Themes allow you to change the basic look of MineDroid widgets.</p>
+
+<h2>Creating a theme</h2>
+<p>Right now you can create theme only by extending com.onkiup.minecraft.gui.themes.DefaultTheme or by implementing
+    com.onkiup.minecraft.gui.themes.Theme interface.</p>
+
+<h2>Setting a theme</h2>
+<p>To set theme, you should put instance of theme class to a field OnkiupGuiManager.theme</p>
+
+<h2>Theme interface methods</h2>
+<ul>
+    <li><b>public int getFontColor()</b> — should return default text color;</li>
+    <li><b>public float getFontSize()</b> — should return default text scale (1 = no scale, 2 = double scale);</li>
+    <li><b>public float getHeaderSize()</b> — should return default header text scale;</li>
+    <li><b>public Drawable getOverlayDrawable()</b> — should return default overlay window drawable;</li>
+    <li><b>public Drawable getOverlayBackgroundDrawable()</b> — should return default overlay window background (shadow)
+        drawable;
+    </li>
+    <li><b>public Rect getDefaultPadding()</b> — should return default padding for any inflated element;</li>
+    <li><b>public Rect getDefaultMargin()</b> — should return default margin for any inflated element;</li>
+    <li><b>public Drawable getButtonBackground()</b> — should return default button drawable;</li>
+</ul>
+
+<h2>Future plans</h2>
+<p>Future versions will add a possibility to create themes from XML files.</p>
