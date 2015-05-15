@@ -9,6 +9,7 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/views/page.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/style.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="minedriod.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,10 +32,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="page.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="32" selection-start="124" selection-end="124" vertical-scroll-proportion="0.1744186" vertical-offset="0" max-vertical-offset="430">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="43" selection-start="335" selection-end="335" vertical-scroll-proportion="0.23863636" vertical-offset="0" max-vertical-offset="450">
+            <state line="7" column="43" selection-start="335" selection-end="335" vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="450">
               <folding />
             </state>
           </provider>
@@ -100,7 +110,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/pages/docs/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/themes/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/style.less" />
@@ -112,6 +121,7 @@
         <option value="$PROJECT_DIR$/interfaces/docs/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/lists/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/drawables/page.html" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -555,13 +565,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="725" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="21" selection-start="113" selection-end="113" vertical-scroll-proportion="0.10699002" vertical-offset="0" max-vertical-offset="701">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/docs/themes/page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="74" selection-start="1412" selection-end="1412" vertical-scroll-proportion="0.5563481" vertical-offset="0" max-vertical-offset="701">
@@ -629,7 +632,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="43" selection-start="335" selection-end="335" vertical-scroll-proportion="0.23863636" vertical-offset="0" max-vertical-offset="450">
+        <state line="7" column="43" selection-start="335" selection-end="335" vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="450">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="32" selection-start="124" selection-end="124" vertical-scroll-proportion="0.1744186" vertical-offset="0" max-vertical-offset="430">
           <folding />
         </state>
       </provider>
