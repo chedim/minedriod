@@ -1,1 +1,6 @@
 /MineDroid.iml
+*.DS_Store
+/.gradle/
+/.settings/
+/bin/
+/eclipse/
