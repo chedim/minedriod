@@ -1,0 +1,17 @@
+[
+{
+  "modid": "minedroid",
+  "name": "MineDroid",
+  "description": "The brand new world.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["chedim"],
+  "credits": "Onkiup",
+  "logoFile": "",
+  "screenshots": [],
+  "package": "com.onkiup.minedroid",
+  "dependencies": []
+}
+]
