@@ -1,8 +1,11 @@
 package com.onkiup.minedroid.gui;
 
 /**
- * Created by chedim on 5/18/15.
+ * Interface for game ticks based timer
  */
 public interface DelayedTask {
+    /**
+     * Called when timer is done
+     */
     public void execute();
 }

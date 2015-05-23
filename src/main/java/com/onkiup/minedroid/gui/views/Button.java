@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.themes.Theme;
@@ -8,8 +9,8 @@ import com.onkiup.minedroid.gui.themes.Theme;
  * Created by chedim on 4/26/15.
  */
 public class Button extends TextView {
-    public Button() {
-        super();
+    public Button(Context context) {
+        super(context);
         setBackground(MineDroid.theme.getButtonBackground());
     }
 
@@ -19,8 +20,7 @@ public class Button extends TextView {
         if (background == null) background = theme.getButtonBackground().clone();
     }
 
-    public Button(String text) {
-        this();
-        setText(text);
+    public Button(Context context, String text) {
+        super(context, text);
     }
 }

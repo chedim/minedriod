@@ -1,5 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
+import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.themes.Theme;
@@ -16,8 +18,8 @@ public class LinearLayout extends ViewGroup {
         this.orientation = orientation;
     }
 
-    public LinearLayout() {
-        super();
+    public LinearLayout(Context context) {
+        super(context);
         layout = new Layout(Layout.MATCH_PARENT, Layout.MATCH_PARENT);
     }
 
@@ -161,6 +163,6 @@ public class LinearLayout extends ViewGroup {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         super.inflate(node, theme);
-        orientation = (Orientation) node.getEnumAttr("mc", "orientation", Orientation.VERTICAL);
+        orientation = (Orientation) node.getEnumAttr(MineDroid.NS, "orientation", Orientation.VERTICAL);
     }
 }

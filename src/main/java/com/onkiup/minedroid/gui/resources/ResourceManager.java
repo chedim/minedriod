@@ -5,42 +5,44 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 @SideOnly(Side.CLIENT)
 public class ResourceManager {
-    protected static final String[] clientQualifiers = new String[4];
-    protected static final String[] typeDirs = new String[] {
-            "values", "drawables", "layouts", "textures", "images", "nines", "values"
-    };
-    protected static final String[] typeXmls = new String[] {
-            "strings", null, null, null, null, null, "styles"
-    };
-
-    public static enum ResourceType {
-        STRING, DRAWABLE, LAYOUT, TEXTURE, IMAGE, NINEPATCH, STYLE
+    public static ValueLink getValue(Class R, String link) {
+        return (ValueLink) get(R, link);
     }
 
+    public static Object get(Class R, String link) {
+        if (!link.substring(0, 1).equals("@")) {
+            if (link.substring(0, 2).equals("\\@")) {
+                link = link.substring(1);
+            }
+            return link;
+        }
 
-    static {
-        clientQualifiers[0] = Minecraft.getMinecraft().getVersion();
-        clientQualifiers[1] = Minecraft.getMinecraft().gameSettings.fancyGraphics ? "fancy" : "fast";
-        clientQualifiers[2] = Minecraft.getMinecraft().isSingleplayer() ? "sp" : "mp";
-        clientQualifiers[3] = Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode();
-    }
+        link = link.substring(1);
+        String[] parts = link.split("\\/");
 
-    protected String moduleId;
-    protected HashMap<Integer, ResourceLocation> locationCache = new HashMap<Integer, ResourceLocation>();
+        if (parts.length != 2) throw new RuntimeException("Invalid resource link: '@"+link+"'");
 
-    public ResourceManager(String moduleId) {
-        this.moduleId = moduleId;
-    }
-
-    public ResourceLocation resolveId(Integer id) {
-        if (locationCache.containsKey(id)) {
-            return locationCache.get(id);
+        Class[] subs = R.getDeclaredClasses();
+        for (Class sub: subs) {
+            if (sub.getSimpleName().equals(parts[0])) {
+                try {
+                    Field f = sub.getField(parts[1]);
+                    return f.get(null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return null;
+    }
+
+    public static ResourceLocation getResource(Class R, String link) {
+        return (ResourceLocation) get(R, link);
     }
 }

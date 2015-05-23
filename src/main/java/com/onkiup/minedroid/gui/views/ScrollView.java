@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.RoundedCornerDrawable;
@@ -18,8 +19,8 @@ public class ScrollView extends ContentView {
     protected View child;
     protected Point scroll = new Point(0, 0);
 
-    public ScrollView() {
-
+    public ScrollView(Context context) {
+        super(context);
     }
 
     @Override

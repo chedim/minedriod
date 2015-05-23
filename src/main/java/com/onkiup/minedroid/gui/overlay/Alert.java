@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.overlay;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.events.MouseEvent;
 import com.onkiup.minedroid.gui.views.*;
@@ -9,13 +10,13 @@ import net.minecraft.util.ResourceLocation;
  * Created by chedim on 5/18/15.
  */
 public class Alert extends Overlay {
-    protected TextView mMessage = new TextView();
-    protected Button mOkButton = new Button();
-    protected RelativeLayout layout = new RelativeLayout();
+    protected TextView mMessage = new TextView(this);
+    protected Button mOkButton = new Button(this);
+    protected RelativeLayout layout = new RelativeLayout(this);
     protected String text;
 
-    public Alert(String text) {
-        super();
+    public Alert(Context context, String text) {
+        super(context);
     }
 
     protected View.OnClick mOk = new View.OnClick() {

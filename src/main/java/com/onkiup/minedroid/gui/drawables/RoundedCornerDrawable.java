@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.drawables;
 
+import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Point;
@@ -72,7 +73,7 @@ public class RoundedCornerDrawable extends ColorDrawable {
     @Override
     public void inflate(XmlHelper xmlHelper, Theme theme) {
         super.inflate(xmlHelper, theme);
-        this.radius = xmlHelper.getDimenAttr("mc", "radius", 0);
+        this.radius = xmlHelper.getDimenAttr(MineDroid.NS, "radius", 0);
     }
 
     public void setRadius(int r) {

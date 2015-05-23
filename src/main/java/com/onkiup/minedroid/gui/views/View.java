@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
@@ -19,7 +20,7 @@ import com.onkiup.minedroid.gui.themes.Theme;
 /**
  * Created by chedim on 4/25/15.
  */
-public class View extends EventBase {
+public class View extends EventBase implements Context {
     protected int id;
     protected Point position;
     protected Layout layout = new Layout(), resolvedLayout;
@@ -27,13 +28,14 @@ public class View extends EventBase {
     protected int layoutWeight = 0;
     protected boolean debug;
     protected Overlay screen;
+    protected Class R;
 
     protected ViewHolder mHolder;
 
     protected ContentView parent;
 
-    public View() {
-
+    public View(Context context) {
+        R = context.R();
     }
 
     public void onDraw() {
@@ -171,10 +173,6 @@ public class View extends EventBase {
         }
     }
 
-    public View findViewById(String id) {
-        return findViewById(MineDroid.getId(id));
-    }
-
     public View findViewById(int id) {
         if (id == this.id) return this;
         return null;
@@ -186,6 +184,11 @@ public class View extends EventBase {
             event.target = getParent();
             getParent().fireEvent(event.type, event);
         }
+    }
+
+    @Override
+    public Class R() {
+        return R;
     }
 
     public static class Layout {
@@ -349,7 +352,7 @@ public class View extends EventBase {
     }
 
     public void inflate(XmlHelper node, Theme theme) {
-        setBackground(node.getDrawableAttr("mc", "background", null));
+        setBackground(node.getDrawableAttr(MineDroid.NS, "background", null));
         Point size = new Point(0, 0);
         if (background != null) {
             size = background.getOriginalSize();
@@ -357,14 +360,14 @@ public class View extends EventBase {
 
         Layout layout = new Layout();
 
-        layout.width = node.getDimenAttr("mc", "width", size.x);
-        layout.height = node.getDimenAttr("mc", "height", size.y);
+        layout.width = node.getDimenAttr(MineDroid.NS, "width", size.x);
+        layout.height = node.getDimenAttr(MineDroid.NS, "height", size.y);
 
-        layout.margin = node.getRectAttr("mc", "margin", theme.getDefaultMargin());
-        layout.padding = node.getRectAttr("mc", "padding", theme.getDefaultPadding());
+        layout.margin = node.getRectAttr(MineDroid.NS, "margin", theme.getDefaultMargin());
+        layout.padding = node.getRectAttr(MineDroid.NS, "padding", theme.getDefaultPadding());
 
         setLayout(layout);
-        this.id = node.getIdAttr("mc", "id");
+        this.id = node.getIdAttr(MineDroid.NS, "id");
     }
 
     public void setId(int id) {

@@ -1,5 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
+import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.CenteredRect;
 import com.onkiup.minedroid.gui.primitives.Point;
@@ -14,6 +16,10 @@ import java.util.List;
  * Created by chedim on 4/26/15.
  */
 public class RelativeLayout extends ViewGroup {
+
+    public RelativeLayout(Context r) {
+        super(r);
+    }
 
     @Override
     public void resolveLayout(View.Layout layout) {
@@ -493,17 +499,17 @@ public class RelativeLayout extends ViewGroup {
         View child = super.inflateChild(node, theme);
 
         Layout layout = new Layout(child.getLayout());
-        layout.alignLeft = findViewById(node.getIdAttr("mc", "alignLeft"));
-        layout.toRightOf = findViewById(node.getIdAttr("mc", "toRightOf"));
-        layout.alignCenter = findViewById(node.getIdAttr("mc", "alignCenter"));
-        layout.alignRight = findViewById(node.getIdAttr("mc", "alignRight"));
-        layout.toRightOf = findViewById(node.getIdAttr("mc", "toRightOf"));
+        layout.alignLeft = findViewById(node.getIdAttr(MineDroid.NS, "alignLeft"));
+        layout.toRightOf = findViewById(node.getIdAttr(MineDroid.NS, "toRightOf"));
+        layout.alignCenter = findViewById(node.getIdAttr(MineDroid.NS, "alignCenter"));
+        layout.alignRight = findViewById(node.getIdAttr(MineDroid.NS, "alignRight"));
+        layout.toRightOf = findViewById(node.getIdAttr(MineDroid.NS, "toRightOf"));
 
-        layout.alignTop = findViewById(node.getIdAttr("mc", "alignTop"));
-        layout.below = findViewById(node.getIdAttr("mc", "below"));
-        layout.alignMiddle = findViewById(node.getIdAttr("mc", "alignMiddle"));
-        layout.alignBottom = findViewById(node.getIdAttr("mc", "alignBottom"));
-        layout.above = findViewById(node.getIdAttr("mc", "above"));
+        layout.alignTop = findViewById(node.getIdAttr(MineDroid.NS, "alignTop"));
+        layout.below = findViewById(node.getIdAttr(MineDroid.NS, "below"));
+        layout.alignMiddle = findViewById(node.getIdAttr(MineDroid.NS, "alignMiddle"));
+        layout.alignBottom = findViewById(node.getIdAttr(MineDroid.NS, "alignBottom"));
+        layout.above = findViewById(node.getIdAttr(MineDroid.NS, "above"));
         child.setLayout(layout);
 
         return child;

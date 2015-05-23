@@ -3,6 +3,8 @@ package com.onkiup.minedroid.gui;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
+import com.onkiup.minedroid.gui.resources.ResourceLink;
+import com.onkiup.minedroid.gui.resources.ResourceManager;
 import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.util.ResourceLocation;
 import org.w3c.dom.Node;
@@ -12,18 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chedim on 4/30/15.
+ * Some useful methods for XML parsing
  */
 public class XmlHelper {
 
+    /**
+     * Wrapped XML Node
+     */
     protected Node node;
+    protected Context context;
 
-    public XmlHelper(Node node) {
+    public XmlHelper(Context context, Node node) {
         this.node = node;
+        this.context = context;
     }
 
+    /**
+     * Returns node attribute
+     * @param ns Attribute namespace
+     * @param name Attribute name
+     * @return Node Attribute value
+     */
     public Node getAttr(String ns, String name) {
-        return node.getAttributes().getNamedItem(ns + ":" + name);
+        return node.getAttributes().getNamedItemNS(ns, name);
     }
 
     public String getStringAttr(String ns, String name, String def) {
@@ -31,41 +44,37 @@ public class XmlHelper {
 
         if (attr == null) return def;
 
-        return attr.getNodeValue();
+        String val = attr.getNodeValue();
+
+        return ResourceManager.get(context.R(), val).toString();
     }
 
     public Integer getIntegerAttr(String ns, String name, Integer def) {
         Node attr = getAttr(ns, name);
         if (attr == null) return def;
-        return Integer.parseInt(attr.getNodeValue());
+        String val = ResourceManager.getValue(context.R(), attr.getNodeValue()).toString();
+        return Integer.parseInt(val);
     }
 
     public Float getFloatAttr(String ns, String name, Float def) {
         Node attr = getAttr(ns, name);
         if (attr == null) return def;
-        return Float.parseFloat(attr.getNodeValue());
+        String val = ResourceManager.getValue(context.R(), attr.getNodeValue()).toString();
+        return Float.parseFloat(val);
     }
 
     public Drawable getDrawableAttr(String ns, String name, Drawable def) {
         ResourceLocation rl = (ResourceLocation) getResourceAttr(ns, name, null);
         if (rl == null) return def;
 
-        return MineDroid.inflateDrawable(rl);
+        return MineDroid.inflateDrawable(context, rl);
     }
 
     public ResourceLocation getResourceAttr(String ns, String name, ResourceLocation o) {
         Node attr = getAttr(ns, name);
         if (attr == null) return o;
 
-        String[] location = attr.getNodeValue().split(":");
-        ResourceLocation rl;
-        if (location.length == 2) {
-            rl = new ResourceLocation(location[0], location[1]);
-        } else {
-            rl = new ResourceLocation(location[0]);
-        }
-
-        return rl;
+        return (ResourceLink) ResourceManager.get(context.R(), attr.getNodeValue());
     }
 
     public Integer getDimenAttr(String ns, String name, Integer def) {
@@ -75,6 +84,8 @@ public class XmlHelper {
         String val = attr.getNodeValue().toLowerCase();
         if (val.equals("match_parent")) return View.Layout.MATCH_PARENT;
         if (val.equals("wrap_content")) return View.Layout.WRAP_CONTENT;
+
+        val = ResourceManager.get(context.R(), val).toString();
 
         return Integer.parseInt(val);
     }
@@ -117,7 +128,7 @@ public class XmlHelper {
         NodeList list = node.getChildNodes();
         for (int x = 0; x < list.getLength(); x++) {
             Node childNode = list.item(x);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE) result.add(new XmlHelper(childNode));
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) result.add(new XmlHelper(context, childNode));
         }
 
         return result;
@@ -131,7 +142,15 @@ public class XmlHelper {
         String id = getStringAttr(ns, name, null);
         if (id == null) return -1;
         if (id.equals("parent")) return 0;
-        return MineDroid.getId(id);
+
+        Object val = ResourceManager.get(context.R(), id);
+
+        if (val == null) return -1;
+        if (val instanceof Integer) {
+            return (Integer) val;
+        }
+
+        return Integer.valueOf(val.toString());
     }
 
     public Point getSize(String ns, Point src) {

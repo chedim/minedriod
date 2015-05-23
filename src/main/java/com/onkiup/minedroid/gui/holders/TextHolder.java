@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.holders;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.views.ContentView;
 import com.onkiup.minedroid.gui.views.ListView;
 import com.onkiup.minedroid.gui.views.TextView;
@@ -12,6 +13,10 @@ import net.minecraft.util.ResourceLocation;
 public class TextHolder extends ListView.Holder<String>{
 
     protected TextView view;
+
+    public TextHolder(Context context) {
+        super(context);
+    }
 
     @Override
     protected ResourceLocation getViewLocation() {
@@ -31,7 +36,7 @@ public class TextHolder extends ListView.Holder<String>{
     @Override
     public View getView() {
         if (mView == null) {
-            TextView v = new TextView();
+            TextView v = new TextView(this);
             v.setGravityVertical(ContentView.VGravity.CENTER);
             v.setGravityHorizontal(ContentView.HGravity.CENTER);
             v.setHolder(this);

@@ -26,23 +26,25 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by chedim on 4/25/15.
+ * Class that represents GUI Screen
  */
-public abstract class Overlay extends GuiScreen {
+public abstract class Overlay extends GuiScreen implements Context {
 
     private static final Integer DBL_CLICK_TIMEOUT = getDblClickInterval();
     protected View contentView;
-    protected RelativeLayout container = new RelativeLayout();
+    protected RelativeLayout container = new RelativeLayout(this);
     protected State state = State.INITIALIZING;
     protected Drawable background;
 
     protected EntityPlayer player;
     protected World world;
     protected Point3D position;
+    protected Class r;
 
-    protected Overlay() {
+    protected Overlay(Context context) {
         this.player = Minecraft.getMinecraft().thePlayer;
         this.world = Minecraft.getMinecraft().theWorld;
+        r = context.R();
     }
 
     protected abstract ResourceLocation getContentLayout();
@@ -297,6 +299,11 @@ public abstract class Overlay extends GuiScreen {
     }
 
     protected View getContentView() {
-        return container.inflateChild(MineDroid.getXmlHelper(getContentLayout()), MineDroid.theme);
+        return container.inflateChild(MineDroid.getXmlHelper(this, getContentLayout()), MineDroid.theme);
+    }
+
+    @Override
+    public Class R() {
+        return r;
     }
 }

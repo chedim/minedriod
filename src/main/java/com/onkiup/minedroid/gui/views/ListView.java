@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.Drawable;
@@ -10,6 +11,7 @@ import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.themes.Theme;
 import net.minecraft.util.ResourceLocation;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,10 @@ public class ListView extends LinearLayout {
     protected Drawable mEmptyDrawable;
 
     protected int mOffset = 0, mFirstShown = 0, mLastShown = 0, mShownSize = 0;
+
+    public ListView(Context context) {
+        super(context);
+    }
 
 
     public void setObjects(List objects) {
@@ -339,7 +345,8 @@ public class ListView extends LinearLayout {
 
         try {
             Class<Holder> holderClass = mHolders.get(c);
-            Holder holder = holderClass.newInstance();
+            Constructor<Holder> constructor = holderClass.getConstructor(Context.class);
+            Holder holder = constructor.newInstance(this);
             holder.setList(this);
             return holder.getView();
         } catch (Exception e) {
@@ -388,17 +395,22 @@ public class ListView extends LinearLayout {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         super.inflate(node, theme);
-        ResourceLocation location = node.getResourceAttr("mc", "empty", null);
+        ResourceLocation location = node.getResourceAttr(MineDroid.NS, "empty", null);
         if (location != null) {
-            mEmptyDrawable = MineDroid.inflateDrawable(location);
+            mEmptyDrawable = MineDroid.inflateDrawable(this, location);
         }
     }
 
-    public static abstract class Holder<T> implements ViewHolder<T> {
+    public static abstract class Holder<T> implements ViewHolder<T>, Context {
         protected View mView;
         protected T mObject;
         protected int mPosition;
         protected ListView mList;
+        protected Class R;
+
+        public Holder(Context context) {
+            R = context.R();
+        }
 
         protected abstract ResourceLocation getViewLocation();
 
@@ -431,11 +443,16 @@ public class ListView extends LinearLayout {
 
         public View getView() {
             if (mView == null) {
-                mView = MineDroid.inflateLayout(getViewLocation());
+                mView = MineDroid.inflateLayout(this, getViewLocation());
                 mView.setHolder(this);
             }
 
             return mView;
+        }
+
+        @Override
+        public Class R() {
+            return R;
         }
     }
 }

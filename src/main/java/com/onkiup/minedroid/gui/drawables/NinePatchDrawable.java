@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.drawables;
 
+import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.themes.Theme;
@@ -92,8 +93,8 @@ public class NinePatchDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         try {
-            setDrawables((ResourceLocation) node.getResourceAttr("mc", "src", null));
-            setSize(node.getSize("mc", size));
+            setDrawables((ResourceLocation) node.getResourceAttr(MineDroid.NS, "src", null));
+            setSize(node.getSize(MineDroid.NS, size));
         } catch (IOException e) {
             e.printStackTrace();
         }

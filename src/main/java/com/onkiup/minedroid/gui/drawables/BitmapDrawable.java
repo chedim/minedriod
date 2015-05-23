@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.drawables;
 
+import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.themes.Theme;
@@ -81,10 +82,10 @@ public class BitmapDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         try {
-            setDrawable((ResourceLocation) node.getResourceAttr("mc", "background", null));
+            setDrawable((ResourceLocation) node.getResourceAttr(MineDroid.NS, "background", null));
             size = new Point(0, 0);
-            size.x = node.getDimenAttr("mc", "width", originalSize.x);
-            size.y = node.getDimenAttr("mc", "width", originalSize.y);
+            size.x = node.getDimenAttr(MineDroid.NS, "width", originalSize.x);
+            size.y = node.getDimenAttr(MineDroid.NS, "width", originalSize.y);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -44,7 +44,7 @@ public class StateDrawable implements Drawable {
         List<XmlHelper> children = node.getChildren();
         for (XmlHelper child : children) {
             try {
-                State childState = (State) child.getEnumAttr("mc", "state", State.DEFAULT);
+                State childState = (State) child.getEnumAttr(MineDroid.NS, "state", State.DEFAULT);
                 setDrawableForState(childState, MineDroid.processNodeDrawable(child));
             } catch (Exception e) {
                 throw new RuntimeException(e);

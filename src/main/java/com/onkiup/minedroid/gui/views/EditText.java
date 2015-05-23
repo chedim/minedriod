@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.drawables.ColorDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.KeyEvent;
@@ -28,12 +29,12 @@ public class EditText extends TextView {
             220, 221, 222, 223
     };
 
-    public EditText() {
-        this("");
+    public EditText(Context context) {
+        this(context, "");
     }
 
-    public EditText(String text) {
-        super(text);
+    public EditText(Context context, String text) {
+        super(context, text);
         cursor = new ColorDrawable(0xff000000);
         drawCursorTimer = new Timer();
         drawCursorTimer.schedule(new TimerTask() {

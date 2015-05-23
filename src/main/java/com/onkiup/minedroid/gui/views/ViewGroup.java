@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
@@ -15,6 +16,10 @@ import java.util.List;
  */
 public abstract class ViewGroup extends ContentView {
     private List<View> children = new ArrayList<View>();
+
+    public ViewGroup(Context r) {
+        super(r);
+    }
 
     public void addChild(View child) {
         children.add(child);
@@ -129,7 +134,7 @@ public abstract class ViewGroup extends ContentView {
 
     public View inflateChild(XmlHelper node, Theme theme) {
         try {
-            return MineDroid.processNode(node.getNode(), theme);
+            return MineDroid.processNode(node, theme);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -146,10 +151,6 @@ public abstract class ViewGroup extends ContentView {
         }
 
         return null;
-    }
-
-    public View findViewById(String id) {
-        return findViewById(MineDroid.getId(id));
     }
 
     public List<View> getFocusables() {

@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
@@ -12,6 +13,10 @@ import com.onkiup.minedroid.gui.themes.Theme;
 public abstract class ContentView extends View {
     protected HGravity hGravity = HGravity.LEFT;
     protected VGravity vGravity = VGravity.CENTER;
+
+    public ContentView(Context context) {
+        super(context);
+    }
 
     public void setGravityHorizontal(HGravity gravity) {
         hGravity = gravity;
@@ -69,8 +74,8 @@ public abstract class ContentView extends View {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         super.inflate(node, theme);
-        setGravityHorizontal((HGravity) node.getEnumAttr("mc", "horizontal-gravity", HGravity.CENTER));
-        setGravityVertical((VGravity) node.getEnumAttr("mc", "vertical-gravity", VGravity.CENTER));
+        setGravityHorizontal((HGravity) node.getEnumAttr(MineDroid.NS, "horizontal-gravity", HGravity.CENTER));
+        setGravityVertical((VGravity) node.getEnumAttr(MineDroid.NS, "vertical-gravity", VGravity.CENTER));
     }
 
 }

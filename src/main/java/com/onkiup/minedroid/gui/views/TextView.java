@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.views;
 
+import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.TextDrawable;
@@ -13,15 +14,15 @@ import com.onkiup.minedroid.gui.themes.Theme;
 public class TextView extends ContentView {
     protected TextDrawable text = new TextDrawable("", MineDroid.theme.getFontColor());
 
-    public TextView() {
-        super();
+    public TextView(Context context) {
+        super(context);
         text.setTextSize(MineDroid.theme.getFontSize());
         vGravity = VGravity.CENTER;
         hGravity = HGravity.CENTER;
     }
 
-    public TextView(String text) {
-        this();
+    public TextView(Context context, String text) {
+        this(context);
         this.text.setText(text);
     }
 
@@ -87,9 +88,9 @@ public class TextView extends ContentView {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         super.inflate(node, theme);
-        String text = node.getLocalizedAttr("mc", "text", "");
+        String text = node.getLocalizedAttr(MineDroid.NS, "text", "");
         setText(text);
-        this.text.setTextSize(node.getFloatAttr("mc", "fontSize", 1f));
+        this.text.setTextSize(node.getFloatAttr(MineDroid.NS, "fontSize", 1f));
     }
 }
 

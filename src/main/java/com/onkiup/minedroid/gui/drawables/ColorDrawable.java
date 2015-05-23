@@ -1,5 +1,6 @@
 package com.onkiup.minedroid.gui.drawables;
 
+import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.GLColor;
@@ -91,8 +92,8 @@ public class ColorDrawable implements Drawable {
 
     @Override
     public void inflate(XmlHelper xmlHelper, Theme theme) {
-        setSize(xmlHelper.getSize("mc", new Point(0, 0)));
-        setColor(xmlHelper.getColorAttr("mc", "color", 0x00000000l));
+        setSize(xmlHelper.getSize(MineDroid.NS, new Point(0, 0)));
+        setColor(xmlHelper.getColorAttr(MineDroid.NS, "color", 0x00000000l));
     }
 
     @Override

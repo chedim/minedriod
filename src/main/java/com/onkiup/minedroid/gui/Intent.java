@@ -11,6 +11,7 @@ import java.util.HashMap;
 /**
  * Created by chedim on 5/18/15.
  */
+@Deprecated
 public class Intent implements Packet {
 
     public HashMap<String, Serializable> args;
