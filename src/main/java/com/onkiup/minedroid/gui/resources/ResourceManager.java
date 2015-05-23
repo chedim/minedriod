@@ -10,12 +10,12 @@ import java.util.HashMap;
 
 @SideOnly(Side.CLIENT)
 public class ResourceManager {
-    public static ValueLink getValue(Class R, String link) {
-        return (ValueLink) get(R, link);
-    }
 
     public static Object get(Class R, String link) {
+        if (link == null) return null;
+        if (link.length() == 0) return "";
         if (!link.substring(0, 1).equals("@")) {
+            if (link.length() < 2) return link;
             if (link.substring(0, 2).equals("\\@")) {
                 link = link.substring(1);
             }
@@ -42,7 +42,4 @@ public class ResourceManager {
         return null;
     }
 
-    public static ResourceLocation getResource(Class R, String link) {
-        return (ResourceLocation) get(R, link);
-    }
 }

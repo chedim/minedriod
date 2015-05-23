@@ -30,6 +30,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InvalidClassException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -191,6 +192,7 @@ public class MineDroid implements IGuiHandler, Context {
      */
     public static View inflateLayout(Context context, ResourceLocation source) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -208,6 +210,7 @@ public class MineDroid implements IGuiHandler, Context {
      */
     public static XmlHelper getXmlHelper(Context context, ResourceLocation source) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -228,7 +231,7 @@ public class MineDroid implements IGuiHandler, Context {
      * @throws InstantiationException
      * @throws InvalidClassException
      */
-    public static View processNode(Context context, Node node, Theme theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException {
+    public static View processNode(Context context, Node node, Theme theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         return processNode(new XmlHelper(context, node), theme);
     }
 
@@ -242,7 +245,7 @@ public class MineDroid implements IGuiHandler, Context {
      * @throws InstantiationException
      * @throws InvalidClassException
      */
-    public static View processNode(XmlHelper node, Theme theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException {
+    public static View processNode(XmlHelper node, Theme theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         String name = node.getNode().getNodeName();
         if (!name.contains(".")) {
             name = "com.onkiup.minedroid.gui.views." + name;
@@ -253,7 +256,8 @@ public class MineDroid implements IGuiHandler, Context {
             throw new InvalidClassException("Class <" + name + "> is not a View.");
         }
 
-        View view = (View) viewClass.newInstance();
+        Constructor c = viewClass.getConstructor(Context.class);
+        View view = (View) c.newInstance(node);
         view.inflate(node, theme);
 
         return view;
@@ -287,12 +291,12 @@ public class MineDroid implements IGuiHandler, Context {
             name = "com.onkiup.minedroid.gui.drawables." + name + "Drawable";
         }
 
-        Class viewClass = Class.forName(name);
-        if (!Drawable.class.isAssignableFrom(viewClass)) {
+        Class drawableClass = Class.forName(name);
+        if (!Drawable.class.isAssignableFrom(drawableClass)) {
             throw new InvalidClassException("Class <" + name + "> is not a Drawable.");
         }
 
-        Drawable drawable = (Drawable) viewClass.newInstance();
+        Drawable drawable = (Drawable) drawableClass.newInstance();
         drawable.inflate(node, theme);
 
         return drawable;
@@ -305,6 +309,7 @@ public class MineDroid implements IGuiHandler, Context {
      */
     public static Drawable inflateDrawable(Context context, ResourceLocation rl) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
 
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -344,10 +349,11 @@ public class MineDroid implements IGuiHandler, Context {
      * @param id
      * @return Overlay
      */
-    public static Overlay getScreen(int id) {
+    public static Overlay getScreen(Context context, int id) {
         Class<? extends Overlay> c = getScreenClass(id);
         if (c != null) try {
-            return c.newInstance();
+            Constructor<? extends Overlay> constructor = c.getConstructor(Context.class);
+            return constructor.newInstance(context);
         } catch (Exception e) {
             e.printStackTrace();
         }

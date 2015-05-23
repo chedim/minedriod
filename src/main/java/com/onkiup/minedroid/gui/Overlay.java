@@ -41,7 +41,7 @@ public abstract class Overlay extends GuiScreen implements Context {
     protected Point3D position;
     protected Class r;
 
-    protected Overlay(Context context) {
+    public Overlay(Context context) {
         this.player = Minecraft.getMinecraft().thePlayer;
         this.world = Minecraft.getMinecraft().theWorld;
         r = context.R();

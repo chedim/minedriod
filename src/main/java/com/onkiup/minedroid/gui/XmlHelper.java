@@ -16,17 +16,17 @@ import java.util.List;
 /**
  * Some useful methods for XML parsing
  */
-public class XmlHelper {
+public class XmlHelper implements Context {
 
     /**
      * Wrapped XML Node
      */
     protected Node node;
-    protected Context context;
+    protected Class r;
 
     public XmlHelper(Context context, Node node) {
         this.node = node;
-        this.context = context;
+        this.r = context.R();
     }
 
     /**
@@ -46,20 +46,20 @@ public class XmlHelper {
 
         String val = attr.getNodeValue();
 
-        return ResourceManager.get(context.R(), val).toString();
+        return ResourceManager.get(r, val).toString();
     }
 
     public Integer getIntegerAttr(String ns, String name, Integer def) {
         Node attr = getAttr(ns, name);
         if (attr == null) return def;
-        String val = ResourceManager.getValue(context.R(), attr.getNodeValue()).toString();
+        String val = ResourceManager.get(r, attr.getNodeValue()).toString();
         return Integer.parseInt(val);
     }
 
     public Float getFloatAttr(String ns, String name, Float def) {
         Node attr = getAttr(ns, name);
         if (attr == null) return def;
-        String val = ResourceManager.getValue(context.R(), attr.getNodeValue()).toString();
+        String val = ResourceManager.get(r, attr.getNodeValue()).toString();
         return Float.parseFloat(val);
     }
 
@@ -67,14 +67,14 @@ public class XmlHelper {
         ResourceLocation rl = (ResourceLocation) getResourceAttr(ns, name, null);
         if (rl == null) return def;
 
-        return MineDroid.inflateDrawable(context, rl);
+        return MineDroid.inflateDrawable(this, rl);
     }
 
     public ResourceLocation getResourceAttr(String ns, String name, ResourceLocation o) {
         Node attr = getAttr(ns, name);
         if (attr == null) return o;
 
-        return (ResourceLink) ResourceManager.get(context.R(), attr.getNodeValue());
+        return (ResourceLink) ResourceManager.get(r, attr.getNodeValue());
     }
 
     public Integer getDimenAttr(String ns, String name, Integer def) {
@@ -85,7 +85,7 @@ public class XmlHelper {
         if (val.equals("match_parent")) return View.Layout.MATCH_PARENT;
         if (val.equals("wrap_content")) return View.Layout.WRAP_CONTENT;
 
-        val = ResourceManager.get(context.R(), val).toString();
+        val = ResourceManager.get(r, val).toString();
 
         return Integer.parseInt(val);
     }
@@ -128,7 +128,7 @@ public class XmlHelper {
         NodeList list = node.getChildNodes();
         for (int x = 0; x < list.getLength(); x++) {
             Node childNode = list.item(x);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE) result.add(new XmlHelper(context, childNode));
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) result.add(new XmlHelper(this, childNode));
         }
 
         return result;
@@ -139,11 +139,13 @@ public class XmlHelper {
     }
 
     public int getIdAttr(String ns, String name) {
-        String id = getStringAttr(ns, name, null);
-        if (id == null) return -1;
+        Node attr = getAttr(ns, name);
+        if (attr == null) return -1;
+
+        String id = attr.getNodeValue();
         if (id.equals("parent")) return 0;
 
-        Object val = ResourceManager.get(context.R(), id);
+        Object val = ResourceManager.get(r, id);
 
         if (val == null) return -1;
         if (val instanceof Integer) {
@@ -173,5 +175,10 @@ public class XmlHelper {
 
     public String getName() {
         return node.getNodeName();
+    }
+
+    @Override
+    public Class R() {
+        return r;
     }
 }
