@@ -23,7 +23,7 @@
 <h2>Nine patches</h2>
 <p>
     NinePatchDrawable uses nine pictures to display a drawable with properly resized border. To use this drawable you
-    should create a folder with nine png images named like this:
+    should create a subfolder in folder 'assets/&lt;modid&gt;/ninepatches/&lt;nine-patch-name&gt;/' with nine png images named like this:
 </p>
 <center>
     <table width="400" height="200" border="1" cellspacing="0">
@@ -48,9 +48,4 @@
     Current 9patch realization doesn't support image paddings so you should set paddings manually in your view.
     Ninepatch border size will be taken from corner images sizes (0.0.png, 0.2.png, 2.0.png, 2.2.png). It's very
     convenient to use Photoshop slices to create nine-patches.
-</p>
-
-<p>
-    When initializing NinePatchDrawable, you should pass it ResourceLocation of the folder that contains nine-patch
-    images.
 </p>
