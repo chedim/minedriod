@@ -2,7 +2,7 @@
 
     // ------ Dependency Injection
     var options = {
-        source: 'client',
+        source: '',
         startup: 'router',
         home: 'index',
         debug: false,

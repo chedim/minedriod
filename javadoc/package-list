@@ -1,0 +1,10 @@
+com.onkiup.minedroid
+com.onkiup.minedroid.gui
+com.onkiup.minedroid.gui.drawables
+com.onkiup.minedroid.gui.events
+com.onkiup.minedroid.gui.holders
+com.onkiup.minedroid.gui.overlay
+com.onkiup.minedroid.gui.primitives
+com.onkiup.minedroid.gui.resources
+com.onkiup.minedroid.gui.themes
+com.onkiup.minedroid.gui.views

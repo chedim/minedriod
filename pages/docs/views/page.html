@@ -54,12 +54,15 @@
                 views:
                 <ul>
                     <li>
-                        <b><a href="#docs/views/linearlayout">LinearLayout</a></b> — This view positions it's children in a line;
+                        <b><a href="#docs/views/linearlayout">LinearLayout</a></b> — This view positions it's children
+                        in a line;
                         <ul>
                             <li><b><a href="#docs/lists">ListView</a></b> — displays scrollable lists;</li>
                         </ul>
                     </li>
-                    <li><b><a href="#docs/view/relativelayout">RelativeLayout</a></b> — This view provides possibility to position child views relatively to each other;</li>
+                    <li><b><a href="#docs/view/relativelayout">RelativeLayout</a></b> — This view provides possibility
+                        to position child views relatively to each other;
+                    </li>
                 </ul>
             </li>
             <li><b><a href="#docs/views/scrollview">ScrollView</a></b> — provides vertical scroll for it's content view
@@ -67,3 +70,40 @@
         </ul>
     </li>
 </ul>
+
+
+<h1>Overlays</h1>
+<p>
+    Overlay is a window (or, in Android — Activity) that can be shown on users screen.
+    To create overlay, you should extend class com.onkiup.minecraft.gui.Overlay and register it with
+    MineDroid.addScreen();
+</p>
+
+<h2>Overlay methods</h2>
+<p>
+<table>
+    <thead>
+    <tr>
+        <td>Callback method</td>
+        <td>Description</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>void dismiss()</td>
+        <td>Dismisses opened overlay</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+To create overlay, MineDroid will call it's methods <b>ResourceLocation getContentLayout()</b>. <br/>
+When overlay is being shown, MineDroid will call it's method <b>onStart</b> and
+<b>onStop</b> — when it is being dismissed.
+</p>
