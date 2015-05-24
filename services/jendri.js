@@ -12,19 +12,19 @@
         interface: 'default'
     };
     var AppCache;
-    var ajax = function (file, options) {
-        if (AppCache) {
-            AppCache.load(file, options);
-        } else {
-            $.ajax(file, options);
-        }
-    }
 
     if (window.Jendri) {
         options = $.extend(true, options, window.Jendri);
         delete window['Jendri'];
     }
     var Jendri = options;
+    var ajax = Jendri.ajax = function (file, options) {
+        if (AppCache) {
+            AppCache.load(file, options);
+        } else {
+            $.ajax(file, options);
+        }
+    }
     window['J'] = Jendri;
     var services = [], hash = {}, hashBack = {}, tagCb = {};
     Jendri.__callbacks = tagCb;

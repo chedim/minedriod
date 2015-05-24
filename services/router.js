@@ -355,9 +355,9 @@ Router.load = function (target, link, args, callback) {
         success: function (data) {
             console.log(link, 'html');
             var content = $(target).html();
-            console.log('-->',link, 'content', target, content);
             var template = $(data);
-            $('content', template).html(content);
+            var contentTag = ($(template).is('content') ? template : $('content', template));
+            $(contentTag).html(content);
             $(target).html('');
             $(target).append(template);
             pageFin();

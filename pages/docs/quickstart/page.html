@@ -1,9 +1,176 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+<h1>Quick start guide</h1>
+<h2>Example mod</h2>
+<p>
+    Let's create an example mod with id 'example'! In this mod we will show a simple alert message to our user.
+</p>
+<h2>Downloading and installing</h2>
+<p>
+    You can download a <a href="https://github.com/chedim/minedriod/raw/master/minedroid-1.0.jar">separate jar</a> or
+    checkout sources from <a href="https://github.com/chedim/minedriod">github</a>.<br/>
+    MineDroid comes as a separate Forge mod so you don't need to include it into your module jar file.
+</p>
+<p>
+    If you use Gradle, you can add Minedroid from a GitHub hosted maven repository:
+<pre>https://raw.github.com/chedim/maven-repo/master/</pre><br/>
+MineDroid artifact is:
+<pre>com.onkiup.minedroid:minedroid:1.0</pre><br/>
+Also there is a plugin for Gradle that generates R class with links to your mod all resources:
+<pre>com.onkiup.gradle:minedroid:1.1-SNAPSHOT</pre><br/>
+Here is an example gradle.build file:<br/>
+<div class="gradle" widget="code">
+    <pre>buildscript {
+    repositories {
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name="onkiup"
+            url = "https://raw.github.com/chedim/maven-repo/master/";
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'com.onkiup.gradle:minedroid:1.1-SNAPSHOT'
+    }
+}
+apply plugin: 'forge'
+apply plugin: 'minedroid'
 
-</body>
-</html>
+dependencies {
+            compile 'com.onkiup.minedroid:minedroid:1.0'
+}</pre>
+</div>
+</p>
+
+<h2>Creating R class</h2>
+<p>
+    MineDroid gives you very powerful system of resources handling but it requires some additional steps to be made.
+    MineDroid gradle plugin helps you to automatize these steps by adding gradle 'minedroid' task that generates R
+    class that contains links to all of your mod resources. This task creates a source folder 'gen' in the root folder
+    of your project and you should manually register this source folder with your IDE.
+</p>
+<p>
+    Since this task cannot know your module package name, you should define it in your 'mcmod.info' file as a 'package'
+    field:
+<div widget="code" lang="json">
+    <pre>
+[
+{
+  "modid": "example",
+  "name": "Example MineDroid mod",
+  "description": "The brand new GUI.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["chedim"],
+  "credits": "Onkiup",
+  "logoFile": "",
+  "screenshots": [],
+  "package": "com.example.example",
+  "dependencies": []
+}
+]
+    </pre>
+</div>
+</p>
+<p>
+    This task runs every time when you compile your mod with gradle. To run this task manually, simply execute
+    command 'gradle minedroid' in your project directory.
+</p>
+
+<h2>Mod string values</h2>
+<p>
+    As soon as we want to show some message to the user, we should define it by creating a strings file
+    'assets/example/values/strings.xml':
+<div widget="code" lang="xml">
+    <pre>&lt;strings&gt;
+    &lt;string name="message"&gt;This is our message!&lt;/string&gt;
+    &lt;string name="dismiss"&gt;This is our message!&lt;/string&gt;
+&lt;/strings&gt;</pre>
+</div>
+Later we can use some qualifiers to, in example, localize our mod.
+</p>
+<h2>Creating Screen</h2>
+<p>
+    To create a screen, you should create it's layout first. Layouts are stored as XML files in your
+    'assets/&lt;module_id&gt;/layouts' folder. Let's assume that out module id will be 'example'.
+    For this quick start, we will create a very simple layout file 'assets/example/layouts/simple.xml' with two
+    views: <a href="javadoc/com/onkiup/minedroid/gui/views/TextView.html" target="_blank">TextView</a> and
+    <a href="javadoc/com/onkiup/minedroid/gui/views/Button.html" target="_blank">Button</a>:
+<div widget="code" lang="xml">
+    <pre>&lt;RelativeLayout
+    xmlns:mc="http://onkiup.com/minecraft/xml"
+    mc:width="wrap_content" mc:height="wrap_content" mc:padding="10"
+    mc:alignCenter="parent" mc:alignMiddle="parent"&gt;
+        &lt;TextView mc:id="@id/message" mc:width="wrap_content" mc:height="wrap_content"
+            mc:alignCenter="parent"/&gt;
+        &lt;Button mc:id="@id/dismiss" mc:width="wrap_content" mc:height="wrap_content"
+            mc:alignCenter="parent" mc:below="@id/message" mc:text="@string/dismiss"/&gt;
+&lt;/RelativeLayout&gt;</pre>
+</div>
+Afer we created this resource file, we should execute 'gradle minedroid' in the project directory to generate the R class.
+</p>
+<p>
+    Now we can create a Overlay class that will represent our gui window:
+<div widget="code" lang="java">
+    <pre>@SideOnly(Side.CLIENT)
+public class ExampleOverlay extends Overlay {
+
+    private View.OnClick onDismissClick = new View.OnClick() {
+        @Override
+        public void handle(MouseEvent event) {
+            dismiss();
+        }
+    }
+
+    public ExampleOverlay(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected ResourceLocation getContentLayout() {
+        return R.layout.example;
+    }
+
+    @Override
+    protected void fill(View content) {
+        TextView message = (TextView) content.findViewById(R.id.message);
+        message.setTex(R.string.message);
+        Button dismiss = (Button) content.findViewById(R.id.dismiss);
+        dismiss.on(onDismissClick);
+    }
+
+}</pre>
+</div>
+</p>
+<h2>Initializing MineDroid</h2>
+<p>
+    Now we should initialize MineDroid instance after our module had started:
+<div widget="code" lang="java">
+    <pre>@Mod(modid = "example", version = "1.0")
+public class Example {
+
+    private static MineDroid md;
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        /* is it a client? */
+        try {
+            Class.forName("net.minecraft.client.Minecraft");
+            NetworkRegistry.INSTANCE.registerGuiHandler(this, md = new MineDroid(R.class));
+        } catch (ClassNotFoundException e) {
+            System.out.println("Dedicated server.");
+        }
+    }
+
+}</pre>
+</div>
+</p>
+
+<h2>Showing the ExampleOverlay</h2>
+<p>
+    Now, to show the window, you should just call MineDroid.open(ExampleOverlay.class);<br/>
+    That's it!
+</p>
