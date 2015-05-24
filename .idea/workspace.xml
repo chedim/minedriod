@@ -32,7 +32,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.15486726" vertical-offset="0" max-vertical-offset="678">
+            <state line="7" column="0" selection-start="157" selection-end="157" vertical-scroll-proportion="0.15486726" vertical-offset="0" max-vertical-offset="678">
               <folding />
             </state>
           </provider>
@@ -41,7 +41,7 @@
       <file leaf-file-name="jendri.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/services/jendri.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="17" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3570">
+            <state line="4" column="19" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3570">
               <folding />
             </state>
           </provider>
@@ -148,9 +148,9 @@
         <option value="$PROJECT_DIR$/pages/docs/drawables/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/views/page.html" />
-        <option value="$PROJECT_DIR$/services/jendri.js" />
         <option value="$PROJECT_DIR$/interfaces/docs/page.html" />
         <option value="$PROJECT_DIR$/javadoc/overview-frame.html" />
+        <option value="$PROJECT_DIR$/services/jendri.js" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
@@ -547,13 +547,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/services/jendri.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="17" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3570">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="11" selection-start="2364" selection-end="2364" vertical-scroll-proportion="-33.75" vertical-offset="0" max-vertical-offset="915">
@@ -589,9 +582,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/services/jendri.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="19" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3570">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.15486726" vertical-offset="0" max-vertical-offset="678">
+        <state line="7" column="0" selection-start="157" selection-end="157" vertical-scroll-proportion="0.15486726" vertical-offset="0" max-vertical-offset="678">
           <folding />
         </state>
       </provider>
