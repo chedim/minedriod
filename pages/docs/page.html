@@ -21,12 +21,15 @@
     MineDroid comes as a separate Forge mod so you don't need to include it into your module jar file.
 </p>
 <p>
-    If you use Gradle, you can add Minedroid from a GitHub hosted maven repository: <pre>https://raw.github.com/chedim/maven-repo/master/</pre><br/>
-    MineDroid artifact is: <pre>com.onkiup.minedroid:minedroid:1.0</pre><br/>
-    Also there is a plugin for Gradle that generates R class with links to your mod all resources: <pre>com.onkiup.gradle:minedroid:1.1-SNAPSHOT</pre><br/>
-        Here is an example gradle.build file:<br/>
-        <div class="gradle" widget="code">
-buildscript {
+    If you use Gradle, you can add Minedroid from a GitHub hosted maven repository:
+<pre>https://raw.github.com/chedim/maven-repo/master/</pre><br/>
+MineDroid artifact is:
+<pre>com.onkiup.minedroid:minedroid:1.0</pre><br/>
+Also there is a plugin for Gradle that generates R class with links to your mod all resources:
+<pre>com.onkiup.gradle:minedroid:1.1-SNAPSHOT</pre><br/>
+Here is an example gradle.build file:<br/>
+<div class="gradle" widget="code">
+<pre>buildscript {
     repositories {
         maven {
             name = "forge"
@@ -47,8 +50,8 @@ apply plugin: 'minedroid'
 
 dependencies {
             compile 'com.onkiup.minedroid:minedroid:1.0'
-}
-        </div>
+}</pre>
+</div>
 </p>
 <p>
     Also you can check this <a href="#docs/quickstart">quick start guide</a>
@@ -56,18 +59,21 @@ dependencies {
 
 <h2>Issues reporting</h2>
 <p>
-   Please, feel free to report about any found issues at the <a href="https://github.com/chedim/minedriod/issues">GitHub bug tracker</a>.
+    Please, feel free to report about any found issues at the <a href="https://github.com/chedim/minedriod/issues">GitHub
+    bug tracker</a>.
 </p>
 
 <h2>Donations</h2>
 <p>
     If you find this library helpful, you can donate some money to it's creator who right now doesn't have any other
     income :)
-    Also, if you'll need some fetures to be added in the library by it's author, a donation will motivate him to do that faster ;)
+    Also, if you'll need some fetures to be added in the library by it's author, a donation will motivate him to do that
+    faster ;)
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
     <input type="hidden" name="cmd" value="_s-xclick">
     <input type="hidden" name="hosted_button_id" value="JUZXK2Z7XXHDG">
-    <input id="donate" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit"
+    <input id="donate" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0"
+           name="submit"
            alt="PayPal - The safer, easier way to pay online!">
     <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>

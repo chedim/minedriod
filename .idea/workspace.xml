@@ -34,19 +34,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="page.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="35" selection-start="1664" selection-end="1664" vertical-scroll-proportion="-3.75" vertical-offset="450" max-vertical-offset="1200">
+            <state line="31" column="5" selection-start="1424" selection-end="1424" vertical-scroll-proportion="0.29957205" vertical-offset="255" max-vertical-offset="1290">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/docs/quickstart/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="92" selection-start="6109" selection-end="6109" vertical-scroll-proportion="0.850214" vertical-offset="1999" max-vertical-offset="2715">
+            <state line="173" column="92" selection-start="6109" selection-end="6109" vertical-scroll-proportion="-24.833334" vertical-offset="1999" max-vertical-offset="2715">
               <folding />
             </state>
           </provider>
@@ -115,12 +115,12 @@
         <option value="$PROJECT_DIR$/interfaces/docs/code.js" />
         <option value="$PROJECT_DIR$/services/jendri.js" />
         <option value="$PROJECT_DIR$/widgets/code/page.html" />
-        <option value="$PROJECT_DIR$/pages/docs/page.html" />
         <option value="$PROJECT_DIR$/services/router.js" />
         <option value="$PROJECT_DIR$/interfaces/docs/page.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/widgets/code/code.js" />
         <option value="$PROJECT_DIR$/pages/docs/quickstart/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/page.html" />
       </list>
     </option>
   </component>
@@ -758,13 +758,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="35" selection-start="1664" selection-end="1664" vertical-scroll-proportion="-3.75" vertical-offset="450" max-vertical-offset="1200">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/widgets/code/code.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="3" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
@@ -774,7 +767,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/docs/quickstart/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="92" selection-start="6109" selection-end="6109" vertical-scroll-proportion="0.850214" vertical-offset="1999" max-vertical-offset="2715">
+        <state line="173" column="92" selection-start="6109" selection-end="6109" vertical-scroll-proportion="-24.833334" vertical-offset="1999" max-vertical-offset="2715">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="5" selection-start="1424" selection-end="1424" vertical-scroll-proportion="0.29957205" vertical-offset="255" max-vertical-offset="1290">
           <folding />
         </state>
       </provider>
