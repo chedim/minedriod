@@ -11,8 +11,10 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Created by chedim on 4/25/15.
+ * Should draw a texture from a texture pack.
+ * Not realized yet
  */
+@Deprecated
 public class TextureDrawable implements Drawable {
 
     protected ResourceLocation src;

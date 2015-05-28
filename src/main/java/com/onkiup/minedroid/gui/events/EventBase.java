@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by chedim on 4/26/15.
+ * Parent class for all event emitters
  */
 public class EventBase {
     protected HashMap<Class, ArrayList<WeakReference<Event>>> eventListeners = new HashMap<Class, ArrayList<WeakReference<Event>>>();
 
+    /**
+     * Binds event listener via WeakReference (event type is determined by listener class)
+     * @param listener event listener
+     */
     public void on(Event listener) {
         Class eventType = getEventClass(listener.getClass());
         if (!eventListeners.containsKey(eventType)) {
@@ -19,6 +23,10 @@ public class EventBase {
         eventListeners.get(eventType).add(new WeakReference<Event>(listener));
     }
 
+    /**
+     * Unbinds event listener
+     * @param listener Listener to unbind
+     */
     public void off(Event listener) {
         Class eventType = getEventClass(listener.getClass());
         if (!eventListeners.containsKey(eventType)) {
@@ -35,6 +43,11 @@ public class EventBase {
         listeners.removeAll(rm);
     }
 
+    /**
+     * Fires event
+     * @param type Event type class
+     * @param args Event argument
+     */
     public void fireEvent(Class type, Object args) {
         if (!eventListeners.containsKey(type)) return;
         ArrayList<WeakReference<Event>> listeners = eventListeners.get(type);
@@ -51,10 +64,15 @@ public class EventBase {
         listeners.removeAll(rm);
     }
 
+    /**
+     * Returns event class for event listener
+     * @param c event listener class
+     * @return event class
+     */
     public Class getEventClass(Class c) {
         Class[] interfaces = c.getInterfaces();
-        for (int i=0; i<interfaces.length; i++) {
-            if (Event.class.isAssignableFrom(interfaces[i])) return interfaces[i];
+        for (Class anInterface : interfaces) {
+            if (Event.class.isAssignableFrom(anInterface)) return anInterface;
         }
 
         return null;

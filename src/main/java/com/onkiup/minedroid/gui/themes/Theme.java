@@ -4,18 +4,54 @@ import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.primitives.Rect;
 
 /**
- * Created by chedim on 4/25/15.
+ * MineDroid views default attribute values
  */
 public interface Theme {
-    public int getFontColor();
-    public float getFontSize();
-    public float getHeaderSize();
+    /**
+     * Returns default font color
+     * @return Default font color
+     */
+    int getFontColor();
 
-    public Drawable getOverlayDrawable();
-    public Drawable getOverlayBackgroundDrawable();
+    /**
+     *
+     * @return Default font size
+     */
+    float getFontSize();
 
-    public Rect getDefaultPadding();
-    public Rect getDefaultMargin();
+    /**
+     *
+     * @return Default header font size
+     */
+    float getHeaderSize();
 
-    public Drawable getButtonBackground();
+    /**
+     *
+     * @return Default overlay content view background
+     */
+    Drawable getOverlayDrawable();
+
+    /**
+     *
+     * @return Default overlay container view background
+     */
+    Drawable getOverlayBackgroundDrawable();
+
+    /**
+     *
+     * @return Default elements padding
+     */
+    Rect getDefaultPadding();
+
+    /**
+     *
+     * @return Default elements margin
+     */
+    Rect getDefaultMargin();
+
+    /**
+     *
+     * @return Default button background
+     */
+    Drawable getButtonBackground();
 }

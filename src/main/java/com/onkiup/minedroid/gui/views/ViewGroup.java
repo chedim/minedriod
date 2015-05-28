@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chedim on 4/25/15.
+ * Parent clas for all views that contain other views
  */
 public abstract class ViewGroup extends ContentView {
     private List<View> children = new ArrayList<View>();
@@ -21,6 +21,10 @@ public abstract class ViewGroup extends ContentView {
         super(r);
     }
 
+    /**
+     * Adds a new child
+     * @param child
+     */
     public void addChild(View child) {
         children.add(child);
         child.setDebug(debug);
@@ -40,6 +44,10 @@ public abstract class ViewGroup extends ContentView {
         child.setOverlay(getOverlay());
     }
 
+    /**
+     * Returns count of added children
+     * @return Children count
+     */
     public int getChildrenCount() {
         return children.size();
     }
@@ -140,6 +148,7 @@ public abstract class ViewGroup extends ContentView {
         }
     }
 
+    @Override
     public View findViewById(int id) {
         if (id == -1) return null;
         if (id == 0) return this;

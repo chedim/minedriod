@@ -1,10 +1,20 @@
 package com.onkiup.minedroid.gui.events;
 
 /**
- * Created by chedim on 5/15/15.
+ * Represents a window key binding
  */
 public class WindowKeyBinding {
-    public String description, category;
+    /**
+     * Key action description
+     */
+    public String description;
+    /**
+     * Key action category
+     */
+    public String category;
+    /**
+     * Binding key code
+     */
     public int keyCode;
 
     public WindowKeyBinding(int keyCode, String description, String category) {

@@ -8,12 +8,20 @@ import net.minecraft.client.renderer.WorldRenderer;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Created by chedim on 4/29/15.
+ * Draws ellipse (or its part)
  */
 public class EllipseDrawable extends ColorDrawable {
 
-    protected double arcMin = 0, arcMax = 2 * Math.PI;
+    /**
+     * Ellipse arc start radian
+     */
+    protected double arcMin = 0;
+    /**
+     * Ellipse arc stop radian
+     */
+    protected double arcMax = 2 * Math.PI;
 
+    @Override
     public EllipseDrawable clone() {
         EllipseDrawable result = new EllipseDrawable(color.clone());
         result.setArc(arcMin, arcMax);
@@ -82,6 +90,15 @@ public class EllipseDrawable extends ColorDrawable {
         GlStateManager.disableBlend();
     }
 
+    /**
+     * Draws ellipse triangle part
+     * @param x1 center x
+     * @param y1 center y
+     * @param rX radius on X
+     * @param rY radius on Y
+     * @param i1 radians for first dot
+     * @param i2 radians for second dot
+     */
     protected void triangle(double x1, double y1, double rX, double rY, double i1, double i2) {
         double x2 = (x1 + Math.cos(i1) * rX);
         double y2 = (y1 + Math.sin(i1) * rY);
@@ -93,6 +110,11 @@ public class EllipseDrawable extends ColorDrawable {
         GL11.glVertex2d(x3, y3);
     }
 
+    /**
+     * Sets arc limits
+     * @param min Arc start rads
+     * @param max Arc end rads
+     */
     public void setArc(double min, double max) {
         arcMin = min;
         arcMax = max;

@@ -1,8 +1,13 @@
 package com.onkiup.minedroid.gui.resources;
 
 /**
- * Created by chedim on 5/22/15.
+ * Helps to handle language-specific plurals rules
  */
 public interface PluralLocalizer {
-    public int quantify(int what);
+    /**
+     * Calculates plural index for given value
+     * @param what
+     * @return plural index
+     */
+    int quantify(int what);
 }

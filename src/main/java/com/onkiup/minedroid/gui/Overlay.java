@@ -26,19 +26,45 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Class that represents GUI Screen
+ * Gui Screens parent class
  */
 public abstract class Overlay extends GuiScreen implements Context {
-
+    /**
+     * Double clicks timeout
+     */
     private static final Integer DBL_CLICK_TIMEOUT = getDblClickInterval();
+    /**
+     * Overlay content view
+     */
     protected View contentView;
+    /**
+     * Overlay main container
+     */
     protected RelativeLayout container = new RelativeLayout(this);
+    /**
+     * Overlay state
+     */
     protected State state = State.INITIALIZING;
+    /**
+     * Overlay container background
+     */
     protected Drawable background;
-
+    /**
+     * Current player
+     */
     protected EntityPlayer player;
+    /**
+     * Current world
+     */
     protected World world;
+    /**
+     * Window open position
+     */
     protected Point3D position;
+
+    /**
+     * Current mod R class
+     */
     protected Class r;
 
     public Overlay(Context context) {
@@ -47,19 +73,44 @@ public abstract class Overlay extends GuiScreen implements Context {
         r = context.R();
     }
 
+    /**
+     * Should return Overlay content layout location
+     * @return Overlay content layout location
+     */
     protected abstract ResourceLocation getContentLayout();
+
+    /**
+     * Should fill content view with data
+     * @param content content view
+     */
     protected abstract void fill(View content);
 
+    /**
+     * Returns Overlay container background
+     * @return Background drawable
+     */
     protected Drawable getBackgroundDrawable() {
         return MineDroid.theme.getOverlayBackgroundDrawable().clone();
     }
 
+    /**
+     * Called when Overlay is started
+     */
     protected abstract void onStart();
 
+    /**
+     * Called when Overlay is dismissed
+     */
     protected abstract void onStop();
 
+    /**
+     * Top left corner of the screen (for developer convinience :)
+     */
     protected static final Point START_POINT = new Point(0, 0);
 
+    /**
+     * Handles Overlay closed event
+     */
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
@@ -67,6 +118,12 @@ public abstract class Overlay extends GuiScreen implements Context {
         state = State.STOPPED;
     }
 
+    /**
+     * Draws overlay
+     * @param mouseX Current mouse x coordinate
+     * @param mouseY Current mouse y coorfinate
+     * @param partialTicks I have no idea what is it :)
+     */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if (state != State.STARTED) {
@@ -79,6 +136,9 @@ public abstract class Overlay extends GuiScreen implements Context {
         state = State.STARTED;
     }
 
+    /**
+     * Inits Overlay components
+     */
     @Override
     public void initGui() {
         if (this.state == State.INITIALIZING) {
@@ -109,18 +169,43 @@ public abstract class Overlay extends GuiScreen implements Context {
         System.out.println("New screen size: "+width+"x"+height);
     }
 
+    /**
+     * Set focus on the view
+     * @param view View to be focused
+     */
     public void focusItem(View view) {
         if (view.isFocusable()) focusedItem = view;
     }
 
-
+    /**
+     * Represents Overlay states
+     */
     protected enum State {INITIALIZING, CREATED, STARTED, STOPPED}
+
+    /**
+     * timer for double clicks
+     */
     protected Timer clickWaiter;
+    /**
+     * Stores last MouseDown event for double clicks
+     */
     protected MouseEvent lastMouseDown;
+    /**
+     * Currently focused view
+     */
     protected View focusedItem;
 
+    /**
+     * Some keyboard flags
+     */
     protected boolean shiftPressed, ctrlPressed, altPressed, cmdPressed;
 
+    /**
+     * Handles keyboard events
+     * @param typedChar Char than had been typed
+     * @param keyCode Key code
+     * @throws IOException
+     */
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         if (state != State.STARTED) return;
@@ -175,9 +260,14 @@ public abstract class Overlay extends GuiScreen implements Context {
         }
     }
 
+    /**
+     * Returns view to be focused after current
+     * @param offset How much views to skip
+     * @return View that should be focused
+     */
     public View getNextFocusItem(int offset) {
         int f = 0;
-        List<View> focusables = null;
+        List<View> focusables;
         if (contentView instanceof ViewGroup) {
             focusables = ((ViewGroup) contentView).getFocusables();
         } else if (contentView instanceof ScrollView) {
@@ -198,6 +288,10 @@ public abstract class Overlay extends GuiScreen implements Context {
         return focusables.get(f);
     }
 
+    /**
+     * Handles mouse inputs
+     * @throws IOException
+     */
     @Override
     public void handleMouseInput() throws IOException {
         if (state != State.STARTED) return;
@@ -260,6 +354,9 @@ public abstract class Overlay extends GuiScreen implements Context {
         }
     }
 
+    /**
+     * Waiter for double clicks
+     */
     protected class ClickWaiter extends TimerTask {
         protected MouseEvent up;
 
@@ -267,6 +364,9 @@ public abstract class Overlay extends GuiScreen implements Context {
             this.up = up;
         }
 
+        /**
+         * If this is called, there is no double click
+         */
         @Override
         public void run() {
             MouseEvent click = up.clone();
@@ -278,30 +378,52 @@ public abstract class Overlay extends GuiScreen implements Context {
         }
     }
 
+    /**
+     * Returns system defined double click interval
+     * @return Double click interval
+     */
     private static Integer getDblClickInterval() {
         Integer interval = (Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
         if (interval == null) interval = 200;
         return interval;
     }
 
-
+    /**
+     * Returns key binding that opens this window
+     * @return Key binding
+     */
     protected WindowKeyBinding getKeyBinding() {
         return null;
     }
 
 
+    /**
+     * Dismisses the overlay
+     */
     public void dismiss() {
         mc.thePlayer.closeScreen();
     }
 
+    /**
+     * Returns true if this window can be closed with Escape button
+     * @return cancalable flag
+     */
     public boolean isCancelable() {
         return true;
     }
 
+    /**
+     * Returns inflated content view
+     * @return Content view
+     */
     protected View getContentView() {
         return container.inflateChild(MineDroid.getXmlHelper(this, getContentLayout()), MineDroid.theme);
     }
 
+    /**
+     * Returns current Mod R class
+     * @return R class
+     */
     @Override
     public Class R() {
         return r;

@@ -1,9 +1,12 @@
 package com.onkiup.minedroid.gui.primitives;
 
 /**
- * Created by chedim on 4/25/15.
+ * Represents a rectngle
  */
 public class Rect {
+    /**
+     * Rectangle coordinates
+     */
     public int left, top, right, bottom;
 
     public Rect(int left, int top, int right, int bottom) {
@@ -29,10 +32,18 @@ public class Rect {
         return new Rect(left, top, right, bottom);
     }
 
+    /**
+     * Calculates rectangle size
+     * @return Calculated size
+     */
     public Point getSize() {
         return new Point(right - left, bottom - top);
     }
 
+    /**
+     * Returns rectangle top left point coordinates
+     * @return top left point coordinates
+     */
     public Point coords() {
         return new Point(left, top);
     }
@@ -42,10 +53,20 @@ public class Rect {
         return "[(" + left + ", " + top + ") — (" + right + ", " + bottom + ")]";
     }
 
+    /**
+     * Checks if the point inside of the rectangle
+     * @param point Test pont
+     * @return check result
+     */
     public boolean contains(Point point) {
         return point.x > left && point.x < right && point.y > top && point.y < bottom;
     }
 
+    /**
+     * Copies rectangle to the position
+     * @param position new position
+     * @return moved copy
+     */
     public Rect move(Point position) {
         Rect result = clone();
         result.left += position.x;
@@ -55,6 +76,11 @@ public class Rect {
         return result;
     }
 
+    /**
+     * returns rectangles intesection rectangle
+     * @param other other rectangle
+     * @return intersection area
+     */
     public Rect and(Rect other) {
         Rect result = new Rect(0, 0, 0, 0);
         result.left = Math.max(left, other.left);
@@ -68,10 +94,18 @@ public class Rect {
         return result;
     }
 
+    /**
+     * Moves rectangle bottom right point to fit given width
+     * @param width new width
+     */
     public void setWidth(int width) {
         this.right = this.left + width;
     }
 
+    /**
+     * Moves rectangle bottom right point to fit given height
+     * @param height new height
+     */
     public void setHeight(int height) {
         this.bottom = this.top + height;
     }

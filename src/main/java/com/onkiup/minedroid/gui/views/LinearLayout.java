@@ -7,13 +7,23 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.themes.Theme;
 
 /**
- * Created by chedim on 4/25/15.
+ * Groups views into a line
  */
 public class LinearLayout extends ViewGroup {
 
+    /**
+     * Grouping orientation
+     */
     protected Orientation orientation = Orientation.HORIZONTAL;
+    /**
+     * Sum of child elements weights
+     */
     protected int weightSum;
 
+    /**
+     * Sets line orientation
+     * @param orientation new line orientation
+     */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
@@ -54,7 +64,7 @@ public class LinearLayout extends ViewGroup {
                 }
             }
 
-            if (orientation == orientation.HORIZONTAL) {
+            if (orientation == Orientation.HORIZONTAL) {
                 // adding item width & margins to ours.
                 result.width += childLayout.getOuterWidth();
                 // correcting our height to make all of elements fully visible

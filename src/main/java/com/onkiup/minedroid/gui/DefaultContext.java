@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui;
 
 /**
- * Created by chedim on 5/22/15.
+ * Default Context implementation
  */
 public class DefaultContext implements Context {
     protected Class R;
@@ -10,6 +10,7 @@ public class DefaultContext implements Context {
         R = r;
     }
 
+    @Override
     public Class R() {
         return R;
     }

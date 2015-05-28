@@ -3,7 +3,7 @@ package com.onkiup.minedroid.gui.resources;
 import com.onkiup.minedroid.gui.MineDroid;
 
 /**
- * Created by chedim on 5/22/15.
+ * Holds information about all environment-specified values
  */
 public class ValueLink {
     protected Object value;
@@ -28,6 +28,10 @@ public class ValueLink {
         }
     }
 
+    /**
+     * return value for current environment
+     * @return
+     */
     public Object getValue() {
         return value;
     }

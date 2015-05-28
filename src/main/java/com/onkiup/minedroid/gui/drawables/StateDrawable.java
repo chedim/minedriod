@@ -8,10 +8,16 @@ import com.onkiup.minedroid.gui.themes.Theme;
 import java.util.List;
 
 /**
- * Created by chedim on 4/25/15.
+ * Drawable that draws different dravables for different view states
  */
 public class StateDrawable implements Drawable {
+    /**
+     * Array of drawables for view states
+     */
     protected Drawable[] drawables = new Drawable[5];
+    /**
+     * current displayed state
+     */
     protected State state = State.DEFAULT;
 
     public StateDrawable() {
@@ -52,6 +58,11 @@ public class StateDrawable implements Drawable {
         }
     }
 
+    /**
+     * Sets given drawable for given view state
+     * @param state View state
+     * @param drawable State drawable
+     */
     public void setDrawableForState(State state, Drawable drawable) {
         drawables[state.ordinal()] = drawable;
         if (state == State.DEFAULT) {
@@ -61,17 +72,30 @@ public class StateDrawable implements Drawable {
         }
     }
 
+    /**
+     * Changes currently drawn state
+     * @param state New state
+     */
     public void setState(State state) {
         this.state = state;
     }
+
+    /**
+     * Returns current state
+     * @return current state
+     */
     public StateDrawable.State getState() {
         return state;
     }
 
+    /**
+     * Enum for all available view states
+     */
     public enum State {
         DEFAULT, HOVER, PRESSED, SELECTED, FOCUSED
     }
 
+    @Override
     public StateDrawable clone() {
         StateDrawable result = new StateDrawable();
         for (int i=0; i<drawables.length; i++)

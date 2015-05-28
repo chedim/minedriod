@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.primitives;
 
 /**
- * Created by chedim on 5/15/15.
+ * Represents 3D point coordinates
  */
 public class Point3D extends Point {
 
@@ -17,6 +17,11 @@ public class Point3D extends Point {
         return new Point3D(x, y, z);
     }
 
+    /**
+     * Uses given point as an offset to create a moved point
+     * @param point Offset
+     * @return Moved point
+     */
     public Point3D add(Point3D point) {
         Point3D result = (Point3D) super.add(point);
         result.z += point.z;
@@ -29,6 +34,11 @@ public class Point3D extends Point {
         return "("+x+", "+y+", "+z+")";
     }
 
+    /**
+     * Uses given point as a negative offset to create a moved point
+     * @param point Offset
+     * @return Moved point
+     */
     public Point3D sub(Point3D point) {
         Point3D result = (Point3D) super.sub(point);
         result.z -= point.z;

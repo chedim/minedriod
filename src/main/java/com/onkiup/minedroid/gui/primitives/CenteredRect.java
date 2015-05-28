@@ -3,7 +3,6 @@ package com.onkiup.minedroid.gui.primitives;
 /**
  * This rect left+top points to the center of the rect
  * and right+bottom — to its right bottom point offset from the center.
- * Created by chedim on 4/27/15.
  */
 public class CenteredRect extends Rect {
 
@@ -54,8 +53,7 @@ public class CenteredRect extends Rect {
 
     @Override
     public Point getSize() {
-        Point size = new Point(right * 2, bottom * 2);
-        return size;
+        return new Point(right * 2, bottom * 2);
     }
 
     @Override

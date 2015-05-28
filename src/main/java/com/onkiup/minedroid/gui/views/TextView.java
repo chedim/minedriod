@@ -9,7 +9,7 @@ import com.onkiup.minedroid.gui.resources.ValueLink;
 import com.onkiup.minedroid.gui.themes.Theme;
 
 /**
- * Created by chedim on 4/25/15.
+ * Shows some text
  */
 public class TextView extends ContentView {
     protected TextDrawable text = new TextDrawable("", MineDroid.theme.getFontColor());
@@ -26,17 +26,27 @@ public class TextView extends ContentView {
         this.text.setText(text);
     }
 
+    /**
+     *
+     * @return Text size
+     */
     protected Point getTextSize() {
         Point originalSize = text.getOriginalSize();
         int height = text.calculateEndPoint(resolvedLayout.getInnerWidth()).y;
-        Point textSize = new Point(Math.min(originalSize.x, resolvedLayout.getInnerWidth()), height);
-        return textSize;
+        return new Point(Math.min(originalSize.x, resolvedLayout.getInnerWidth()), height);
     }
 
+    /**
+     * @return Returns current text boundaries
+     */
     public float getFontSize() {
         return text.getTextSize();
     }
 
+    /**
+     * Sets font scale factor
+     * @param size
+     */
     public void setFontSize(float size) {
         text.setTextSize(size);
     }
@@ -65,22 +75,44 @@ public class TextView extends ContentView {
         return result;
     }
 
+    /**
+     *
+     * @return text value of node
+     */
     public String getText() {
         return text.getText();
     }
 
+    /**
+     * Sets text value of view
+     * @param text
+     */
     public void setText(String text) {
         this.text.setText(text);
     }
 
+    /**
+     * Sets formated text value of view
+     * @param text format string
+     * @param args format arguments
+     */
     public void setText(String text, Object... args) {
         this.text.setText(text, args);
     }
 
+    /**
+     * Sets text value
+     * @param text new value
+     */
     public void setText(ValueLink text) {
         this.text.setText(text);
     }
 
+    /**
+     * Sets formated text value of view
+     * @param text link to format string
+     * @param args format arguments
+     */
     public void setText(ValueLink text, Object... args) {
         this.text.setText(text, args);
     }

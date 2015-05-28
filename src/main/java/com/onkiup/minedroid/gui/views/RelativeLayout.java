@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by chedim on 4/26/15.
+ * Allows to positin it's children relatively
  */
 public class RelativeLayout extends ViewGroup {
 
@@ -36,6 +36,10 @@ public class RelativeLayout extends ViewGroup {
         }
     }
 
+    /**
+     * Resolves child layout
+     * @param child
+     */
     protected void resolveChildLayout(View child) {
         if (child.isLayoutResolved()) return;
 
@@ -48,7 +52,6 @@ public class RelativeLayout extends ViewGroup {
         }
 
         Rect outline = getOuter(child, true);
-        Point outlineSize = outline.getSize();
 
         // applying resolved parent layout
         if (outline.right == Layout.MATCH_PARENT) {
@@ -106,6 +109,10 @@ public class RelativeLayout extends ViewGroup {
         injectLayout(child);
     }
 
+    /**
+     * Replaces child's View.Layout with RelativeLayout.Layout
+     * @param child child view
+     */
     private void injectLayout(View child) {
         View.Layout childLayout = child.getLayout();
         if (childLayout instanceof Layout) return;
@@ -155,6 +162,11 @@ public class RelativeLayout extends ViewGroup {
         return result;
     }
 
+    /**
+     * Returns measured view's size
+     * @param view
+     * @return
+     */
     protected Layout getMeasured(View view) {
         if (!measured.containsKey(view)) {
             Layout childLayout = (Layout) view.getLayout().clone();
@@ -205,8 +217,8 @@ public class RelativeLayout extends ViewGroup {
         }
 
         public boolean validate() {
-            boolean error = false;
-            error |= alignLeft != null && alignCenter != null && alignRight != null;
+            boolean error;
+            error = alignLeft != null && alignCenter != null && alignRight != null;
             error |= alignTop != null && alignMiddle != null && alignBottom != null;
             error |= alignLeft != null && toRightOf != null;
             error |= alignRight != null && toLeftOf != null;
@@ -217,17 +229,14 @@ public class RelativeLayout extends ViewGroup {
 
         /**
          * Returns children outer rect
-         *
-         * @return
+         * @param parent RelativeLayout GroupView's layout
+         * @return Children outer rectangle (with margins)
          */
         public Rect getOuterRect(RelativeLayout parent) {
 
             if (!validate()) {
                 throw new RuntimeException("invalid layout arguments");
             }
-
-            Rect relyRect;
-
 
             Rect rect = calculateOuterPosition(parent);
             calculateOuterSize(rect, parent);
