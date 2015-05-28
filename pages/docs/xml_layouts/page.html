@@ -1,9 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<title>MineDroid XML layouts</title>
+<h1>XML Layouts</h1>
+<p>
+    XML layouts allow you to edit and store your screen layouts in XML files. Every tag in layout file represents a View
+    (or Drawable). To access tags attributes, MineDroid uses namespace 'http://onkiup.com/minecraft/xml'.
+</p>
+<h2>Attributes</h2>
+<h3>View</h3>
+<ul>
+    <li><b>id</b></li>
+    <li><b>width, height</b> — dimen</li>
+    <li><b>margin, margin-left, margin-top, margin-right, margin-bottom</b> — dimen</li>
+    <li><b>padding, madding-left, padding-top, padding-right, padding-bottom</b> - dimen</li>
+    <li><b>background — drawable</b></li>
+</ul>
+<h3>ContentView</h3>
+<ul>
+    <li><b>horizontal-gravity</b> — Gravity constants: left, center, right</li>
+    <li><b>vertical-gravity</b> — Gravity constants: top, center, bottom</li>
+</ul>
+<h3>TextView</h3>
+<ul>
+    <li><b>text</b> — string</li>
+</ul>
+<h3>LinearLayou</h3>
+<ul>
+    <li><b>orientation</b> — orientation constant: vertical or horizontal</li>
+</ul>
+<h3>RelativeLayout children layout attributes</h3>
+<ul>
+    <li><b>alignLeft, alignRight, toRightOf, alignCenter, alignRight, toRightOf, alignTop, below, alignMiddle,
+        alignBottom, above</b> — ids</li>
+</ul>
+<h3>ListView</h3>
+<ul>
+    <li><b>empty</b> — empty list drawable location</li>
+</ul>

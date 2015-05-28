@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e5a700f-fe46-4fe8-ac45-b942546dbe93" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/widgets/code/code.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/services/highlight.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/widgets/code/page.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/jendri.js" afterPath="$PROJECT_DIR$/services/jendri.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/resources/page.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pages/docs/xml_layouts/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interfaces/docs/page.html" afterPath="$PROJECT_DIR$/interfaces/docs/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/page.html" afterPath="$PROJECT_DIR$/pages/docs/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/drawables/page.html" afterPath="$PROJECT_DIR$/pages/docs/drawables/page.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/lists/page.html" afterPath="$PROJECT_DIR$/pages/docs/lists/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/quickstart/page.html" afterPath="$PROJECT_DIR$/pages/docs/quickstart/page.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/themes/page.html" afterPath="$PROJECT_DIR$/pages/docs/themes/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/views/page.html" afterPath="$PROJECT_DIR$/pages/docs/views/page.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/router.js" afterPath="$PROJECT_DIR$/services/router.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="minedriod.iws" />
@@ -35,28 +34,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="6" selection-start="230" selection-end="230" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="390">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
+        <entry file="file://$PROJECT_DIR$/pages/docs/views/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="69" selection-start="3157" selection-end="3157" vertical-scroll-proportion="-27.958334" vertical-offset="559" max-vertical-offset="1335">
+            <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="2145">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="page.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
+        <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="100" selection-start="1248" selection-end="1248" vertical-scroll-proportion="0.50075185" vertical-offset="42" max-vertical-offset="855">
+            <state line="9" column="40" selection-start="447" selection-end="447" vertical-scroll-proportion="0.20300752" vertical-offset="0" max-vertical-offset="665">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/docs/themes/page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="0" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="495">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/docs/events/page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="10" selection-start="1639" selection-end="1639" vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="675">
               <folding />
             </state>
           </provider>
@@ -65,25 +73,27 @@
       <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/docs/quickstart/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="115" column="24" selection-start="4482" selection-end="4482" vertical-scroll-proportion="-9.208333" vertical-offset="1504" max-vertical-offset="2715">
+            <state line="202" column="31" selection-start="7193" selection-end="7193" vertical-scroll-proportion="0.0" vertical-offset="2457" max-vertical-offset="3135">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="code.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widgets/code/code.js">
+      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/docs/resources/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="3" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
-              <folding />
+            <state line="46" column="111" selection-start="2007" selection-end="2007" vertical-scroll-proportion="-21.375" vertical-offset="177" max-vertical-offset="855">
+              <folding>
+                <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="code.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widgets/tagbox/code.js">
+      <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/docs/xml_layouts/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="9091" max-vertical-offset="10140">
+            <state line="32" column="5" selection-start="1207" selection-end="1207" vertical-scroll-proportion="-20.0" vertical-offset="0" max-vertical-offset="630">
               <folding />
             </state>
           </provider>
@@ -120,26 +130,28 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/pages/docs/themes/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/style.less" />
         <option value="$PROJECT_DIR$/interfaces/docs/style.less" />
         <option value="$PROJECT_DIR$/pages/docs/overlays/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/components/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/events/page.html" />
-        <option value="$PROJECT_DIR$/pages/docs/lists/page.html" />
-        <option value="$PROJECT_DIR$/pages/docs/views/page.html" />
         <option value="$PROJECT_DIR$/javadoc/overview-frame.html" />
         <option value="$PROJECT_DIR$/services/highlight.js" />
         <option value="$PROJECT_DIR$/interfaces/docs/code.js" />
         <option value="$PROJECT_DIR$/services/jendri.js" />
         <option value="$PROJECT_DIR$/widgets/code/page.html" />
         <option value="$PROJECT_DIR$/services/router.js" />
-        <option value="$PROJECT_DIR$/interfaces/docs/page.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/widgets/code/code.js" />
-        <option value="$PROJECT_DIR$/pages/docs/quickstart/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/views/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/themes/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/lists/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/drawables/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/quickstart/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/resources/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/xml_layouts/page.html" />
+        <option value="$PROJECT_DIR$/interfaces/docs/page.html" />
       </list>
     </option>
   </component>
@@ -310,7 +322,139 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="xml_layouts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="quickstart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lists" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -429,7 +573,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -445,9 +588,10 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -467,10 +611,10 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -490,241 +634,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/widgets/tagbox/code.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="39" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="9091" max-vertical-offset="10140">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
+    <entry file="file://$PROJECT_DIR$/services/jendri.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="43" selection-start="688" selection-end="688" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="450">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="11" selection-start="2364" selection-end="2364" vertical-scroll-proportion="0.0" vertical-offset="402" max-vertical-offset="915">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="4" selection-start="1525" selection-end="1525" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="600">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/lists/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="4" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="495">
-          <folding>
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/events/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="69" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="675">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interfaces/docs/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="2865">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/overlays/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="127" selection-start="533" selection-end="533" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="270">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="21" selection-start="113" selection-end="113" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="405">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="17" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/themes/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="3" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="23" selection-start="1245" selection-end="1245" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="725" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/themes/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="74" selection-start="1412" selection-end="1412" vertical-scroll-proportion="0.5563481" vertical-offset="0" max-vertical-offset="701" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="4" selection-end="4" vertical-scroll-proportion="0.022189349" vertical-offset="0" max-vertical-offset="676">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/lists/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="4" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="495">
-          <folding>
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1431718764000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/views/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="12" selection-start="4044" selection-end="4044" vertical-scroll-proportion="-22.083334" vertical-offset="910" max-vertical-offset="1725">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/overlays/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="127" selection-start="0" selection-end="539" vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javadoc/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1200">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javadoc/index-files/index-1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="32" selection-start="796" selection-end="796" vertical-scroll-proportion="0.15789473" vertical-offset="270" max-vertical-offset="3465">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/standardSchemas/xhtml1-transitional.dtd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="2" selection-start="3672" selection-end="3672" vertical-scroll-proportion="0.32300884" vertical-offset="1776" max-vertical-offset="18285">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interfaces/docs/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="2865">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/events/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="69" selection-start="480" selection-end="480" vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="675">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javadoc/overview-frame.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="42" selection-start="476" selection-end="476" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="555">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/index/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="678">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/jsext.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2985">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/jendri.bus.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="702">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/datejs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.5907111" vertical-offset="1096" max-vertical-offset="1785">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/alert.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="702">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/openable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="689">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widgets/menu/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="678">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widgets/menu/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/highlight.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="17" selection-start="413" selection-end="413" vertical-scroll-proportion="0.4059829" vertical-offset="0" max-vertical-offset="702">
+        <state line="43" column="29" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0" vertical-offset="394" max-vertical-offset="3570">
           <folding />
         </state>
       </provider>
@@ -736,16 +655,160 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="39" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="57" selection-start="502" selection-end="502" vertical-scroll-proportion="0.36090225" vertical-offset="0" max-vertical-offset="665">
+        <state line="19" column="43" selection-start="688" selection-end="688" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="450">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interfaces/docs/code.js">
+    <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="0.06410257" vertical-offset="0" max-vertical-offset="702">
+        <state line="54" column="11" selection-start="2364" selection-end="2364" vertical-scroll-proportion="0.0" vertical-offset="402" max-vertical-offset="915" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="4" selection-start="1525" selection-end="1525" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="600" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/lists/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="4" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="495" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/events/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="69" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="675">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/docs/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="2865" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/overlays/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="127" selection-start="533" selection-end="533" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="270" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="21" selection-start="113" selection-end="113" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="405" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="17" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="150" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/themes/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="3" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="23" selection-start="1245" selection-end="1245" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="615" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="725" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="4" selection-end="4" vertical-scroll-proportion="0.022189349" vertical-offset="0" max-vertical-offset="676" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/overlays/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="127" selection-start="0" selection-end="539" vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javadoc/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1200" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javadoc/index-files/index-1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="32" selection-start="796" selection-end="796" vertical-scroll-proportion="0.15789473" vertical-offset="270" max-vertical-offset="3465" />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/standardSchemas/xhtml1-transitional.dtd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="2" selection-start="3672" selection-end="3672" vertical-scroll-proportion="0.32300884" vertical-offset="1776" max-vertical-offset="18285" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/docs/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="2865" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javadoc/overview-frame.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="42" selection-start="476" selection-end="476" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="555" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/index/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="678" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/jsext.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2985" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/jendri.bus.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="702" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/datejs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.5907111" vertical-offset="1096" max-vertical-offset="1785" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/alert.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="702" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/openable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="689" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widgets/menu/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="678" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widgets/menu/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/highlight.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="17" selection-start="413" selection-end="413" vertical-scroll-proportion="0.4059829" vertical-offset="0" max-vertical-offset="702" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="347" column="5" selection-start="11452" selection-end="11452" vertical-scroll-proportion="0.0" vertical-offset="4995" max-vertical-offset="6855">
           <folding />
         </state>
       </provider>
@@ -759,9 +822,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/widgets/code/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="10" selection-start="10" selection-end="10" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90">
-          <folding />
-        </state>
+        <state line="0" column="10" selection-start="10" selection-end="10" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/services/jendri.js">
@@ -773,16 +834,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/widgets/code/style.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1935">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1935" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/services/hljs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="5104" selection-start="5104" selection-end="5104" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
-          <folding />
-        </state>
+        <state line="0" column="5104" selection-start="5104" selection-end="5104" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widgets/code/code.js">
@@ -794,28 +851,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="6" selection-start="230" selection-end="230" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="390">
+        <state line="9" column="6" selection-start="230" selection-end="230" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="390" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/events/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="10" selection-start="1639" selection-end="1639" vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="675">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/quickstart/page.html">
+    <entry file="file://$PROJECT_DIR$/pages/docs/views/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="24" selection-start="4482" selection-end="4482" vertical-scroll-proportion="-9.208333" vertical-offset="1504" max-vertical-offset="2715">
+        <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2145">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/docs/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="69" selection-start="3157" selection-end="3157" vertical-scroll-proportion="-27.958334" vertical-offset="559" max-vertical-offset="1335">
+        <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1425" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/themes/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="495">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/lists/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="665" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="100" selection-start="1248" selection-end="1248" vertical-scroll-proportion="0.50075185" vertical-offset="42" max-vertical-offset="855">
+        <state line="0" column="26" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="870" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/quickstart/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="202" column="31" selection-start="7193" selection-end="7193" vertical-scroll-proportion="0.0" vertical-offset="2457" max-vertical-offset="3135">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/resources/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="111" selection-start="2007" selection-end="2007" vertical-scroll-proportion="-21.375" vertical-offset="177" max-vertical-offset="855">
+          <folding>
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/docs/code.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="12" selection-start="79" selection-end="79" vertical-scroll-proportion="0.08547009" vertical-offset="0" max-vertical-offset="702">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/xml_layouts/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="5" selection-start="1207" selection-end="1207" vertical-scroll-proportion="-20.0" vertical-offset="0" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="40" selection-start="447" selection-end="447" vertical-scroll-proportion="0.20300752" vertical-offset="0" max-vertical-offset="665">
           <folding />
         </state>
       </provider>

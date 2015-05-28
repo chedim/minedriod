@@ -1,4 +1,5 @@
-<h1>Quick start guide</h1>
+<title>Minedroid Quick Start Guide</title>
+<h1>Quick Start Guide</h1>
 <h2>Example mod</h2>
 <p>
     Let's create an example mod with id 'example'! In this mod we will show a simple alert message to our user.
@@ -14,7 +15,7 @@
 <pre>https://raw.github.com/chedim/maven-repo/master/</pre><br/>
 MineDroid artifact is:
 <pre>com.onkiup.minedroid:minedroid:1.0</pre><br/>
-Also there is a plugin for Gradle that generates R class with links to your mod all resources:
+Also there is a plugin for Gradle that generates R class with links to all of your mod resources:
 <pre>com.onkiup.gradle:minedroid:1.1-SNAPSHOT</pre><br/>
 Here is an example gradle.build file:<br/>
 <div class="gradle" widget="code">
@@ -86,7 +87,7 @@ dependencies {
     'assets/example/values/strings.xml':
 <div widget="code" lang="xml">
     <pre>&lt;strings&gt;
-    &lt;string name="message"&gt;This is our message!&lt;/string&gt;
+    &lt;string name="message"&gt;This is our message: hello, %s!&lt;/string&gt;
     &lt;string name="dismiss"&gt;Close window&lt;/string&gt;
 &lt;/strings&gt;</pre>
 </div>
@@ -137,7 +138,7 @@ public class ExampleOverlay extends Overlay {
     @Override
     protected void fill(View content) {
         TextView message = (TextView) content.findViewById(R.id.message);
-        message.setTex(R.string.message);
+        message.setTex(R.string.message, player.getDisplayName().getUnformattedText());
         Button dismiss = (Button) content.findViewById(R.id.dismiss);
         dismiss.on(onDismissClick);
     }
@@ -173,4 +174,31 @@ public class Example {
 <p>
     Now, to show the window, you should just call MineDroid.open(ExampleOverlay.class);<br/>
     That's it!
+</p>
+
+<h2>Localizing Strings</h2>
+<p>
+    Let's localize our mod! Since I am Russian, lets make a russian locale :)
+</p>
+<p>
+    To localize strings, we will create a new 'strings.xml' file and put it into the 'values-ru' folder:
+    'assets/example/values-ru/strings.xml'. The file will have the same structure as the original 'strings.xml' file,
+    but will contain localized strings:
+    <div widget="code" lang="xml">
+        <pre>&lt;strings&gt;
+    &lt;string name="message"&gt;Вот наше сообщение: привет, %s!&lt;/string&gt;
+    &lt;string name="dismiss"&gt;Закрыть окно&lt;/string&gt;
+&lt;/strings&gt;</pre>
+    </div>
+</p>
+
+<p>
+    Now, if you will run Minecraft Client with Russian language locale, MineDroid will take care about selecting
+    the correct 'strings.xml' file and you will get Russian strings in our window.
+    Easy, huh? :)
+</p>
+
+<p>
+    You can read more about resources selection and qualifiers like '-ru' qualifier at the
+    <a href="#docs/resources">resources page</a>.
 </p>

@@ -1,9 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+<title>MineDroid Resources</title>
+<h1>Resource Files</h1>
+<p>
+    MineDroid organizes and handles almost all of your mod resources and implements some new resources types.
+</p>
 
-</body>
-</html>
+<h2>MineDroid Resources Types</h2>
+<p>
+<ul>
+    <li><b>layouts/</b> — layout XML files</li>
+    <li><b>drawables/</b> — Drawables XML files or images</li>
+    <li><b>textures/</b> — Textures files (not realized yet)</li>
+    <li><b>ninepatches/</b> — NinePatch folders</li>
+    <li><b>raw</b> — Other resources</li>
+    <li><b>values/strings.xml</b> — String values</li>
+    <li><b>values/arrays.xml</b> — Array values</li>
+    <li><b>values/plurals.xml</b> — Plural values</li>
+    <li><b>values/dimen.xml</b> — Dimension values</li>
+    <li><b>values/color.xml</b> — Color values</li>
+</ul>
+</p>
+
+<h2>Qualifiers</h2>
+<p>
+    Minedroid allows you to add some qualifiers to resource or value directories names to differentiate the look of your
+    mod for different environments and localize it. Here is a list of available qualifiers:
+</p>
+
+<ul>
+    <li><b>-[version]</b> — Minedroid version qualifier. Qualifier should look like '-1.7' or '-1.8.3'
+        (or any Minecraft version, preceded with minus symbol).
+        Version 1.8.3 will match, i.e., qualifiers -1.8.3, -1.8 and, -1.
+    </li>
+    <li><b>-[graphics]</b> — Graphics setting qualifier. Can be either '-fast' or '-fancy'</li>
+    <li><b>-[mode]</b> — Server mode: -local for single player on integrated server, -remote for multiplayer on
+        dedicated server
+    </li>
+    <li><b>-[language]</b> — 2-symbol Minecraft client language option. Should look like '-en' or '-ru', etc.</li>
+</ul>
+
+<p>
+    Qualifiers should be added to a resources or values directory name in this order: version, graphics, mode, language:
+    <div widget="code"><pre>values-1.8-fancy-remote-ru</pre></div>
+</p>
+<p>
+    These examples of qualifiers usage are incorrect:
+    <div style="color: red !important; text-decoration: strike !important; background: #f8f8f8; padding: 0.5em;"><pre>values-ru-fancy
+values-remote-1.8
+values-ru-1.8</pre></div>
+</p>
+
