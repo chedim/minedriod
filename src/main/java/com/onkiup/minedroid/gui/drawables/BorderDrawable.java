@@ -4,7 +4,7 @@ import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Point;
 
 /**
- * Created by chedim on 4/26/15.
+ * Draws debug border
  */
 public class BorderDrawable extends ColorDrawable {
     public BorderDrawable(Color color) {

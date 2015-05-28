@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chedim on 4/30/15.
+ * Allows to scroll big views
  */
 public class ScrollView extends ContentView {
     protected View child;
@@ -78,8 +78,7 @@ public class ScrollView extends ContentView {
 
     @Override
     public Layout measure(Point boundaries) {
-        Layout result = layout.clone();
-        return result;
+        return layout.clone();
     }
 
     public void setChild(View view) {
@@ -87,14 +86,25 @@ public class ScrollView extends ContentView {
         child.setParent(this);
     }
 
+    /**
+     * @return Child element
+     */
     public View getChild() {
         return child;
     }
 
+    /**
+     * Scrolls view to the given poition
+     *
+     * @param target position
+     */
     public void scrollTo(Point target) {
         this.scroll = target.clone();
     }
 
+    /**
+     * @return current scroll value
+     */
     public Point getScroll() {
         return this.scroll.clone();
     }
@@ -130,6 +140,9 @@ public class ScrollView extends ContentView {
         return child.findViewById(id);
     }
 
+    /**
+     * @return List of focusables views
+     */
     public List<View> getFocusables() {
         List<View> result = new ArrayList<View>();
         if (child != null) {

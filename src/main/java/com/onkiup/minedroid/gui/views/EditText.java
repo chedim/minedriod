@@ -1,10 +1,13 @@
 package com.onkiup.minedroid.gui.views;
 
 import com.onkiup.minedroid.gui.Context;
+import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.ColorDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.KeyEvent;
 import com.onkiup.minedroid.gui.primitives.Point;
+import com.onkiup.minedroid.gui.themes.Theme;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by chedim on 5/3/15.
+ * TextView that allows user to edit it's content
  */
 public class EditText extends TextView {
 
@@ -51,8 +54,8 @@ public class EditText extends TextView {
         int code = event.keyCode;
         if (!event.cancel) {
             if (!processControl(event)) {
-                for (int i=0; i < nonPrintables.length; i++) {
-                    if (nonPrintables[i] == code) return;
+                for (int nonPrintable : nonPrintables) {
+                    if (nonPrintable == code) return;
                 }
                 processInput(event);
             }
@@ -81,9 +84,15 @@ public class EditText extends TextView {
         System.out.println("Cursor position: "+selectionEnd);
     }
 
+    @Override
+    public void inflate(XmlHelper node, Theme theme) {
+        super.inflate(node, theme);
+        setText(node.getStringAttr(MineDroid.NS, "text", ""));
+    }
+
     /**
-     * Up
-     * @param event
+     * handles Up key
+     * @param event Keyboard event
      */
     private void key_200(KeyEvent event) {
         if (getText().length() == 0) return;
@@ -117,8 +126,8 @@ public class EditText extends TextView {
     }
 
     /**
-     * Left
-     * @param event
+     * Handles left key
+     * @param event Keyboard event
      */
     private void key_203(KeyEvent event) {
         if (getText().length() == 0) return;
@@ -127,8 +136,8 @@ public class EditText extends TextView {
     }
 
     /**
-     * Right
-     * @param event
+     * Handles right key
+     * @param event Keyboard event
      */
     private void key_205(KeyEvent event) {
         if (getText().length() == 0) return;
@@ -137,8 +146,8 @@ public class EditText extends TextView {
     }
 
     /**
-     * Down
-     * @param event
+     * Handles down key
+     * @param event Keyboard event
      */
     private void key_208(KeyEvent event) {
         if (getText().length() == 0) return;
@@ -187,8 +196,8 @@ public class EditText extends TextView {
     }
 
     /**
-     * Home
-     * @param event
+     * Handles home key
+     * @param event Keyboard event
      */
     private void key_199(KeyEvent event) {
         if (getText().length() == 0) return;
@@ -198,8 +207,8 @@ public class EditText extends TextView {
     }
 
     /**
-     * End
-     * @param event
+     * Handles end key
+     * @param event Keyboard event
      */
     private void key_207(KeyEvent event) {
         if (getText().length() == 0) return;

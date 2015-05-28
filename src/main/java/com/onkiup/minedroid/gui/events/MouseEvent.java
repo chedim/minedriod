@@ -4,24 +4,47 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.views.View;
 
 /**
- * Created by chedim on 4/26/15.
+ * Holds information about mouse events
  */
 public class MouseEvent {
-
+    /**
+     * Event type class
+     */
     public Class type;
-
+    /**
+     * Event coordinates
+     */
     public Point coords;
+    /**
+     * View that currently handles the event
+     */
     public View target;
+    /**
+     * View that was an original target of the event
+     */
     public View source;
+    /**
+     * Button numder (if pressed/released)
+     */
     public int button;
-
+    /**
+     * Event coordinates offset of previous event
+     */
     public Point diff;
-
+    /**
+     * Event cancelation flag
+     */
     public boolean cancel = false;
+    /**
+     * Scroll amount values
+     */
     public Point wheel;
-
+    /**
+     * Some useful keyboard flags
+     */
     public boolean shift, control, alt;
 
+    @Override
     public MouseEvent clone() {
         MouseEvent result = new MouseEvent();
         result.type = type;

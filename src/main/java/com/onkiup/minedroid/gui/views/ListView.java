@@ -17,23 +17,45 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by chedim on 5/12/15.
+ * View that shows a scrollable list of objects
  */
 public class ListView extends LinearLayout {
+    /**
+     * Array of objects that should be shown
+     */
     protected List mObjects;
+    /**
+     * ViewHolders for different objects types
+     */
     protected HashMap<Class, Class<Holder>> mHolders = new HashMap<Class, Class<Holder>>();
+    /**
+     * Cached views that are ready to be reused
+     */
     protected HashMap<Class, List<View>> mReusable = new HashMap<Class, List<View>>();
+    /**
+     * Sizes of currently shown in list Views. Used to approximately determine scroller size.
+     */
     protected List<Integer> mSizes = new ArrayList<Integer>();
 
+    /**
+     * Drawable to be shown when there is no objects in list
+     */
     protected Drawable mEmptyDrawable;
 
+    /**
+     * Service information
+     */
     protected int mOffset = 0, mFirstShown = 0, mLastShown = 0, mShownSize = 0;
 
     public ListView(Context context) {
         super(context);
     }
 
-
+    /**
+     * Sets list of objects to be shown
+     *
+     * @param objects
+     */
     public void setObjects(List objects) {
         mObjects = objects;
         mOffset = 0;
@@ -41,10 +63,19 @@ public class ListView extends LinearLayout {
         mLastShown = 0;
     }
 
+    /**
+     * @return List of objects to be shown
+     */
     public List getObjects() {
         return mObjects;
     }
 
+    /**
+     * Registers a ViewHolder for a particular Object class
+     *
+     * @param objectClass
+     * @param holder
+     */
     public void setHolder(Class objectClass, Class<? extends Holder> holder) {
         mHolders.put(objectClass, (Class<Holder>) holder);
     }
@@ -162,6 +193,9 @@ public class ListView extends LinearLayout {
 
     }
 
+    /**
+     * Fills the ListView with views
+     */
     protected void fill() {
         super.removeAllChildren();
         mShownSize = 0;
@@ -182,6 +216,11 @@ public class ListView extends LinearLayout {
     }
 
 
+    /**
+     * Moves current viewport
+     *
+     * @param offset amount of items to move viewport on
+     */
     protected void moveViewport(int offset) {
 
         if (offset == 0) return;
@@ -238,6 +277,11 @@ public class ListView extends LinearLayout {
         }
     }
 
+    /**
+     * Sets the first item that should be visible in the ListView
+     *
+     * @param position item index
+     */
     protected void moveToFirst(int position) {
         int addedSize = 0;
         for (int i = 0; i < mFirstShown - position; i++) {
@@ -256,6 +300,11 @@ public class ListView extends LinearLayout {
         dropInvisibleTail();
     }
 
+    /**
+     * Sets the last item to be visible in the ListView
+     *
+     * @param position item index
+     */
     protected void moveToLast(int position) {
         int addedSize = 0;
         for (int i = 0; i < position - mLastShown; i++) {
@@ -274,6 +323,9 @@ public class ListView extends LinearLayout {
         dropInvisibleHead();
     }
 
+    /**
+     * Removes child views that represent items with indexes before the first visible item
+     */
     protected void dropInvisibleHead() {
         int newOffset = mOffset;
         for (int i = 0; i < getChildrenCount(); i++) {
@@ -289,6 +341,9 @@ public class ListView extends LinearLayout {
         mOffset = newOffset;
     }
 
+    /**
+     * Removes child views that represent items with indexes after the last visible item
+     */
     protected void dropInvisibleTail() {
         int newSize = mShownSize;
         for (int i = 0; i < getChildrenCount(); i++) {
@@ -318,6 +373,11 @@ public class ListView extends LinearLayout {
         reuse(child);
     }
 
+    /**
+     * Saves the child view to be reused
+     *
+     * @param v
+     */
     protected void reuse(View v) {
         Holder holder = (Holder) v.getHolder();
         if (holder == null) return;
@@ -336,6 +396,10 @@ public class ListView extends LinearLayout {
         }
     }
 
+    /**
+     * @param c
+     * @return View that can show the given class
+     */
     protected View getViewFor(Class c) {
         if (mReusable.containsKey(c)) {
             if (mReusable.get(c).size() > 0) {
@@ -355,6 +419,11 @@ public class ListView extends LinearLayout {
         }
     }
 
+    /**
+     *
+     * @param position
+     * @return View that can show item with given position
+     */
     protected View getViewFor(int position) {
         if (position > mFirstShown && position < mLastShown) {
             return getChildAt(position - mFirstShown);
@@ -364,6 +433,11 @@ public class ListView extends LinearLayout {
         return getViewFor(o.getClass());
     }
 
+    /**
+     *
+     * @param view
+     * @return View's width if list is horizontal, otherwise returns it's height
+     */
     protected int getItemSize(View view) {
         int size = 0;
         if (view != null) {
@@ -380,6 +454,11 @@ public class ListView extends LinearLayout {
         return size;
     }
 
+    /**
+     *
+     * @param position
+     * @return View's size for given position
+     */
     protected int getItemSize(int position) {
         if (position >= mSizes.size())
             for (int i = mSizes.size(); i <= position; i++) {
@@ -401,10 +480,26 @@ public class ListView extends LinearLayout {
         }
     }
 
+    /**
+     * Holder for list children
+     * @param <T>
+     */
     public static abstract class Holder<T> implements ViewHolder<T>, Context {
+        /**
+         * Controlled view
+         */
         protected View mView;
+        /**
+         * List item to populate values from
+         */
         protected T mObject;
+        /**
+         * Position of the list item
+         */
         protected int mPosition;
+        /**
+         * ListView that holds this ViewHolder
+         */
         protected ListView mList;
         protected Class R;
 
@@ -412,35 +507,62 @@ public class ListView extends LinearLayout {
             R = context.R();
         }
 
+        /**
+         *
+         * @return Location of the View's XML source
+         */
         protected abstract ResourceLocation getViewLocation();
 
+        /**
+         * Should populate view with values from given object
+         * @param object
+         */
         protected abstract void fill(T object);
 
+        /**
+         * Should accept the view to be populated
+         * @param view
+         */
         protected abstract void link(View view);
 
+        @Override
         public void setObject(T object) {
             mObject = object;
             if (mView != null) fill(mObject);
         }
 
+        /**
+         *
+         * @return list item that is used by this ViewHolder
+         */
         public T getObject() {
             return mObject;
         }
 
+        /**
+         * Sets ListView that holds this ViewHolder
+         * @param list
+         */
         public void setList(ListView list) {
             mList = list;
         }
 
+        /**
+         * Sets index of the item in the list
+         * @param position
+         */
         public void setPosition(int position) {
             mPosition = position;
         }
 
+        @Override
         public void setView(View view) {
             mView = view;
             link(mView);
             if (mObject != null) fill(mObject);
         }
 
+        @Override
         public View getView() {
             if (mView == null) {
                 mView = MineDroid.inflateLayout(this, getViewLocation());

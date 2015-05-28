@@ -3,12 +3,24 @@ package com.onkiup.minedroid.gui.resources;
 import com.onkiup.minedroid.gui.MineDroid;
 
 /**
- * Created by chedim on 5/21/15.
+ * Represents environment parameters
  */
 public class EnvParams {
+    /**
+     * Language seting
+     */
     public String lang;
+    /**
+     * Minecraft version
+     */
     public Integer version;
+    /**
+     * Graphics setting
+     */
     public Graphics graphics;
+    /**
+     * Online/ofline mode
+     */
     public Mode mode;
 
     public EnvParams(String lang, String version, Graphics graphics, Mode mode) {
@@ -22,10 +34,21 @@ public class EnvParams {
 
     }
 
+    /**
+     * Graphics setting values
+     */
     public static enum Graphics {FANCY, FAST}
 
+    /**
+     * Online/offline mode values
+     */
     public static enum Mode {LOCAL, REMOTE}
 
+    /**
+     * Return amount of parameters matched to given environment parameters
+     * @param to environment to compare
+     * @return amount of matched parameters
+     */
     public int compareTo(EnvParams to) {
         int result = 0;
         if (version != null && version <= to.version) result++;
@@ -35,6 +58,10 @@ public class EnvParams {
         return result;
     }
 
+    /**
+     * returns environment quantifiers
+     * @return quantifier string
+     */
     public String getPath() {
         String result = "";
         if (version != null) result += "-" + version;

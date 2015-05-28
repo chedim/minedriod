@@ -1,3 +1,5 @@
+apply plugin: 'maven'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -80,3 +82,11 @@ sourceSets {
  }
 
 idea { module { inheritOutputDirs = true } }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../../../maven-repo'))
+        }
+    }
+}

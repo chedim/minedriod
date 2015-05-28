@@ -8,10 +8,12 @@ import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Created by chedim on 5/13/15.
+ * Simple holder for string values
  */
 public class TextHolder extends ListView.Holder<String>{
-
+    /**
+     * View that is used to display the value
+     */
     protected TextView view;
 
     public TextHolder(Context context) {

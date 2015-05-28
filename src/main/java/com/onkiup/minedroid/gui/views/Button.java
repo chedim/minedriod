@@ -6,7 +6,7 @@ import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.themes.Theme;
 
 /**
- * Created by chedim on 4/26/15.
+ * Button GUI element
  */
 public class Button extends TextView {
     public Button(Context context) {

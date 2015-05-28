@@ -6,13 +6,12 @@ import com.onkiup.minedroid.gui.drawables.NinePatchDrawable;
 import com.onkiup.minedroid.gui.drawables.StateDrawable;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import net.minecraft.util.ResourceLocation;
 import com.onkiup.minedroid.R;
 
 import java.io.IOException;
 
 /**
- * Created by chedim on 4/25/15.
+ * Default MineDroid theme
  */
 public class DefaultTheme implements Theme {
 

@@ -1,10 +1,24 @@
 package com.onkiup.minedroid.gui.views;
 
 /**
- * Created by chedim on 5/12/15.
+ * Interface for all ViewHolders
  */
 public interface ViewHolder<T> {
-    public void setObject(T object);
-    public void setView(View view);
-    public View getView();
+    /**
+     * Sets data source object for the ViewHolder
+     * @param object Object to display
+     */
+    void setObject(T object);
+
+    /**
+     * Sets view that ViewHolder should control and populate with data
+     * @param view New View for the ViewHolder
+     */
+    void setView(View view);
+
+    /**
+     *
+     * @return Controlled by ViewHolder view
+     */
+    View getView();
 }

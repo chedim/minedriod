@@ -3,15 +3,37 @@ package com.onkiup.minedroid.gui.events;
 import com.onkiup.minedroid.gui.views.View;
 
 /**
- * Created by chedim on 5/3/15.
+ * Holds information about key events
  */
 public class KeyEvent {
+    /**
+     * Event type class
+     */
     public Class type;
-    public View target, source;
+    /**
+     * View that currently handles the event
+     */
+    public View target;
+    /**
+     * View that was an original target of the event
+     */
+    public View source;
+    /**
+     * Pressed key code
+     */
     public int keyCode;
+    /**
+     * Pressed key char representation
+     */
     public char keyChar;
+    /**
+     * Event cancelation flag
+     */
     public boolean cancel = false;
 
+    /**
+     * Some keyboard flags
+     */
     public boolean shift, control, alt;
 
     @Override

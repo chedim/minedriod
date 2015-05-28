@@ -7,7 +7,7 @@ import com.onkiup.minedroid.gui.views.*;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Created by chedim on 5/18/15.
+ * Alert window
  */
 public class Alert extends Overlay {
     protected TextView mMessage = new TextView(this);
@@ -19,6 +19,9 @@ public class Alert extends Overlay {
         super(context);
     }
 
+    /**
+     * Ok button listener
+     */
     protected View.OnClick mOk = new View.OnClick() {
         @Override
         public void handle(MouseEvent event) {

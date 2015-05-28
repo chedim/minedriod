@@ -4,8 +4,6 @@ import com.onkiup.minedroid.gui.MineDroid;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * MineDroid Forge plugin
@@ -17,7 +15,7 @@ public class Plugin {
 
     /**
      * Initializes MineDroid
-     * @param event
+     * @param event Event object
      */
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {

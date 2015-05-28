@@ -1,9 +1,12 @@
 package com.onkiup.minedroid.gui.primitives;
 
 /**
- * Created by chedim on 4/25/15.
+ * Represents a RGBA color
  */
 public class Color {
+    /**
+     * Color components
+     */
     public int alpha = 255, red = 0, green = 0, blue = 0;
 
     public Color(int red, int green, int blue, int alpha) {

@@ -13,30 +13,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chedim on 4/25/15.
+ * Draws Text
  */
 public class TextDrawable implements Drawable {
 
+    /**
+     * Text to draw
+     */
     protected String text;
+    /**
+     * Drawing color
+     */
     protected long color;
+    /**
+     * Font texture scale factor
+     */
     protected float fontSize = 1;
+    /**
+     * Current font size
+     */
     protected Point size = new Point(0, 0), originalSize;
+    /**
+     * Are line breaks allowed?
+     */
     protected boolean multiline;
 
+    /**
+     * Measured character height with the current MineDroid font texture
+     */
     protected static int charHeight = 0;
 
     static {
-        try
-        {
+        try {
 //            Field f = Minecraft.getMinecraft().fontRendererObj.getClass().getDeclaredField("locationFontTexture");
 //            f.setAccessible(true);
 //            ResourceLocation fontLocation = (ResourceLocation) f.get(Minecraft.getMinecraft().fontRendererObj);
 //            BufferedImage bufferedimage = TextureUtil.readBufferedImage(Minecraft.getMinecraft().getResourceManager().getResource(fontLocation).getInputStream());
 //            charHeight = bufferedimage.getHeight() / 16;
             charHeight = Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT;
-        }
-        catch (Exception ioexception)
-        {
+        } catch (Exception ioexception) {
             throw new RuntimeException(ioexception);
         }
 
@@ -50,15 +65,26 @@ public class TextDrawable implements Drawable {
         this.color = color;
     }
 
+    /**
+     * Sets text scale factor
+     *
+     * @param fontSize new scale factor
+     */
     public void setTextSize(float fontSize) {
         this.fontSize = fontSize;
         size.x *= fontSize;
         size.y *= fontSize;
     }
 
+    /**
+     * Returns text value
+     *
+     * @return Text value
+     */
     public String getText() {
         return text;
     }
+
     public void setText(String text) {
         this.text = text;
         FontRenderer renderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
@@ -67,18 +93,40 @@ public class TextDrawable implements Drawable {
         originalSize = size.clone();
     }
 
+    /**
+     * Sets text value from value link
+     *
+     * @param text New text value
+     */
     public void setText(ValueLink text) {
         this.setText(text.toString());
     }
 
+    /**
+     * Sets formatted text value
+     *
+     * @param s    Format string
+     * @param args Format arguments
+     */
     public void setText(String s, Object... args) {
         setText(String.format(s, args));
     }
 
+    /**
+     * Sets formatted text value from value link
+     *
+     * @param s    Value link to format string
+     * @param args Format arguments
+     */
     public void setText(ValueLink s, Object... args) {
         setText(s.toString(), args);
     }
 
+    /**
+     * Returns current text boundaries
+     *
+     * @return text boundaries
+     */
     public float getTextSize() {
         return fontSize;
     }
@@ -100,8 +148,8 @@ public class TextDrawable implements Drawable {
 
         // drawing text
         List<String> lines = fitString(text, size.x);
-        for (String line: lines) {
-            renderer.drawString(line.replaceAll("\\n+$",""), left, top, (int) color);
+        for (String line : lines) {
+            renderer.drawString(line.replaceAll("\\n+$", ""), left, top, (int) color);
             top += charHeight * fontSize;
         }
 
@@ -136,20 +184,46 @@ public class TextDrawable implements Drawable {
         setSize(node.getSize(MineDroid.NS, getOriginalSize()));
     }
 
+    /**
+     * Returns calculated char height for current MineCraft font texture
+     *
+     * @return Char Height
+     */
     public int getCharHeight() {
         return (int) (charHeight * fontSize);
     }
 
+    /**
+     * Calculates last text character bottom right point for given width
+     *
+     * @param width Width
+     * @return Calculated end point
+     */
     public Point calculateEndPoint(int width) {
         return calculateEndPoint(text, width);
     }
 
+    /**
+     * Calculates last character bottom right point for given text in given width
+     *
+     * @param text  Text
+     * @param width Width
+     * @return Calculated end point
+     */
     public Point calculateEndPoint(String text, int width) {
         List<String> lines = fitString(text, width);
         int lastLineWidth = getStringWidth(lines.get(lines.size() - 1));
         return new Point(lastLineWidth, Math.round(charHeight * lines.size() * fontSize));
     }
 
+    /**
+     * Calculates coordinate for text position
+     *
+     * @param text     Text
+     * @param width    width limit
+     * @param position Text position
+     * @return Calculated coordinate
+     */
     public Point calculatePosition(String text, int width, int position) {
         List<String> lines = fitString(text, width);
         int currentPosition = 0;
@@ -163,7 +237,7 @@ public class TextDrawable implements Drawable {
                     if (++currentPosition == position) {
                         if (c == '\n') {
                             result.x = 0;
-                            result.y = Math.round(charHeight * (y+1) * fontSize);
+                            result.y = Math.round(charHeight * (y + 1) * fontSize);
                         } else {
                             result.x = getStringWidth(line.substring(0, x + 1));
                             result.y = Math.round(charHeight * y * fontSize);
@@ -181,16 +255,31 @@ public class TextDrawable implements Drawable {
         return result;
     }
 
+    /**
+     * Splits text to fit given width
+     *
+     * @param text  Text to split
+     * @param width Width limit
+     * @return Text lines
+     */
     public List<String> getTextLines(String text, int width) {
         return fitString(text, width);
     }
 
+    /**
+     * Splits text until given position to fit given width
+     *
+     * @param text     Text to split
+     * @param width    Width limit
+     * @param position Position limit
+     * @return Text lines
+     */
     public List<String>[] getSplitLines(String text, int width, int position) {
-        List[] result = new List[] {new ArrayList<String>(), new ArrayList<String>()};
+        List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>()};
         List<String> lines = fitString(text, width);
         int index = 0;
         int currentPosition = 0;
-        for (int i =0; i<lines.size(); i++) {
+        for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             if (index == 0) {
                 if (currentPosition + line.length() > position) {
@@ -201,7 +290,7 @@ public class TextDrawable implements Drawable {
                 } else if (currentPosition + line.length() == position) {
                     index = 1;
                     result[0].add(line);
-                    if (i < lines.size() -1) {
+                    if (i < lines.size() - 1) {
                         result[0].add("");
                     }
                     continue;
@@ -217,15 +306,25 @@ public class TextDrawable implements Drawable {
         return result;
     }
 
+    /**
+     * Allows/dissalows line breaks
+     * @param multiline line breaks flag
+     */
     public void setMultiline(boolean multiline) {
         this.multiline = multiline;
     }
 
+    /**
+     * Calculates given string width without adding any line breaks to it
+     * but with respect to already existing ones
+     * @param text Text to measure
+     * @return Calculated width
+     */
     public int getStringWidth(String text) {
         int result = 0, currentLine = 0;
         FontRenderer renderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
 
-        for (int i=0; i<text.length(); i++) {
+        for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             if (c == '\n') {
                 currentLine = 0;
@@ -238,6 +337,12 @@ public class TextDrawable implements Drawable {
         return result;
     }
 
+    /**
+     * Splits string to make it fit given width
+     * @param text Text to split
+     * @param width Width limit
+     * @return Splitted text
+     */
     public List<String> fitString(String text, int width) {
         FontRenderer renderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
         List<String> result = new ArrayList<String>();
@@ -249,7 +354,7 @@ public class TextDrawable implements Drawable {
             return result;
         }
 
-        for (int i=0; i<text.length(); i++) {
+        for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             int charWidth = renderer.getCharWidth(c);
             if (c == '\n') {

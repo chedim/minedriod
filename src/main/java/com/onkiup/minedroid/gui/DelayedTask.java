@@ -7,5 +7,5 @@ public interface DelayedTask {
     /**
      * Called when timer is done
      */
-    public void execute();
+    void execute();
 }

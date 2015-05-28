@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.primitives;
 
 /**
- * Created by chedim on 4/25/15.
+ * Represents color with it's components stored as float values from 0 to 1
  */
 public class GLColor {
     public float red, green, blue, alpha;

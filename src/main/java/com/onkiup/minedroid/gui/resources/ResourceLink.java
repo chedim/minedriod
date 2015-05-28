@@ -4,9 +4,12 @@ import com.onkiup.minedroid.gui.MineDroid;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Created by chedim on 5/21/15.
+ * Holds links to all environment-defined resource locations
  */
 public class ResourceLink extends ResourceLocation {
+    /**
+     * resource location
+     */
     protected String domain, path;
 
 
@@ -66,7 +69,4 @@ public class ResourceLink extends ResourceLocation {
         return 31 * getResourceDomain().hashCode() + getResourcePath().hashCode();
     }
 
-    public static enum Type {
-        LAYOUT, DRAWABLE, NINEPATCH, TEXTURE
-    }
 }

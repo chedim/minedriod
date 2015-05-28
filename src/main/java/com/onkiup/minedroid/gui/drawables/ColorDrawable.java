@@ -11,11 +11,18 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 
 /**
- * Created by chedim on 4/25/15.
+ * Draws a colored rectangle
  */
 public class ColorDrawable implements Drawable {
 
+    /**
+     * Rectangle color
+     */
     protected GLColor color;
+
+    /**
+     * Rectangle size
+     */
     protected Point size;
 
     public ColorDrawable() {
@@ -73,18 +80,34 @@ public class ColorDrawable implements Drawable {
         return new Point(0, 0);
     }
 
+    /**
+     * Sets drawing color
+     * @param color New color
+     */
     public void setColor(long color) {
         setColor(new Color(color));
     }
 
+    /**
+     * Sets drawing color
+     * @param color New color
+     */
     public void setColor(Color color) {
         setColor(new GLColor(color));
     }
 
+    /**
+     * Sets drawing color
+     * @param color New color
+     */
     public void setColor(GLColor color) {
         this.color = color;
     }
 
+    /**
+     * Returns drawing color
+     * @return drawing color
+     */
     public GLColor getColor() {
         return this.color;
     }

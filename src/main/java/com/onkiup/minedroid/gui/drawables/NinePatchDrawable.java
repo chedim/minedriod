@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import java.io.IOException;
 
 /**
- * Created by chedim on 4/25/15.
+ * Class that draws nine-patch images
  */
 public class NinePatchDrawable implements Drawable {
 
@@ -93,7 +93,7 @@ public class NinePatchDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         try {
-            setDrawables((ResourceLocation) node.getResourceAttr(MineDroid.NS, "src", null));
+            setDrawables(node.getResourceAttr(MineDroid.NS, "src", null));
             setSize(node.getSize(MineDroid.NS, size));
         } catch (IOException e) {
             e.printStackTrace();

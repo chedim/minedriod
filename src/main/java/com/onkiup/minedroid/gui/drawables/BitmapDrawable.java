@@ -16,12 +16,21 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by chedim on 4/25/15.
+ * Represents image files
  */
 public class BitmapDrawable implements Drawable {
 
+    /**
+     * Image file location
+     */
     protected ResourceLocation src;
+    /**
+     * Current drawable size
+     */
     protected Point size;
+    /**
+     * Original image size
+     */
     protected Point originalSize;
 
 
@@ -33,6 +42,12 @@ public class BitmapDrawable implements Drawable {
 
     }
 
+    /**
+     * Sets image location
+     * @param src image location
+     * @throws IOException
+     * @throws OutOfMemoryError
+     */
     public void setDrawable(ResourceLocation src) throws IOException, OutOfMemoryError {
         this.src = src;
         InputStream is = Minecraft.getMinecraft().getResourceManager().getResource(src).getInputStream();
@@ -40,6 +55,10 @@ public class BitmapDrawable implements Drawable {
         originalSize = size = new Point(img.getWidth(), img.getHeight());
     }
 
+    /**
+     * Draws the image
+     * @param where Where to draw the image
+     */
     @Override
     public void draw(Point where) {
         int left = where.x;
@@ -64,25 +83,42 @@ public class BitmapDrawable implements Drawable {
 //        overlay.draw(where);
     }
 
+    /**
+     * Sets drawable size
+     * @param size New drawable size
+     */
     @Override
     public void setSize(Point size) {
         this.size = size;
     }
 
+    /**
+     * Returns current drawable size
+     * @return Drawable size
+     */
     @Override
     public Point getSize() {
         return size;
     }
 
+    /**
+     * Returns original image size
+     * @return image size
+     */
     @Override
     public Point getOriginalSize() {
         return originalSize;
     }
 
+    /**
+     * Inflates Drawable from XML
+     * @param node XML node
+     * @param theme Theme with which it should be inflated
+     */
     @Override
     public void inflate(XmlHelper node, Theme theme) {
         try {
-            setDrawable((ResourceLocation) node.getResourceAttr(MineDroid.NS, "background", null));
+            setDrawable(node.getResourceAttr(MineDroid.NS, "background", null));
             size = new Point(0, 0);
             size.x = node.getDimenAttr(MineDroid.NS, "width", originalSize.x);
             size.y = node.getDimenAttr(MineDroid.NS, "width", originalSize.y);

@@ -5,14 +5,40 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.themes.Theme;
 
 /**
- * Created by chedim on 4/25/15.
+ * Basic class for all drawables
  */
 public interface Drawable {
-    public void draw(Point where);
-    public void setSize(Point size);
-    public Point getSize();
-    public Point getOriginalSize();
+    /**
+     * Draws the drawable
+     * @param where Where to draw
+     */
+    void draw(Point where);
+    /**
+     * Sets drawable size
+     * @param size New drawable size
+     */
+    void setSize(Point size);
+    /**
+     * Returns current drawable size
+     * @return Drawable size
+     */
+    Point getSize();
+    /**
+     * Returns original drawable size
+     * @return original size
+     */
+    Point getOriginalSize();
 
-    public void inflate(XmlHelper node, Theme theme);
-    public Drawable clone();
+    /**
+     * Inflates Drawable from XML
+     * @param node XML node
+     * @param theme Theme with which it should be inflated
+     */
+    void inflate(XmlHelper node, Theme theme);
+
+    /**
+     * Clones the drawable
+     * @return drawable clone
+     */
+    Drawable clone();
 }

@@ -8,32 +8,59 @@ import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.themes.Theme;
 
 /**
- * Created by chedim on 4/26/15.
+ * Parent class for all GUI elements that have any content inside of them
  */
 public abstract class ContentView extends View {
+    /**
+     * Content gravity on X axis
+     */
     protected HGravity hGravity = HGravity.LEFT;
+    /**
+     * Content gravity on Y axis
+     */
     protected VGravity vGravity = VGravity.CENTER;
 
     public ContentView(Context context) {
         super(context);
     }
 
+    /**
+     * Sets gravity on X axis
+     * @param gravity new gravity
+     */
     public void setGravityHorizontal(HGravity gravity) {
         hGravity = gravity;
     }
 
+    /**
+     * Sets gravity on Y axis
+     * @param gravity new gravity
+     */
     public void setGravityVertical(VGravity gravity) {
         vGravity = gravity;
     }
 
+    /**
+     *
+     * @return current X axis gravity
+     */
     public HGravity getGravityHorizontal() {
         return hGravity;
     }
 
+    /**
+     *
+     * @return Current Y axis gravity
+     */
     public VGravity hetGravityVertical() {
         return vGravity;
     }
 
+    /**
+     * Calculates element placement for current gravity
+     * @param size Element size
+     * @return Element drawing base point
+     */
     public Point getGravityOffset(Point size) {
         Point result = new Point(0, 0);
         Point me = resolvedLayout.getInnerSize();
@@ -55,21 +82,40 @@ public abstract class ContentView extends View {
         resetClipRect();
     }
 
+    /**
+     * Sets GL_SCISSOR rectangle for View contents
+     */
     protected void setClipRect() {
         Rect inner = resolvedLayout.getInnerRect().move(position);
         MineDroid.addClipRect(inner);
     }
 
+    /**
+     * Drops G_SCISSOR rectangle
+     */
     protected void resetClipRect() {
         MineDroid.restoreClipRect();
     }
 
+    /**
+     * Draws view contents
+     */
     public abstract void drawContents();
 
+    /**
+     * Clears view contents
+     */
     public abstract void clear();
 
-    public static enum HGravity {LEFT, CENTER, RIGHT};
-    public static enum VGravity {TOP, CENTER, BOTTOM};
+    /**
+     * Horizontal gravity values;
+     */
+    public enum HGravity {LEFT, CENTER, RIGHT}
+
+    /**
+     * Vertical gravity values;
+     */
+    public enum VGravity {TOP, CENTER, BOTTOM}
 
     @Override
     public void inflate(XmlHelper node, Theme theme) {

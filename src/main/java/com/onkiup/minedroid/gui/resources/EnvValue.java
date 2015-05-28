@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.resources;
 
 /**
- * Created by chedim on 5/22/15.
+ * Holds a string value for given environment params
  */
 public class EnvValue extends EnvParams {
 

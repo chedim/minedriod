@@ -3,7 +3,7 @@ package com.onkiup.minedroid.gui.resources;
 import com.onkiup.minedroid.gui.MineDroid;
 
 /**
- * Created by chedim on 5/22/15.
+ * Holds information about plural strings
  */
 public class Plural {
     protected String[] values = new String[6];
@@ -21,6 +21,11 @@ public class Plural {
         values[5] = other;
     }
 
+    /**
+     * Gets plural value for given number
+     * @param by
+     * @return plural value
+     */
     public String getValue(int by) {
         return values[MineDroid.getPluralLocalizer().quantify(by)];
     }

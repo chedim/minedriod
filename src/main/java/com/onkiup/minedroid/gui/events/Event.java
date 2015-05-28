@@ -1,8 +1,12 @@
 package com.onkiup.minedroid.gui.events;
 
 /**
- * Created by chedim on 4/26/15.
+ * Base class for all MineDroid events
  */
 public interface Event<Argument> {
-    public void handle(Argument event);
+    /**
+     * Handles event
+     * @param event event information
+     */
+    void handle(Argument event);
 }

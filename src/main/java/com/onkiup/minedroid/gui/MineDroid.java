@@ -70,10 +70,18 @@ public class MineDroid implements IGuiHandler, Context {
      */
     protected Class R;
 
+    /**
+     * Initialized MineDroid
+     * @param r Mod R class
+     */
     public MineDroid(Class r) {
         R = r;
     }
 
+    /**
+     * Returns Mod's context
+     * @return Mod's context
+     */
     public Context getContext() {
         return this;
     }
@@ -92,7 +100,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * generates ids for Overlays
-     * @param clazz
+     * @param clazz Class for which should id be generated
      * @return int
      */
     public static int generateId(Class clazz) {
@@ -126,7 +134,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Scales coordinate
-     * @param x
+     * @param x Coordinate value
      * @return int
      */
     public static int scale(int x) {
@@ -138,11 +146,15 @@ public class MineDroid implements IGuiHandler, Context {
      * Current GL_SCISSOR clip rect
      */
     protected static Rect clip = new Rect(new Point(0, 0), getWindowSize());
+
+    /**
+     * Stack of GL_SCISSOR clip rects
+     */
     protected static ArrayList<Rect> clips = new ArrayList<Rect>();
 
     /**
      * Adds GL_SCISSOR area
-     * @param newClip
+     * @param newClip GL_SCISSOR area
      */
     public static void addClipRect(Rect newClip) {
         clips.add(clip);
@@ -187,7 +199,8 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Inflates layout from XML file
-     * @param source
+     * @param context Mod context
+     * @param source XML file location
      * @return View
      */
     public static View inflateLayout(Context context, ResourceLocation source) {
@@ -205,7 +218,8 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Loads XML file into XMLParser, wraps it into XmlHelper and returns it
-     * @param source
+     * @param context Mod context
+     * @param source Xml location
      * @return XmlHelper
      */
     public static XmlHelper getXmlHelper(Context context, ResourceLocation source) {
@@ -223,6 +237,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Inflates view from a XML Node element
+     * @param context Mod context
      * @param node node element
      * @param theme theme with which View should be inflated
      * @return View
@@ -237,9 +252,9 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Inflates view from a XmlHelper element
-     * @param node
+     * @param node Item node
      * @param theme theme with which View should be inflated
-     * @return
+     * @return Inflated view
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
@@ -265,6 +280,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Inflates drawable from XML Node
+     * @param context Mod context
      * @param node Xml Node
      * @return Drawable
      * @throws ClassNotFoundException
@@ -304,7 +320,8 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Inflates Drawable from @ResourceLocation
-     * @param  rl
+     * @param context Mod context
+     * @param  rl Drawable context
      * @return Drawable
      */
     public static Drawable inflateDrawable(Context context, ResourceLocation rl) {
@@ -321,10 +338,15 @@ public class MineDroid implements IGuiHandler, Context {
     }
 
     /**
-     *
+     * Registered Screens
      */
     protected static ArrayList<Class<? extends Overlay>> screens = new ArrayList<Class<? extends Overlay>>();
 
+    /**
+     * Returns Screen class id
+     * @param c Screen class
+     * @return
+     */
     public static int getScreenId(Class<? extends Overlay> c) {
         int id = screens.indexOf(c);
         if (id == -1) {
@@ -336,7 +358,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Return screen from id
-     * @param id
+     * @param id Screen id
      * @return Class
      */
     public static Class<? extends Overlay> getScreenClass(int id) {
@@ -346,7 +368,8 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Creates Overlay
-     * @param id
+     * @param context Mod context
+     * @param id Overlay id
      * @return Overlay
      */
     public static Overlay getScreen(Context context, int id) {
@@ -362,7 +385,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Registers Screen in MineDroid
-     * @param c
+     * @param c Screen class
      */
     public static void addScreen(Class<? extends Overlay> c) {
         if (screens.contains(c)) return;
@@ -379,19 +402,19 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Sets new PluralLocalizer
-     * @param localizer
+     * @param localizer Localizer for current locale
      */
     public static void setPluralLocalizer(PluralLocalizer localizer) {
         pluralLocalizer = localizer;
     }
 
     /**
-     * @param ID
-     * @param player
-     * @param world
-     * @param x
-     * @param y
-     * @param z
+     * @param ID Overlay id
+     * @param player Player that opens Overlay
+     * @param world Current world
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param z z coordinate
      * @return
      */
     @Override
@@ -402,13 +425,13 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Creates GUI for Forge
-     * @param ID
-     * @param player
-     * @param world
-     * @param x
-     * @param y
-     * @param z
-     * @return
+     * @param ID Overlay id
+     * @param player Player that opens Overlay
+     * @param world Current world
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param z z coordinate
+     * @return Registered for this id overlay
      */
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -425,15 +448,30 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Opens Overlay
-     * @param overlay
+     * @param overlay Overlay that should be open
      */
     public static void open(Overlay overlay) {
         Minecraft.getMinecraft().displayGuiScreen(overlay);
     }
 
     /**
+     * Creates Overlay from class and opens it
+     * @param overlayClass Overlay class that should be open
+     */
+    public void open(Class<? extends Overlay> overlayClass) {
+        try {
+            Constructor c = overlayClass.getConstructor(Context.class);
+            Overlay overlay = (Overlay) c.newInstance(this);
+            open(overlay);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Displays alert
-     * @param s
+     * @param context Mod context
+     * @param s Alert message
      */
     public static void alert(Context context, String s) {
         open(new Alert(context, s));
@@ -441,7 +479,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Displays alert
-     * @param s
+     * @param s Alert message
      */
     public void alert(String s) {
         open(new Alert(this, s));
@@ -462,7 +500,7 @@ public class MineDroid implements IGuiHandler, Context {
 
     /**
      * Returns integer representation of Minecraft version
-     * @param v
+     * @param v Minecraft version
      * @return Integer|null
      */
     public static Integer getMCVersion(String v) {
@@ -476,6 +514,10 @@ public class MineDroid implements IGuiHandler, Context {
         return result;
     }
 
+    /**
+     * Returns Mod R class
+     * @return
+     */
     @Override
     public Class R() {
         return R;
@@ -506,6 +548,10 @@ public class MineDroid implements IGuiHandler, Context {
         private List<TaskInfo> tasks = new ArrayList<TaskInfo>();
         private List<TaskInfo> remove = new ArrayList<TaskInfo>();
 
+        /**
+         * Handles world tick
+         * @param event Tick information
+         */
         @SubscribeEvent
         public synchronized void onTick(TickEvent.ClientTickEvent event) {
             if (event.phase == TickEvent.Phase.END) {
@@ -523,21 +569,32 @@ public class MineDroid implements IGuiHandler, Context {
                             task.left = task.interval;
                         } else {
                             remove.add(task);
-                            continue;
                         }
                     }
                 }
             }
         }
 
+        /**
+         * Adds a delayed task to tasks pool
+         * @param info task info
+         */
         public synchronized void add(TaskInfo info) {
             tasks.add(info);
         }
 
+        /**
+         * removes a delayed task from tasks pool
+         * @param info task info
+         */
         public synchronized void delete(TaskInfo info) {
             remove.add(info);
         }
 
+        /**
+         * deletes a delayed task from tasks pool
+         * @param task delayed task
+         */
         public synchronized void delete(DelayedTask task) {
             TaskInfo stop = null;
             for (TaskInfo info : tickHandler.tasks) {

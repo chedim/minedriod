@@ -1,12 +1,9 @@
 package com.onkiup.minedroid.gui.resources;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 
 @SideOnly(Side.CLIENT)
 public class ResourceManager {
