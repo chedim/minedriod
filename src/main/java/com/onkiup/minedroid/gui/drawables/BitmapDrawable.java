@@ -3,7 +3,7 @@ package com.onkiup.minedroid.gui.drawables;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -116,7 +116,7 @@ public class BitmapDrawable implements Drawable {
      * @param theme Theme with which it should be inflated
      */
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         try {
             setDrawable(node.getResourceAttr(MineDroid.NS, "background", null));
             size = new Point(0, 0);

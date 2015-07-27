@@ -1,0 +1,5 @@
+<style parent="@minedroid:style/text_view"
+        xmlns="http://onkiup.com/minecraft/xml">
+    <item name="background">@minedroid:drawable/bg_button</item>
+    <item name="padding">5</item>
+</style>

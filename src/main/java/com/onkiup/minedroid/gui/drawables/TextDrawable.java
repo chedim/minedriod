@@ -3,8 +3,8 @@ package com.onkiup.minedroid.gui.drawables;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
+import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.resources.ValueLink;
-import com.onkiup.minedroid.gui.themes.Theme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
@@ -177,10 +177,11 @@ public class TextDrawable implements Drawable {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
-        color = node.getColorAttr(MineDroid.NS, "color", 0x00000000l);
+    public void inflate(XmlHelper node, Style theme) {
+        Style s = theme.getStyle("text");
+        color = node.getColorAttr(MineDroid.NS, "color", Long.valueOf(s.getInt("color", 0)));
         setText(node.getStringAttr(MineDroid.NS, "text", ""));
-        setTextSize(node.getFloatAttr(MineDroid.NS, "size", 1f));
+        setTextSize(node.getFloatAttr(MineDroid.NS, "size", s.getFloat("fontSize", 1f)));
         setSize(node.getSize(MineDroid.NS, getOriginalSize()));
     }
 
@@ -394,5 +395,13 @@ public class TextDrawable implements Drawable {
         result.setTextSize(fontSize);
 
         return result;
+    }
+
+    public void setColor(long color) {
+        this.color = color;
+    }
+
+    public long getColor() {
+        return color;
     }
 }

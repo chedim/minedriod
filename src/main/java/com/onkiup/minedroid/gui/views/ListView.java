@@ -8,7 +8,7 @@ import com.onkiup.minedroid.gui.drawables.RoundedCornerDrawable;
 import com.onkiup.minedroid.gui.events.MouseEvent;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Constructor;
@@ -472,8 +472,9 @@ public class ListView extends LinearLayout {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
+
         ResourceLocation location = node.getResourceAttr(MineDroid.NS, "empty", null);
         if (location != null) {
             mEmptyDrawable = MineDroid.inflateDrawable(this, location);
@@ -576,5 +577,10 @@ public class ListView extends LinearLayout {
         public Class R() {
             return R;
         }
+    }
+
+    @Override
+    protected String getThemeStyleName() {
+        return "list_view";
     }
 }

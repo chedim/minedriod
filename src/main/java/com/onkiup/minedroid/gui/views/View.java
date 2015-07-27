@@ -4,7 +4,7 @@ import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
-import com.onkiup.minedroid.gui.drawables.BorderDrawable;
+import com.onkiup.minedroid.gui.drawables.DebugDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.drawables.StateDrawable;
 import com.onkiup.minedroid.gui.drawables.TextDrawable;
@@ -15,7 +15,7 @@ import com.onkiup.minedroid.gui.events.MouseEvent;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 /**
  * Parent class for all View elements.
@@ -68,6 +68,11 @@ public class View extends EventBase implements Context {
      */
     protected ContentView parent;
 
+    /**
+     * Style of the element
+     */
+    protected Style style;
+
     public View(Context context) {
         R = context.R();
     }
@@ -83,7 +88,7 @@ public class View extends EventBase implements Context {
 
         if (debug) {
             Color debugColor = new Color(0x66ff00ff);
-            BorderDrawable border = new BorderDrawable(debugColor);
+            DebugDrawable border = new DebugDrawable(debugColor);
             border.setSize(resolvedLayout.getSize());
             border.draw(position);
 
@@ -333,11 +338,11 @@ public class View extends EventBase implements Context {
         }
 
         public Layout(int width, int height, Rect margin) {
-            this(width, height, margin, MineDroid.theme.getDefaultPadding());
+            this(width, height, margin, new Rect(0, 0, 0, 0));
         }
 
         public Layout(int width, int height) {
-            this(width, height, MineDroid.theme.getDefaultMargin());
+            this(width, height, new Rect(0, 0, 0, 0));
         }
 
         @Override
@@ -522,7 +527,7 @@ public class View extends EventBase implements Context {
      * @param node  Source node
      * @param theme Theme to apply
      */
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         setBackground(node.getDrawableAttr(MineDroid.NS, "background", null));
         Point size = new Point(0, 0);
         if (background != null) {
@@ -534,11 +539,29 @@ public class View extends EventBase implements Context {
         layout.width = node.getDimenAttr(MineDroid.NS, "width", size.x);
         layout.height = node.getDimenAttr(MineDroid.NS, "height", size.y);
 
-        layout.margin = node.getRectAttr(MineDroid.NS, "margin", theme.getDefaultMargin());
-        layout.padding = node.getRectAttr(MineDroid.NS, "padding", theme.getDefaultPadding());
+        theme = theme.getStyle(getThemeStyleName());
+
+        style = node.getStyleAttr(null, "style", null);
+        if (style != null) {
+            style.setFallbackTheme(theme);
+        } else {
+            style = theme;
+        }
+
+        Rect margin = style.getRect("margin"), padding = style.getRect("padding");
+
+        layout.margin = node.getRectAttr(MineDroid.NS, "margin", margin);
+        layout.padding = node.getRectAttr(MineDroid.NS, "padding", padding);
 
         setLayout(layout);
         this.id = node.getIdAttr(MineDroid.NS, "id");
+    }
+
+    /**
+     * @return theme style name for this class
+     */
+    protected String getThemeStyleName() {
+        return "view";
     }
 
     /**
@@ -616,5 +639,12 @@ public class View extends EventBase implements Context {
      */
     public ViewHolder getHolder() {
         return mHolder;
+    }
+
+    /**
+     * @return style of the element
+     */
+    public Style getStyle() {
+        return style;
     }
 }

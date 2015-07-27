@@ -1,0 +1,5 @@
+<style parent="@minedroid:style/content_view"
+        xmlns="http://onkiup.com/minecraft/xml">
+    <item name="fontSize">1</item>
+    <item name="color">0</item>
+</style>

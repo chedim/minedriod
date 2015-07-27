@@ -1,0 +1,6 @@
+<State
+        xmlns:mc="http://onkiup.com/minecraft/xml">
+    <RoundedCorner mc:color="33000000" mc:radius="1"/>
+    <RoundedCorner mc:state="hover" mc:color="66000000" mc:radius="1"/>
+    <RoundedCorner mc:state="pressed" mc:color="99000000" mc:radius="1"/>
+</State>

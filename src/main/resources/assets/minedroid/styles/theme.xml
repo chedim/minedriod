@@ -1,0 +1,13 @@
+<style>
+    <item name="view">@minedroid:style/view</item>
+    <item name="text">@minedroid:style/text</item>
+    <item name="text_view">@minedroid:style/text_view</item>
+    <item name="content_view">@minedroid:style/content_view</item>
+    <item name="button">@minedroid:style/button</item>
+    <item name="scroll_view">@minedroid:style/scroll_view</item>
+    <item name="overlay">@minedroid:style/overlay</item>
+    <item name="group_view">@minedroid:style/view_group</item>
+    <item name="list_view">@minedroid:style/list_view</item>
+    <item name="linear_layout">@minedroid:style/linear_layout</item>
+    <item name="relative_layout">@minedroid:style/relative_layout</item>
+</style>

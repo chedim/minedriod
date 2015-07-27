@@ -4,7 +4,7 @@ import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 /**
  * Draws a rectangle with rounded corners
@@ -77,7 +77,7 @@ public class RoundedCornerDrawable extends ColorDrawable {
     }
 
     @Override
-    public void inflate(XmlHelper xmlHelper, Theme theme) {
+    public void inflate(XmlHelper xmlHelper, Style theme) {
         super.inflate(xmlHelper, theme);
         this.radius = xmlHelper.getDimenAttr(MineDroid.NS, "radius", 0);
     }

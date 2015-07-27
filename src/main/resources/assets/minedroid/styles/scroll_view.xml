@@ -1,0 +1,3 @@
+<style parent="@minedroid:style/content_view">
+    <item name="scrollbar_drawable">@minedroid:drawable/scroll</item>
+</style>

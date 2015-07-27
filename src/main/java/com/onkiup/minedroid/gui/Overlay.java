@@ -90,7 +90,8 @@ public abstract class Overlay extends GuiScreen implements Context {
      * @return Background drawable
      */
     protected Drawable getBackgroundDrawable() {
-        return MineDroid.theme.getOverlayBackgroundDrawable().clone();
+        return MineDroid.inflateDrawable(this, MineDroid.getTheme(this)
+                .getStyle("overlay").getResource("background", null));
     }
 
     /**
@@ -158,7 +159,9 @@ public abstract class Overlay extends GuiScreen implements Context {
             container.setBackground(background);
 
             if (contentView.getBackground() == null) {
-                contentView.setBackground(MineDroid.theme.getOverlayDrawable());
+                contentView.setBackground(
+                        MineDroid.inflateDrawable(this,
+                                MineDroid.getTheme(this).getStyle("overlay").getResource("content_background", null)));
             }
 
             focusedItem = getNextFocusItem(0);
@@ -294,7 +297,7 @@ public abstract class Overlay extends GuiScreen implements Context {
      */
     @Override
     public void handleMouseInput() throws IOException {
-        if (state != State.STARTED) return;
+        if (state != State.STARTED || contentView == null) return;
         MouseEvent event = new MouseEvent();
         event.coords = new Point(0, 0);
         event.coords.x = Mouse.getEventX() * this.width / this.mc.displayWidth;
@@ -417,7 +420,7 @@ public abstract class Overlay extends GuiScreen implements Context {
      * @return Content view
      */
     protected View getContentView() {
-        return container.inflateChild(MineDroid.getXmlHelper(this, getContentLayout()), MineDroid.theme);
+        return container.inflateChild(MineDroid.getXmlHelper(this, getContentLayout()), MineDroid.getTheme(this));
     }
 
     /**

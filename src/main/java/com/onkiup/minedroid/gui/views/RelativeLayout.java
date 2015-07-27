@@ -6,7 +6,7 @@ import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.CenteredRect;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -504,7 +504,7 @@ public class RelativeLayout extends ViewGroup {
     }
 
     @Override
-    public View inflateChild(XmlHelper node, Theme theme) {
+    public View inflateChild(XmlHelper node, Style theme) {
         View child = super.inflateChild(node, theme);
 
         Layout layout = new Layout(child.getLayout());
@@ -512,7 +512,7 @@ public class RelativeLayout extends ViewGroup {
         layout.toRightOf = findViewById(node.getIdAttr(MineDroid.NS, "toRightOf"));
         layout.alignCenter = findViewById(node.getIdAttr(MineDroid.NS, "alignCenter"));
         layout.alignRight = findViewById(node.getIdAttr(MineDroid.NS, "alignRight"));
-        layout.toRightOf = findViewById(node.getIdAttr(MineDroid.NS, "toRightOf"));
+        layout.toLeftOf = findViewById(node.getIdAttr(MineDroid.NS, "toLeftOf"));
 
         layout.alignTop = findViewById(node.getIdAttr(MineDroid.NS, "alignTop"));
         layout.below = findViewById(node.getIdAttr(MineDroid.NS, "below"));
@@ -522,5 +522,10 @@ public class RelativeLayout extends ViewGroup {
         child.setLayout(layout);
 
         return child;
+    }
+
+    @Override
+    protected String getThemeStyleName() {
+        return "relative_layout";
     }
 }

@@ -3,11 +3,12 @@ package com.onkiup.minedroid.gui.views;
 import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
-import com.onkiup.minedroid.gui.drawables.RoundedCornerDrawable;
+import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.MouseEvent;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,14 @@ import java.util.List;
 public class ScrollView extends ContentView {
     protected View child;
     protected Point scroll = new Point(0, 0);
+    protected Drawable scrollDrawable;
 
     public ScrollView(Context context) {
         super(context);
+        ResourceLocation rl = MineDroid.getTheme(context).getStyle("scroll_view").getResource("scrollbar_drawable", null);
+        if (rl != null) {
+            scrollDrawable = MineDroid.inflateDrawable(this, rl);
+        }
     }
 
     @Override
@@ -63,12 +69,12 @@ public class ScrollView extends ContentView {
                 * resolvedLayout.getInnerHeight());
         int scrollerPos = (int) (resolvedLayout.getInnerHeight() * 1f * (scroll.y * 1f / childLayout.getOuterHeight()));
 
-        RoundedCornerDrawable scroller = new RoundedCornerDrawable(0x33000000, 1);
-
-        scroller.setSize(new Point(2, scrollerHeight));
-        Point scPosition = position.add(new Point(resolvedLayout.getInnerWidth() - 4, scrollerPos))
-                .add(resolvedLayout.getInnerRect().coords());
-        scroller.draw(scPosition);
+        if (scrollDrawable != null) {
+            scrollDrawable.setSize(new Point(2, scrollerHeight));
+            Point scPosition = position.add(new Point(resolvedLayout.getInnerWidth() - 4, scrollerPos))
+                    .add(resolvedLayout.getInnerRect().coords());
+            scrollDrawable.draw(scPosition);
+        }
     }
 
     @Override
@@ -110,7 +116,7 @@ public class ScrollView extends ContentView {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
         List<XmlHelper> children = node.getChildren();
 
@@ -121,6 +127,11 @@ public class ScrollView extends ContentView {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        ResourceLocation rl = style.getResource("scrollbar_drawable", null);
+        if (rl != null) {
+            scrollDrawable = MineDroid.inflateDrawable(this, rl);
         }
     }
 
@@ -151,5 +162,10 @@ public class ScrollView extends ContentView {
         }
 
         return result;
+    }
+
+    @Override
+    protected String getThemeStyleName() {
+        return "scroll_view";
     }
 }

@@ -5,7 +5,7 @@ import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -114,7 +114,7 @@ public class ColorDrawable implements Drawable {
 
 
     @Override
-    public void inflate(XmlHelper xmlHelper, Theme theme) {
+    public void inflate(XmlHelper xmlHelper, Style theme) {
         setSize(xmlHelper.getSize(MineDroid.NS, new Point(0, 0)));
         setColor(xmlHelper.getColorAttr(MineDroid.NS, "color", 0x00000000l));
     }

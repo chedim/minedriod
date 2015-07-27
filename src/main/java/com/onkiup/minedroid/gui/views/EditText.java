@@ -7,7 +7,8 @@ import com.onkiup.minedroid.gui.drawables.ColorDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.KeyEvent;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
+import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -46,6 +47,11 @@ public class EditText extends TextView {
                 drawCursor = !drawCursor;
             }
         }, 500, 500);
+
+        ResourceLocation bg = MineDroid.getTheme(context).getStyle("edit_text").getResource("background", null);
+        if (bg != null) {
+            setBackground(MineDroid.inflateDrawable(this, bg));
+        }
     }
 
     @Override
@@ -85,9 +91,14 @@ public class EditText extends TextView {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
-        setText(node.getStringAttr(MineDroid.NS, "text", ""));
+        if (background == null) {
+            ResourceLocation bg = style.getResource("background", null);
+            if (bg != null) {
+                setBackground(MineDroid.inflateDrawable(this, bg));
+            }
+        }
     }
 
     /**
@@ -293,5 +304,10 @@ public class EditText extends TextView {
         Point textPosition = position.add(offset).add(resolvedLayout.padding.coords()).add(cursorFix);
         text.draw(textPosition);
 
+    }
+
+    @Override
+    protected String getThemeStyleName() {
+        return "edit_text";
     }
 }

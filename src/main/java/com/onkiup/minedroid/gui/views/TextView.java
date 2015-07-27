@@ -5,18 +5,18 @@ import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.TextDrawable;
 import com.onkiup.minedroid.gui.primitives.Point;
+import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.resources.ValueLink;
-import com.onkiup.minedroid.gui.themes.Theme;
 
 /**
  * Shows some text
  */
 public class TextView extends ContentView {
-    protected TextDrawable text = new TextDrawable("", MineDroid.theme.getFontColor());
+    protected TextDrawable text = new TextDrawable("", 0);
 
     public TextView(Context context) {
         super(context);
-        text.setTextSize(MineDroid.theme.getFontSize());
+        text.setTextSize(MineDroid.getTheme(context).getStyle(getThemeStyleName()).getFloat("fontSize", 1f));
         vGravity = VGravity.CENTER;
         hGravity = HGravity.CENTER;
     }
@@ -118,11 +118,33 @@ public class TextView extends ContentView {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
+
+        float themeTextSize = style.getFloat("fontSize", 1f);
+        int themeTextColor = style.getInt("color", 0);
+
         String text = node.getLocalizedAttr(MineDroid.NS, "text", "");
         setText(text);
-        this.text.setTextSize(node.getFloatAttr(MineDroid.NS, "fontSize", 1f));
+        setTextSize(node.getFloatAttr(MineDroid.NS, "fontSize", themeTextSize));
+        setColor(node.getIntegerAttr(MineDroid.NS, "color", themeTextColor));
+    }
+
+    public void setTextSize(Float fontSize) {
+        text.setTextSize(fontSize);
+    }
+
+    public void setColor(long color) {
+        text.setColor(color);
+    }
+
+    public long getColor() {
+        return text.getColor();
+    }
+
+    @Override
+    protected String getThemeStyleName() {
+        return "text_view";
     }
 }
 
