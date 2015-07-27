@@ -1,0 +1,7 @@
+<State
+        xmlns:mc="http://onkiup.com/minecraft/xml">
+        <Color mc:color="ff21aae0"/>
+        <Color mc:state="hover" mc:color="ff61c7f7"/>
+        <Color mc:state="pressed" mc:color="ff5faed5"/>
+
+</State>

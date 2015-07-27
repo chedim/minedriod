@@ -2,7 +2,7 @@ package com.onkiup.minedroid.gui.drawables;
 
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 /**
  * Basic class for all drawables
@@ -34,11 +34,12 @@ public interface Drawable {
      * @param node XML node
      * @param theme Theme with which it should be inflated
      */
-    void inflate(XmlHelper node, Theme theme);
+    void inflate(XmlHelper node, Style theme);
 
     /**
      * Clones the drawable
      * @return drawable clone
      */
     Drawable clone();
+
 }

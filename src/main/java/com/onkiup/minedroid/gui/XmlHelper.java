@@ -6,6 +6,7 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.resources.ResourceLink;
 import com.onkiup.minedroid.gui.resources.ResourceManager;
+import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.util.ResourceLocation;
 import org.w3c.dom.Node;
@@ -35,19 +36,24 @@ public class XmlHelper implements Context {
 
     /**
      * Returns node attribute
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
      * @return Node Attribute value
      */
     public Node getAttr(String ns, String name) {
-        return node.getAttributes().getNamedItemNS(ns, name);
+        if (ns == null) return node.getAttributes().getNamedItem(name);
+        Node result = node.getAttributes().getNamedItemNS(ns, name);
+        if (result == null) result = node.getAttributes().getNamedItem(name);
+        return result;
     }
 
     /**
      * Reads string attribute or tries to get it from R class
-     * @param ns Attribute namespace
+     *
+     * @param ns   Attribute namespace
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return String value
      */
     public String getStringAttr(String ns, String name, String def) {
@@ -62,9 +68,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads integer attribute or tries to get it from R class
-     * @param ns Attribute namespace
+     *
+     * @param ns   Attribute namespace
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return Integer value
      */
     public Integer getIntegerAttr(String ns, String name, Integer def) {
@@ -76,9 +83,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads float attribute or tries to get it from R class
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return Float value
      */
     public Float getFloatAttr(String ns, String name, Float def) {
@@ -90,9 +98,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads drawable link and tries to get Drawable for it from R class
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return Drawable element
      */
     public Drawable getDrawableAttr(String ns, String name, Drawable def) {
@@ -104,9 +113,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads resource location link and gets it from R class
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param o Default value
+     * @param o    Default value
      * @return Resource location
      */
     public ResourceLocation getResourceAttr(String ns, String name, ResourceLocation o) {
@@ -118,9 +128,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads dimension attribute value. If it's a link, gets it from R class;
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return Dimension value
      */
     public Integer getDimenAttr(String ns, String name, Integer def) {
@@ -138,9 +149,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads rectangle information (name-left, name-top, name-right, and name-botom) from element attirbutes
-     * @param ns Attributes namespace URL
+     *
+     * @param ns   Attributes namespace URL
      * @param name Attributes name
-     * @param def Default value
+     * @param def  Default value
      * @return Readed rectangle or default value
      */
     public Rect getRectAttr(String ns, String name, Rect def) {
@@ -165,11 +177,12 @@ public class XmlHelper implements Context {
 
     /**
      * The same as @XmlHelper.getStringAttr
-     * @deprecated
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return String or default value
+     * @deprecated
      */
     @Deprecated
     public String getLocalizedAttr(String ns, String name, String def) {
@@ -178,15 +191,15 @@ public class XmlHelper implements Context {
 
     /**
      * Reads Enum value from attribute
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param def Default value, not null
+     * @param def  Default value, not null
      * @return Enum value or default value
      */
     public Enum getEnumAttr(String ns, String name, Enum def) {
-        if (def == null) return def;
-
         String val = getStringAttr(ns, name, null);
+        if (val == null) return def;
         Class<Enum> clazz = (Class<Enum>) def.getClass();
         if (val != null) return Enum.valueOf(clazz, val.toUpperCase());
         return def;
@@ -194,6 +207,7 @@ public class XmlHelper implements Context {
 
     /**
      * Returns node children list
+     *
      * @return Children list
      */
     public List<XmlHelper> getChildren() {
@@ -209,6 +223,7 @@ public class XmlHelper implements Context {
 
     /**
      * Returns wrapped node
+     *
      * @return wrapped node
      */
     public Node getNode() {
@@ -217,7 +232,8 @@ public class XmlHelper implements Context {
 
     /**
      * Reads id link and fetches it from R class
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
      * @return id value
      */
@@ -240,7 +256,8 @@ public class XmlHelper implements Context {
 
     /**
      * Reads size values (width + height)
-     * @param ns Attributes namespace URL
+     *
+     * @param ns  Attributes namespace URL
      * @param def Default value
      * @return Readed size or default value
      */
@@ -256,9 +273,10 @@ public class XmlHelper implements Context {
 
     /**
      * Reads color attribute (and tries to fetch it from R class
-     * @param ns Attribute namespace URL
+     *
+     * @param ns   Attribute namespace URL
      * @param name Attribute name
-     * @param def Default value
+     * @param def  Default value
      * @return Color or default value
      */
     public Long getColorAttr(String ns, String name, Long def) {
@@ -271,19 +289,33 @@ public class XmlHelper implements Context {
     }
 
     /**
-     * Returns wrapped node name
-     * @return node name
+     * @return wrapped node name
      */
     public String getName() {
         return node.getNodeName();
     }
 
     /**
-     * Current mod R class
-     * @return
+     * @return text value of the node
+     */
+    public String getText() {
+        return node.getTextContent();
+    }
+
+    /**
+     * @return Current mod R class
      */
     @Override
     public Class R() {
         return r;
+    }
+
+    public Style getStyleAttr(String ns, String name, Style def) {
+        Node sName = getAttr(ns, name);
+        if (sName == null) {
+            return def;
+        }
+
+        return (Style) ResourceManager.get(r, sName.getNodeValue());
     }
 }

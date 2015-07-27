@@ -3,7 +3,7 @@ package com.onkiup.minedroid.gui.drawables;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class StateDrawable implements Drawable {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         List<XmlHelper> children = node.getChildren();
         for (XmlHelper child : children) {
             try {

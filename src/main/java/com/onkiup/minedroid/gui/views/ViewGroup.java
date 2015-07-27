@@ -6,7 +6,7 @@ import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.events.MouseEvent;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,12 +125,17 @@ public abstract class ViewGroup extends ContentView {
         return children.get(position);
     }
 
+    @Override
+    protected String getThemeStyleName() {
+        return "view_group";
+    }
+
     public Layout createLayout() {
         return new Layout();
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
         List<XmlHelper> children = node.getChildren();
 
@@ -140,7 +145,7 @@ public abstract class ViewGroup extends ContentView {
         }
     }
 
-    public View inflateChild(XmlHelper node, Theme theme) {
+    public View inflateChild(XmlHelper node, Style theme) {
         try {
             return MineDroid.processNode(node, theme);
         } catch (Exception e) {

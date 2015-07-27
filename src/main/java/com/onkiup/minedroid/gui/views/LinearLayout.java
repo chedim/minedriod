@@ -4,7 +4,7 @@ import com.onkiup.minedroid.gui.Context;
 import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 /**
  * Groups views into a line
@@ -171,8 +171,13 @@ public class LinearLayout extends ViewGroup {
     }
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
         orientation = (Orientation) node.getEnumAttr(MineDroid.NS, "orientation", Orientation.VERTICAL);
+    }
+
+    @Override
+    protected String getThemeStyleName() {
+        return "linear_layout";
     }
 }

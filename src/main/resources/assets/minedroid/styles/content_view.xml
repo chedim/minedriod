@@ -1,0 +1,5 @@
+<style parent="@minedroid:style/view"
+        xmlns="http://onkiup.com/minecraft/xml">
+    <item name="horizontal-gravity">center</item>
+    <item name="vertical-gravity">center</item>
+</style>

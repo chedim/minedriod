@@ -5,7 +5,7 @@ import com.onkiup.minedroid.gui.MineDroid;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 
 /**
  * Parent class for all GUI elements that have any content inside of them
@@ -118,10 +118,18 @@ public abstract class ContentView extends View {
     public enum VGravity {TOP, CENTER, BOTTOM}
 
     @Override
-    public void inflate(XmlHelper node, Theme theme) {
+    public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
-        setGravityHorizontal((HGravity) node.getEnumAttr(MineDroid.NS, "horizontal-gravity", HGravity.CENTER));
-        setGravityVertical((VGravity) node.getEnumAttr(MineDroid.NS, "vertical-gravity", VGravity.CENTER));
+
+        HGravity themeHGravity = (HGravity) style.getEnum("horizontal-gravity", HGravity.CENTER);
+        VGravity themeVGravity = (VGravity) style.getEnum("vertical-gravity", VGravity.CENTER);
+
+        setGravityHorizontal((HGravity) node.getEnumAttr(MineDroid.NS, "horizontal-gravity", themeHGravity));
+        setGravityVertical((VGravity) node.getEnumAttr(MineDroid.NS, "vertical-gravity", themeVGravity));
     }
 
+    @Override
+    protected String getThemeStyleName() {
+        return "content_view";
+    }
 }

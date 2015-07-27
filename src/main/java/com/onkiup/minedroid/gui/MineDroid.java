@@ -1,14 +1,16 @@
 package com.onkiup.minedroid.gui;
 
+import com.onkiup.minedroid.R;
+import com.onkiup.minedroid.gui.drawables.BitmapDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
+import com.onkiup.minedroid.gui.drawables.NinePatchDrawable;
 import com.onkiup.minedroid.gui.overlay.Alert;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Point3D;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.resources.EnvParams;
 import com.onkiup.minedroid.gui.resources.PluralLocalizer;
-import com.onkiup.minedroid.gui.themes.DefaultTheme;
-import com.onkiup.minedroid.gui.themes.Theme;
+import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -28,6 +30,7 @@ import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
 import java.io.InvalidClassException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -43,7 +46,7 @@ public class MineDroid implements IGuiHandler, Context {
     /**
      * Current MineDroid theme
      */
-    public static Theme theme;
+    public static HashMap<Class, Style> themes = new HashMap<Class, Style>();
 
     /**
      * Minecraft client instance
@@ -68,14 +71,14 @@ public class MineDroid implements IGuiHandler, Context {
     /**
      * Utilizing module Context
      */
-    protected Class R;
+    protected Class r;
 
     /**
      * Initialized MineDroid
      * @param r Mod R class
      */
     public MineDroid(Class r) {
-        R = r;
+        this.r = r;
     }
 
     /**
@@ -92,7 +95,6 @@ public class MineDroid implements IGuiHandler, Context {
     protected static PluralLocalizer pluralLocalizer;
 
     static {
-        theme = new DefaultTheme();
         tickHandler = new TickHandler();
 
         FMLCommonHandler.instance().bus().register(tickHandler);
@@ -210,7 +212,7 @@ public class MineDroid implements IGuiHandler, Context {
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document dom = db.parse(Minecraft.getMinecraft().getResourceManager().getResource(source).getInputStream());
-            return processNode(context, dom.getChildNodes().item(0), theme);
+            return processNode(context, dom.getChildNodes().item(0), getTheme(context));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -246,7 +248,7 @@ public class MineDroid implements IGuiHandler, Context {
      * @throws InstantiationException
      * @throws InvalidClassException
      */
-    public static View processNode(Context context, Node node, Theme theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
+    public static View processNode(Context context, Node node, Style theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         return processNode(new XmlHelper(context, node), theme);
     }
 
@@ -260,7 +262,7 @@ public class MineDroid implements IGuiHandler, Context {
      * @throws InstantiationException
      * @throws InvalidClassException
      */
-    public static View processNode(XmlHelper node, Theme theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
+    public static View processNode(XmlHelper node, Style theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         String name = node.getNode().getNodeName();
         if (!name.contains(".")) {
             name = "com.onkiup.minedroid.gui.views." + name;
@@ -313,7 +315,7 @@ public class MineDroid implements IGuiHandler, Context {
         }
 
         Drawable drawable = (Drawable) drawableClass.newInstance();
-        drawable.inflate(node, theme);
+        drawable.inflate(node, getTheme(node));
 
         return drawable;
     }
@@ -325,15 +327,30 @@ public class MineDroid implements IGuiHandler, Context {
      * @return Drawable
      */
     public static Drawable inflateDrawable(Context context, ResourceLocation rl) {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
+        String fname = rl.getResourcePath();
+        if (fname.contains(".xml")) {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setNamespaceAware(true);
 
-        try {
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document dom = db.parse(Minecraft.getMinecraft().getResourceManager().getResource(rl).getInputStream());
-            return processNodeDrawable(context, dom.getChildNodes().item(0));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            try {
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document dom = db.parse(Minecraft.getMinecraft().getResourceManager().getResource(rl).getInputStream());
+                return processNodeDrawable(context, dom.getChildNodes().item(0));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else if (fname.contains("ninepatch")) {
+            try {
+                return new NinePatchDrawable(rl);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                return new BitmapDrawable(rl);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -520,7 +537,7 @@ public class MineDroid implements IGuiHandler, Context {
      */
     @Override
     public Class R() {
-        return R;
+        return r;
     }
 
 
@@ -650,5 +667,15 @@ public class MineDroid implements IGuiHandler, Context {
      */
     public static void stop(DelayedTask task) {
        tickHandler.delete(task);
+    }
+
+    public void setTheme(Style theme) {
+        themes.put(r, theme);
+    }
+
+    public static Style getTheme(Context context) {
+        Style theme = themes.get(context.R());
+        if (theme == null) theme = R.style.theme;
+        return theme;
     }
 }

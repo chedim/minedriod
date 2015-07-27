@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Draws ellipse (or its part)
  */
-public class EllipseDrawable extends ColorDrawable {
+public class EllipseDrawable extends ColorDrawable implements PartialDrawable {
 
     /**
      * Ellipse arc start radian
@@ -135,4 +135,8 @@ public class EllipseDrawable extends ColorDrawable {
         return size;
     }
 
+    @Override
+    public void setPart(float part) {
+        setArc(0, 2 * Math.PI * part);
+    }
 }
