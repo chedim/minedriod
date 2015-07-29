@@ -1,28 +1,69 @@
 <title>MineDroid Themes</title>
+<h1>Styles</h1>
+
+<p>Styles allow you to change the basic look of MineDroid widgets.</p>
+
+<h2>Creating a style</h2>
+<p>Styles are located under 'assets/{modname}/styles' directory. Every style should be stored as a separate XML
+    file.</p>
+
+<h2>Style contents</h2>
+<p>Style XML file should have a root tag named 'style'. That root tag can have a 'parent' attribute, which relates to a
+    style that this file extends.</p>
+<p>
+    Style tag can has one or more 'item' tags, which define values for attributes of element to which the style
+    should be applied.
+</p>
+
+<h2>Example style: view.xml</h2>
+<div class="xml" widget="code">
+<pre>
+    &lt;Style xmlns="http://onkiup.com/minecraft/xml"&gt;
+        &lt;item name="padding"&gt;10&lt;/item&gt;
+    &lt;/Style&gt;
+</pre>
+</div>
+
 <h1>Themes</h1>
+<p>Themes are styles that group other styles and define which styles should be used for MineDroid views</p>
 
-<p>Themes allow you to change the basic look of MineDroid widgets.</p>
+<h2>Example theme</h2>
+<div class="xml" widget="code">
+<pre>
+    &lt;Style xmlns="http://onkiup.com/minecraft/xml"&gt;
+        &lt;item name="view"&gt;@minedroid:style/view.xml&lt;/item&gt;
+    &lt;/Style&gt;
+</pre>
+</div>
 
-<h2>Creating a theme</h2>
-<p>Right now you can create theme only by extending com.onkiup.minecraft.gui.themes.DefaultTheme or by implementing
-    com.onkiup.minecraft.gui.themes.Theme interface.</p>
-
-<h2>Setting a theme</h2>
-<p>To set theme, you should put instance of theme class to a field OnkiupGuiManager.theme</p>
-
-<h2>Theme interface methods</h2>
+<h2>Views in theme</h2>
+<p>There is several theme items that you can define with your theme:</p>
 <ul>
-    <li><b>public int getFontColor()</b> — should return default text color;</li>
-    <li><b>public float getFontSize()</b> — should return default text scale (1 = no scale, 2 = double scale);</li>
-    <li><b>public float getHeaderSize()</b> — should return default header text scale;</li>
-    <li><b>public Drawable getOverlayDrawable()</b> — should return default overlay window drawable;</li>
-    <li><b>public Drawable getOverlayBackgroundDrawable()</b> — should return default overlay window background (shadow)
-        drawable;
-    </li>
-    <li><b>public Rect getDefaultPadding()</b> — should return default padding for any inflated element;</li>
-    <li><b>public Rect getDefaultMargin()</b> — should return default margin for any inflated element;</li>
-    <li><b>public Drawable getButtonBackground()</b> — should return default button drawable;</li>
+    <li>view — defines a style for any View and it's children</li>
+    <li>text — defines a style for any text drawable</li>
+    <li>text_view — defines a style for any TextView</li>
+    <li>content_view — defines a style for any ContentView and it's children</li>
+    <li>button — defines a style for all buttons</li>
+    <li>scroll_view — defines a style for ScrollView</li>
+    <li>overlay — defines a style for all windows (Overlays)</li>
+    <li>group_view — defines a style for any GroupView and views, derived from that class</li>
+    <li>list_view</li>
+    <li>linear_layout</li>
+    <li>relative_layout</li>
 </ul>
 
-<h2>Future plans</h2>
-<p>Future versions will add a possibility to create themes from XML files.</p>
+<h2>Applying a theme</h2>
+<p>To apply a theme for your plugin, call MineDroid.setTheme method:</p>
+<div class="java" widget="code">
+<pre>
+    MineDroid.setTheme(R.style.my_theme);
+</pre>
+</div>
+
+<h2>Applying style to a view</h2>
+<p>To apply a style to your view, use 'style' attribute on your XML layout:</p>
+<div class="xml" widget="code">
+<pre>
+    &lt;TextView style="@style/my_textview"/&gt;
+</pre>
+</div>

@@ -18,7 +18,7 @@
 <h2>Installation for players</h2>
 <p>
     MineDroid can be required by some mods to run. To install it, you should download a
-    <a href="https://github.com/chedim/minedriod/raw/master/minedroid-1.0.jar">jar-file</a> and put it into 'mods'
+    <a href="https://github.com/chedim/maven-repo/blob/master/com/onkiup/gradle/minedroid/1.2-SNAPSHOT/minedroid-1.2-20150601.164806-2.jar?raw=true">jar-file</a> and put it into 'mods'
     directory of your Minecraft client.
 </p>
 <h2>Installation for mod developers</h2>
@@ -26,9 +26,9 @@
     If you use Gradle, you can add Minedroid from a GitHub hosted maven repository:
 <pre>https://raw.github.com/chedim/maven-repo/master/</pre><br/>
 MineDroid artifact is:
-<pre>com.onkiup.minedroid:minedroid:1.0</pre><br/>
-Also there is a plugin for Gradle that generates R class with links to your mod all resources:
-<pre>com.onkiup.gradle:minedroid:1.1-SNAPSHOT</pre><br/>
+<pre>com.onkiup.minedroid:minedroid:1.2</pre><br/>
+Also there is a plugin "MineDroid GUI" in IntelliJ plugin repository that enables autocompletion in layouts and generates R class with links to your mod all resources.
+
 Here is an example gradle.build file:<br/>
 <div class="gradle" widget="code">
 <pre>buildscript {
@@ -44,14 +44,12 @@ Here is an example gradle.build file:<br/>
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'com.onkiup.gradle:minedroid:1.1-SNAPSHOT'
     }
 }
 apply plugin: 'forge'
-apply plugin: 'minedroid'
 
 dependencies {
-            compile 'com.onkiup.minedroid:minedroid:1.0'
+            compile 'com.onkiup.minedroid:minedroid:1.2'
 }</pre>
 </div>
 </p>
