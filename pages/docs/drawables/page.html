@@ -24,7 +24,8 @@
 <h2>Nine patches</h2>
 <p>
     NinePatchDrawable uses nine pictures to display a drawable with properly resized border. To use this drawable you
-    should create a subfolder in folder 'assets/&lt;modid&gt;/ninepatches/&lt;nine-patch-name&gt;/' with nine png images named like this:
+    should create a subfolder in folder 'assets/&lt;modid&gt;/ninepatches/&lt;nine-patch-name&gt;/' with nine png images
+    named like this:
 </p>
 <center>
     <table width="400" height="200" border="1" cellspacing="0">
@@ -50,3 +51,43 @@
     Ninepatch border size will be taken from corner images sizes (0.0.png, 0.2.png, 2.0.png, 2.2.png). It's very
     convenient to use Photoshop slices to create nine-patches.
 </p>
+
+<h2>XML drawables</h2>
+<p>You can define and store drawables as XML-files under directory 'assets/&lt;modid&gt;/drawables/'.
+    Here are some examples:</p>
+<b>ColorDrawable:</b>
+<div class="xml" widget="code">
+<pre>
+&lt;Color xmlns="http://onkiup.com/minecraft/xml"
+    color="ff5faed5"/>
+</pre>
+</div>
+
+<b>TextDrawable:</b>
+<div class="xml" widget="code">
+<pre>
+&lt;Text xmlns="http://onkiup.com/minecraft/xml"
+    text="No items."
+    />
+</pre>
+</div>
+
+<b>RoundedCornerDrawable:</b>
+<div class="xml" widget="code">
+<pre>
+&lt;RoundedCorner xmlns="http://onkiup.com/minecraft/xml"
+        color="66ffffff" radius="5" />
+</pre>
+</div>
+
+<b>StateDrawable:</b>
+<div class="xml" widget="code">
+    <pre>
+&lt;State xmlns="http://onkiup.com/minecraft/xml">
+    &lt;Color color="ff21aae0"/>
+    &lt;Color state="hover" color="ff61c7f7"/>
+    &lt;Color state="pressed" color="ff5faed5"/>
+
+&lt;/State>
+    </pre>
+</div>

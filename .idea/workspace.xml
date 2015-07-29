@@ -4,6 +4,7 @@
     <list default="true" id="4e5a700f-fe46-4fe8-ac45-b942546dbe93" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/page.html" afterPath="$PROJECT_DIR$/pages/docs/page.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/drawables/page.html" afterPath="$PROJECT_DIR$/pages/docs/drawables/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/docs/themes/page.html" afterPath="$PROJECT_DIR$/pages/docs/themes/page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -31,17 +32,19 @@
       <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/docs/views/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2145">
+            <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="2145">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="page.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/interfaces/docs/page.html">
+        <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="40" selection-start="447" selection-end="447" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="465">
-              <folding />
+            <state line="88" column="14" selection-start="3190" selection-end="3190" vertical-scroll-proportion="-6.076923" vertical-offset="846" max-vertical-offset="1470">
+              <folding>
+                <element signature="n#style#0;n#li#7;n#ul#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -145,13 +148,13 @@
         <option value="$PROJECT_DIR$/widgets/code/code.js" />
         <option value="$PROJECT_DIR$/pages/docs/views/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/lists/page.html" />
-        <option value="$PROJECT_DIR$/pages/docs/drawables/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/quickstart/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/resources/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/xml_layouts/page.html" />
         <option value="$PROJECT_DIR$/interfaces/docs/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/page.html" />
         <option value="$PROJECT_DIR$/pages/docs/themes/page.html" />
+        <option value="$PROJECT_DIR$/pages/docs/drawables/page.html" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
@@ -271,6 +274,70 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="code" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedriod" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minedroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interfaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -590,11 +657,6 @@
         <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="665" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="26" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="870" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/interfaces/docs/code.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="12" selection-start="79" selection-end="79" vertical-scroll-proportion="0.08547009" vertical-offset="0" max-vertical-offset="702" />
@@ -674,6 +736,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="40" selection-start="447" selection-end="447" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="465">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/docs/drawables/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="14" selection-start="3190" selection-end="3190" vertical-scroll-proportion="-6.076923" vertical-offset="846" max-vertical-offset="1470">
+          <folding>
+            <element signature="n#style#0;n#li#7;n#ul#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
