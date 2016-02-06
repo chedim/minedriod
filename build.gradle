@@ -15,7 +15,7 @@ buildscript {
         maven {
             name="onkiup"
 //            url = "https://raw.github.com/chedim/maven-repo/master/";
-            url = '../../../maven-repo'
+            url = '../maven-repo'
         }
     }
     dependencies {
@@ -86,7 +86,7 @@ idea { module { inheritOutputDirs = true } }
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri('../../../maven-repo'))
+            repository(url: uri('../maven-repo'))
         }
     }
 }
