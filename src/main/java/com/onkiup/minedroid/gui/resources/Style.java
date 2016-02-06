@@ -1,11 +1,15 @@
 package com.onkiup.minedroid.gui.resources;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.Contexted;
+import com.onkiup.minedroid.Modification;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.Drawable;
+import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.views.ContentView;
+import com.onkiup.minedroid.gui.views.View;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,25 +20,26 @@ import java.util.List;
 public class Style implements Context {
 
     protected HashMap<String, Object> props;
-    protected ResourceLink source;
+    protected ResourceLocation source;
+    protected Integer modId;
     protected Class r;
     protected String parentName;
     protected Style parent;
     private Style fallbackTheme;
 
-    public Style(ResourceLink source, Class r) {
+    public Style(ResourceLocation source, Class r) {
         this.source = source;
         this.r = r;
     }
 
-    public Style(ResourceLink source, Class r, String parent) {
+    public Style(ResourceLocation source, Class r, String parent) {
         this.source = source;
         this.r = r;
         this.parentName = parent;
     }
 
     protected void inflate() {
-        XmlHelper helper = MineDroid.getXmlHelper(this, source);
+        XmlHelper helper = GuiManager.getXmlHelper(this, source);
         List<XmlHelper> items = helper.getChildren();
         props = new HashMap<String, Object>();
 
@@ -43,14 +48,18 @@ public class Style implements Context {
             if (name == null) continue;
             String value = item.getText();
             if (value.charAt(0) == '@') {
-                props.put(name, ResourceManager.get(r, value));
+                props.put(name, ResourceManager.get(this, value));
             } else {
                 props.put(name, value);
             }
         }
 
+        if (parentName == null) {
+            parentName = helper.getStringAttr(GuiManager.NS, "parent", null);
+        }
+
         if (parentName != null) {
-            this.parent = (Style) ResourceManager.get(r, parentName);
+            this.parent = (Style) ResourceManager.get(this, parentName);
         }
 
 //        if (false && parent == null) {
@@ -83,36 +92,42 @@ public class Style implements Context {
         return getProperty(property);
     }
 
+    public String getString(String property, String def) {
+        String val = (String) getProperty(property);
+        if (val == null) return def;
+        return val;
+    }
+
     public Integer getInt(String property, Integer def) {
         Object val = get(property);
         if (val == null) return def;
         return Integer.valueOf(val.toString());
     }
 
-    public Rect getRect(String property) {
-        Integer all = getInt(property, 0);
-        Rect rect = new Rect(all, all, all, all);
-        Integer left = getInt(property+"-left", 0),
-                top = getInt(property+"-top", 0),
-                right = getInt(property+"-right", 0),
-                bottom = getInt(property+"-bottom", 0);
-        if (left != null) rect.left = left;
-        if (top != null) rect.top = top;
-        if (right != null) rect.right = right;
-        if (bottom != null) rect.bottom = bottom;
+    public Rect getRect(String property, Rect def) {
+        Integer all = getInt(property, null);
+        if (all == null && def == null) def = new Rect(0, 0, 0, 0);
+        else if (all != null) def = new Rect(all, all, all, all);
+        else def = def.clone();
 
-        return rect;
+        def.left = getInt(property + "-left", def.left);
+        def.top = getInt(property + "-top", def.top);
+        def.right = getInt(property + "-right", def.right);
+        def.bottom = getInt(property + "-bottom", def.bottom);
+
+        return def;
     }
 
     public Style getStyle(String name) {
-        Object val = getProperty(name);
-        if (val == null) return null;
-        return (Style) val;
+        Style val = (Style) getProperty(name);
+
+        return val;
     }
 
-    @Override
-    public Class R() {
-        return r;
+    public Style getStyle(String name, Style def) {
+        Style v = getStyle(name);
+        if (v == null) return def;
+        return v;
     }
 
     protected static Style getInstance() {
@@ -120,6 +135,7 @@ public class Style implements Context {
     }
 
     public void setFallbackTheme(Style fallbackTheme) {
+        if (this == fallbackTheme) return;
         this.fallbackTheme = fallbackTheme;
     }
 
@@ -138,10 +154,74 @@ public class Style implements Context {
         return Float.valueOf(val.toString());
     }
 
-    public ResourceLink getResource(String name, ResourceLink def) {
+    public ResourceLocation getResource(String name, ResourceLocation def) {
         Object val = getProperty(name);
         if (val == null) return def;
 
-        return (ResourceLink) val;
+        return (ResourceLocation) val;
+    }
+
+    public Long getColor(String property, Long def) {
+        Object val = get(property);
+        if (val == null) return def;
+        return Long.parseLong(val.toString(), 16);
+    }
+
+    public Drawable getDrawable(String name, Drawable o) {
+        ResourceLocation l = getResource(name, null);
+        if (l == null) return o;
+        return GuiManager.inflateDrawable(this, l);
+    }
+
+    public int getIdAttr(String name) {
+        String id = getString(name, null);
+        if (id == null) return -1;
+        if (id.equals("parent")) return 0;
+
+        Object val = ResourceManager.get(this, id);
+        if (val == null) return -1;
+        if (val instanceof Integer) return (Integer) val;
+        return Integer.valueOf(val.toString());
+    }
+
+    public Point getSize(Point def) {
+        if (def == null) def = new Point(0, 0);
+        else def = def.clone();
+
+        def.x = getDimen("width", def.x);
+        def.y = getDimen("height", def.y);
+        return def;
+    }
+
+    public Integer getDimen(String name, Integer def) {
+        String val = getString(name, null);
+        if (val == null) return def;
+
+        val = val.toLowerCase();
+        if (val.equals("match_parent")) return View.Layout.MATCH_PARENT;
+        if (val.equals("wrap_content")) return View.Layout.WRAP_CONTENT;
+
+        val = ResourceManager.get(this, val).toString();
+
+        return Integer.parseInt(val);
+    }
+
+    public Boolean getBool(String name, Boolean def) {
+        String val = getString(name, null);
+        if (val == null) return def;
+        if (val.equals("true")) return true;
+        try {
+            return Integer.valueOf(val) > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int contextId() {
+        if (modId == null) {
+            modId = Modification.getModuleByR(r).hashCode();
+        }
+        return modId;
     }
 }

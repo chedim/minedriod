@@ -1,6 +1,6 @@
 package com.onkiup.minedroid.gui.resources;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -11,31 +11,25 @@ public class ResourceLink extends ResourceLocation {
      * resource location
      */
     protected String domain, path;
+    protected boolean isResolved;
+    protected String type, name;
+    protected EnvParams[] variants;
 
 
     public ResourceLink(String modid, String type, String name, EnvParams[] variants) {
         super("");
+        EnvParams env = ResourceManager.getEnvParams();
         domain = modid;
-        if (variants != null && variants.length > 0) {
-            int max = -1;
-            EnvParams result = null;
-            EnvParams env = MineDroid.getEnvParams();
-            for (EnvParams variant : variants) {
-                int cur = variant.compareTo(env);
-                if (cur > max) {
-                    result = variant;
-                    max = cur;
-                    if (max == 4) break;
-                }
-            }
-            if (result != null) {
-                path = type + result.getPath() + "/" + name;
-            } else {
-                path = "";
-            }
-        } else {
-            path = type + "/" + name;
+        this.type = type;
+        this.name = name;
+        this.variants = variants;
+
+        if (env == null && variants != null && variants.length > 1) {
+            // storing link information for future resolving
+            return;
         }
+        isResolved = true;
+        resolve(env);
     }
 
     public ResourceLink(String modid, String type, String name) {
@@ -69,4 +63,25 @@ public class ResourceLink extends ResourceLocation {
         return 31 * getResourceDomain().hashCode() + getResourcePath().hashCode();
     }
 
+    public void resolve(EnvParams env) {
+        if (variants != null && variants.length > 0) {
+            int max = -1;
+            EnvParams result = null;
+            for (EnvParams variant : variants) {
+                int cur = variant.compareTo(env);
+                if (cur > max) {
+                    result = variant;
+                    max = cur;
+                    if (max == 4) break;
+                }
+            }
+            if (result != null) {
+                path = type + result.getPath() + "/" + name;
+            } else {
+                path = "";
+            }
+        } else {
+            path = type + "/" + name;
+        }
+    }
 }

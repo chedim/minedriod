@@ -1,6 +1,6 @@
 package com.onkiup.minedroid.gui.resources;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 
 /**
  * Represents environment parameters
@@ -25,7 +25,7 @@ public class EnvParams {
 
     public EnvParams(String lang, String version, Graphics graphics, Mode mode) {
         this.lang = lang;
-        this.version = MineDroid.getMCVersion(version);
+        this.version = GuiManager.getMCVersion(version);
         this.graphics = graphics;
         this.mode = mode;
     }

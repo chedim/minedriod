@@ -1,14 +1,10 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
-import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.Context;
 import com.onkiup.minedroid.gui.drawables.ColorDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.KeyEvent;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.resources.Style;
-import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -47,11 +43,6 @@ public class EditText extends TextView {
                 drawCursor = !drawCursor;
             }
         }, 500, 500);
-
-        ResourceLocation bg = MineDroid.getTheme(context).getStyle("edit_text").getResource("background", null);
-        if (bg != null) {
-            setBackground(MineDroid.inflateDrawable(this, bg));
-        }
     }
 
     @Override
@@ -88,17 +79,6 @@ public class EditText extends TextView {
         if (selectionStart > max) selectionStart = max;
         if (selectionEnd > max) selectionEnd = max;
         System.out.println("Cursor position: "+selectionEnd);
-    }
-
-    @Override
-    public void inflate(XmlHelper node, Style theme) {
-        super.inflate(node, theme);
-        if (background == null) {
-            ResourceLocation bg = style.getResource("background", null);
-            if (bg != null) {
-                setBackground(MineDroid.inflateDrawable(this, bg));
-            }
-        }
     }
 
     /**
@@ -269,12 +249,12 @@ public class EditText extends TextView {
     boolean drawCursor = true;
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         // drawing the caret element
         Point textSize = getTextSize();
         Point cursorPosition = position.add(resolvedLayout.getInnerRect().coords());
-        int charHeight = text.getCharHeight();
-        cursor.setSize(new Point(1, charHeight));
+        int charHeight = (int) text.getOriginalSize().y;
+        cursor.setSize(new Point(1, charHeight - 2));
         Point end = text.calculatePosition(getText(), resolvedLayout.getInnerWidth(), selectionEnd)
                 .add(getGravityOffset(textSize));
         Point cursorFix = new Point(0, 0);

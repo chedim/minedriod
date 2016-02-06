@@ -1,6 +1,7 @@
 package com.onkiup.minedroid.gui.drawables;
 
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 
@@ -41,5 +42,12 @@ public interface Drawable {
      * @return drawable clone
      */
     Drawable clone();
+
+    /**
+     * Draws shadow around the drawable
+     * @param color
+     * @param size
+     */
+    void drawShadow(Point where, GLColor color, int size);
 
 }

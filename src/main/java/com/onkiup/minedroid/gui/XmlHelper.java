@@ -1,6 +1,7 @@
 package com.onkiup.minedroid.gui;
 
-import com.onkiup.minedroid.R;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.Contexted;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
@@ -18,20 +19,16 @@ import java.util.List;
 /**
  * Some useful methods for XML parsing
  */
-public class XmlHelper implements Context {
+public class XmlHelper extends Contexted {
 
     /**
      * Wrapped XML Node
      */
     protected Node node;
-    /**
-     * Current mod R class
-     */
-    protected Class r;
 
     public XmlHelper(Context context, Node node) {
+        super(context);
         this.node = node;
-        this.r = context.R();
     }
 
     /**
@@ -59,11 +56,21 @@ public class XmlHelper implements Context {
     public String getStringAttr(String ns, String name, String def) {
         Node attr = getAttr(ns, name);
 
-        if (attr == null) return def;
 
-        String val = attr.getNodeValue();
+        String val;
+        if (attr == null) {
+            val = def;
+        } else {
+            val = attr.getNodeValue();
+        }
 
-        return ResourceManager.get(r, val).toString();
+        Object v = ResourceManager.get(this, val);
+        if (v == null) return def;
+        return v.toString();
+    }
+
+    public String getStringAttr(String ns, String name, Style fb, String def) {
+        return getStringAttr(ns, name, fb.getString(name, def));
     }
 
     /**
@@ -77,8 +84,13 @@ public class XmlHelper implements Context {
     public Integer getIntegerAttr(String ns, String name, Integer def) {
         Node attr = getAttr(ns, name);
         if (attr == null) return def;
-        String val = ResourceManager.get(r, attr.getNodeValue()).toString();
+        String val = ResourceManager.get(this, attr.getNodeValue()).toString();
+        if (val.length() == 0) return 0;
         return Integer.parseInt(val);
+    }
+
+    public Integer getIntegerAttr(String ns, String name, Style fb, Integer def) {
+        return getIntegerAttr(ns, name, fb.getInt(name, def));
     }
 
     /**
@@ -92,8 +104,12 @@ public class XmlHelper implements Context {
     public Float getFloatAttr(String ns, String name, Float def) {
         Node attr = getAttr(ns, name);
         if (attr == null) return def;
-        String val = ResourceManager.get(r, attr.getNodeValue()).toString();
+        String val = ResourceManager.get(this, attr.getNodeValue()).toString();
         return Float.parseFloat(val);
+    }
+
+    public Float getFloatAttr(String ns, String name, Style fb, Float def) {
+        return getFloatAttr(ns, name, fb.getFloat(name, def));
     }
 
     /**
@@ -108,7 +124,11 @@ public class XmlHelper implements Context {
         ResourceLocation rl = getResourceAttr(ns, name, null);
         if (rl == null) return def;
 
-        return MineDroid.inflateDrawable(this, rl);
+        return GuiManager.inflateDrawable(this, rl);
+    }
+
+    public Drawable getDrawableAttr(String ns, String name, Style fb, Drawable def) {
+        return getDrawableAttr(ns, name, fb.getDrawable(name, def));
     }
 
     /**
@@ -123,7 +143,11 @@ public class XmlHelper implements Context {
         Node attr = getAttr(ns, name);
         if (attr == null) return o;
 
-        return (ResourceLink) ResourceManager.get(r, attr.getNodeValue());
+        return (ResourceLink) ResourceManager.get(this, attr.getNodeValue());
+    }
+
+    public ResourceLocation getResourceAttr(String ns, String name, Style fb, ResourceLink def) {
+        return getResourceAttr(ns, name, fb.getResource(name, def));
     }
 
     /**
@@ -142,9 +166,13 @@ public class XmlHelper implements Context {
         if (val.equals("match_parent")) return View.Layout.MATCH_PARENT;
         if (val.equals("wrap_content")) return View.Layout.WRAP_CONTENT;
 
-        val = ResourceManager.get(r, val).toString();
+        val = ResourceManager.get(this, val).toString();
 
         return Integer.parseInt(val);
+    }
+
+    public Integer getDimenAttr(String ns, String name, Style fb, Integer def) {
+        return getDimenAttr(ns, name, fb.getDimen(name, def));
     }
 
     /**
@@ -157,22 +185,20 @@ public class XmlHelper implements Context {
      */
     public Rect getRectAttr(String ns, String name, Rect def) {
         Integer all = getDimenAttr(ns, name, null);
-        def = def.clone();
+        if (all == null && def == null) def = new Rect(0, 0, 0, 0);
+        else if (all != null) def = new Rect(all, all, all, all);
+        else def = def.clone();
 
-        if (all != null) {
-            def.left = def.top = def.right = def.bottom = all;
-        }
-
-        Integer val = getDimenAttr(ns, name + "-left", null);
-        if (val != null) def.left = val;
-        val = getDimenAttr(ns, name + "-top", null);
-        if (val != null) def.top = val;
-        val = getDimenAttr(ns, name + "-right", null);
-        if (val != null) def.right = val;
-        val = getDimenAttr(ns, name + "-bottom", null);
-        if (val != null) def.bottom = val;
+        def.left = getDimenAttr(ns, name + "-left", def.left);
+        def.top = getDimenAttr(ns, name + "-top", def.top);
+        def.right = getDimenAttr(ns, name + "-right", def.right);
+        def.bottom = getDimenAttr(ns, name + "-bottom", def.bottom);
 
         return def;
+    }
+
+    public Rect getRectAttr(String ns, String name, Style fb, Rect def) {
+        return getRectAttr(ns, name, fb.getRect(name, def));
     }
 
     /**
@@ -198,11 +224,15 @@ public class XmlHelper implements Context {
      * @return Enum value or default value
      */
     public Enum getEnumAttr(String ns, String name, Enum def) {
-        String val = getStringAttr(ns, name, null);
+        String val = getStringAttr(ns, name, (String) null);
         if (val == null) return def;
         Class<Enum> clazz = (Class<Enum>) def.getClass();
         if (val != null) return Enum.valueOf(clazz, val.toUpperCase());
         return def;
+    }
+
+    public Enum getEnumAttr(String ns, String name, Style fb, Enum def) {
+        return getEnumAttr(ns, name, fb.getEnum(name, def));
     }
 
     /**
@@ -244,7 +274,7 @@ public class XmlHelper implements Context {
         String id = attr.getNodeValue();
         if (id.equals("parent")) return 0;
 
-        Object val = ResourceManager.get(r, id);
+        Object val = ResourceManager.get(this, id);
 
         if (val == null) return -1;
         if (val instanceof Integer) {
@@ -252,6 +282,12 @@ public class XmlHelper implements Context {
         }
 
         return Integer.valueOf(val.toString());
+    }
+
+    public int getIdAttr(String ns, String name, Style fb) {
+        int id = getIdAttr(ns, name);
+        if (id == -1) id = fb.getIdAttr(name);
+        return id;
     }
 
     /**
@@ -262,13 +298,17 @@ public class XmlHelper implements Context {
      * @return Readed size or default value
      */
     public Point getSize(String ns, Point def) {
-
-        def = def.clone();
+        if (def == null) def = new Point(0, 0);
+        else def = def.clone();
 
         def.x = getDimenAttr(ns, "width", def.x);
         def.y = getDimenAttr(ns, "height", def.y);
 
         return def;
+    }
+
+    public Point getSize(String ns, Style fb, Point def) {
+        return getSize(ns, fb.getSize(def));
     }
 
     /**
@@ -284,8 +324,12 @@ public class XmlHelper implements Context {
         if (attr == null) return def;
 
         String value = attr.getNodeValue();
-        value = ResourceManager.get(r, value).toString();
+        value = ResourceManager.get(this, value).toString();
         return Long.parseLong(value, 16);
+    }
+
+    public Long getColorAttr(String ns, String name, Style fb, Long def) {
+        return getColorAttr(ns, name, fb.getColor(name, def));
     }
 
     /**
@@ -302,20 +346,31 @@ public class XmlHelper implements Context {
         return node.getTextContent();
     }
 
-    /**
-     * @return Current mod R class
-     */
-    @Override
-    public Class R() {
-        return r;
-    }
-
     public Style getStyleAttr(String ns, String name, Style def) {
         Node sName = getAttr(ns, name);
         if (sName == null) {
             return def;
         }
 
-        return (Style) ResourceManager.get(r, sName.getNodeValue());
+        Style result = (Style) ResourceManager.get(this, sName.getNodeValue());
+        if (result == null) return def;
+
+        result.setFallbackTheme(def);
+        return result;
+    }
+
+    public Boolean getBoolAttr(String NS, String name, Boolean def) {
+        String val = getStringAttr(NS, name, (String) null);
+        if (val == null) return def;
+        if (val.equals("true")) return true;
+        try {
+            return Integer.valueOf(val) > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public Boolean getBoolAttr(String ns, String name, Style fb, Boolean def) {
+        return getBoolAttr(ns, name, fb.getBool(name, def));
     }
 }

@@ -1,11 +1,12 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.Contexted;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
-import com.onkiup.minedroid.gui.drawables.Drawable;
-import com.onkiup.minedroid.gui.drawables.RoundedCornerDrawable;
+import com.onkiup.minedroid.gui.drawables.*;
 import com.onkiup.minedroid.gui.events.MouseEvent;
+import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.resources.Style;
@@ -32,10 +33,6 @@ public class ListView extends LinearLayout {
      * Cached views that are ready to be reused
      */
     protected HashMap<Class, List<View>> mReusable = new HashMap<Class, List<View>>();
-    /**
-     * Sizes of currently shown in list Views. Used to approximately determine scroller size.
-     */
-    protected List<Integer> mSizes = new ArrayList<Integer>();
 
     /**
      * Drawable to be shown when there is no objects in list
@@ -83,7 +80,7 @@ public class ListView extends LinearLayout {
     @Override
     public void resolveLayout(Layout layout) {
         super.resolveLayout(layout);
-        if (mFirstShown == mLastShown && mLastShown == 0) {
+        if (mFirstShown == mLastShown && mLastShown == 0 && getInnerSize() > 0) {
             fill();
 
             // we need to re-resolve layout :)
@@ -97,8 +94,8 @@ public class ListView extends LinearLayout {
     }
 
     @Override
-    public void onDraw() {
-        super.onDraw();
+    public void onDraw(float partialTicks) {
+        super.onDraw(partialTicks);
 //        BorderDrawable d = new BorderDrawable(new Color(0x66ff0000));
 //        d.setSize(resolvedLayout.getInnerSize());
 //        d.draw(position.add(resolvedLayout.padding.coords()));
@@ -112,7 +109,7 @@ public class ListView extends LinearLayout {
     }
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         if (mObjects == null || mObjects.size() == 0) {
             if (mEmptyDrawable != null) {
                 Rect inner = resolvedLayout.getInnerRect();
@@ -142,18 +139,23 @@ public class ListView extends LinearLayout {
             resolvedLayout.padding.top -= mOffset;
         }
 
-        super.drawContents();
+        super.drawContents(partialTicks);
 
         resolvedLayout = tmp;
 
         // rendering scrollbar
         int itemsCount = mObjects.size();
         if (mLastShown == mFirstShown || itemsCount == 0) return;
-        int approximateItemSize = mShownSize / (mLastShown - mFirstShown);
-        int approximateHeight = approximateItemSize * itemsCount;
-        int scrollerHeight = (int) (getInnerSize() * 1f / approximateHeight * getInnerSize());
+        float approximateItemSize = mShownSize * 1f / (mLastShown - mFirstShown);
+        float approximateHeight = approximateItemSize * itemsCount;
+        int scrollerHeight = (int) Math.floor(getInnerSize() / approximateHeight * getInnerSize());
 
-        int scrollerPos = (int) (getInnerSize() * 1f * (mFirstShown * 1f / itemsCount));
+        int scrollerPos = (int) Math.floor(getInnerSize() * ((mFirstShown) * 1f / (itemsCount))) + mOffset;
+
+        int scrollArea = scrollerPos + scrollerHeight;
+        if(getInnerSize() - scrollArea > 0 && getInnerSize() - scrollArea < 1.5) {
+            scrollerPos += 1;
+        }
 
         RoundedCornerDrawable scroller = new RoundedCornerDrawable(0x33000000, 1);
 
@@ -169,6 +171,21 @@ public class ListView extends LinearLayout {
         }
         scroller.draw(scPosition);
 
+        if (debug) {
+            DebugDrawable d = new DebugDrawable(new Color(0x66000000));
+            if (orientation == Orientation.HORIZONTAL) {
+                d.setSize(new Point(mShownSize, resolvedLayout.getInnerHeight()));
+                d.draw(position.sub(new Point(mOffset, 0)));
+            } else {
+                d.setSize(new Point(resolvedLayout.getInnerWidth(), mShownSize));
+                d.draw(position.sub(new Point(0, mOffset)));
+            }
+            TrueTypeDrawable t = new TrueTypeDrawable("(" +mOffset+") " + mFirstShown + "-" + mLastShown
+                    +"("+getChildrenCount()+")", 0xFF000000);
+            t.setTextSize(10);
+            t.setSize(t.getOriginalSize());
+            t.draw(position.add(new Point(5, 5)));
+        }
     }
 
 
@@ -202,9 +219,6 @@ public class ListView extends LinearLayout {
         int mySize = getInnerSize();
         for (int i = mFirstShown; i < mObjects.size(); i++) {
             View v = getViewFor(i);
-            Holder holder = (Holder) v.getHolder();
-            holder.setPosition(i);
-            holder.setObject(mObjects.get(i));
             int size = getItemSize(v);
             addChild(v);
             mLastShown++;
@@ -236,7 +250,7 @@ public class ListView extends LinearLayout {
             for (int i = 1; i < mFirstShown; i++) {
                 int size = getItemSize(mFirstShown - i);
                 newOffset += size;
-                if (newOffset >= 0) {
+                if (newOffset > 0) {
                     mOffset = newOffset;
                     moveToFirst(mFirstShown - i);
                     return;
@@ -310,9 +324,6 @@ public class ListView extends LinearLayout {
         for (int i = 0; i < position - mLastShown; i++) {
             int itemPosition = mLastShown + 1 + i;
             View v = getViewFor(itemPosition);
-            Holder holder = (Holder) v.getHolder();
-            holder.setPosition(itemPosition);
-            holder.setObject(mObjects.get(itemPosition));
 
             addChild(v);
             addedSize += getItemSize(v);
@@ -330,7 +341,7 @@ public class ListView extends LinearLayout {
         int newOffset = mOffset;
         for (int i = 0; i < getChildrenCount(); i++) {
             int size = getItemSize(mFirstShown);
-            if (newOffset - size < 0) {
+            if (newOffset - size <= 0) {
                 break;
             }
             newOffset -= size;
@@ -348,7 +359,7 @@ public class ListView extends LinearLayout {
         int newSize = mShownSize;
         for (int i = 0; i < getChildrenCount(); i++) {
             int size = getItemSize(mLastShown);
-            if (newSize - size - mOffset < getInnerSize()) {
+            if (newSize - size - mOffset <= getInnerSize()) {
                 break;
             }
 
@@ -420,21 +431,26 @@ public class ListView extends LinearLayout {
     }
 
     /**
-     *
      * @param position
      * @return View that can show item with given position
      */
     protected View getViewFor(int position) {
-        if (position > mFirstShown && position < mLastShown) {
-            return getChildAt(position - mFirstShown);
+        if (position >= mFirstShown && position <= mLastShown) {
+            int child = position - mFirstShown;
+            if (child > -1 && child < getChildrenCount() - 1) {
+                return getChildAt(position - mFirstShown);
+            }
         }
 
         Object o = mObjects.get(position);
-        return getViewFor(o.getClass());
+        View v = getViewFor(o.getClass());
+        Holder holder = (Holder) v.getHolder();
+        holder.setPosition(position);
+        holder.setObject(mObjects.get(position));
+        return v;
     }
 
     /**
-     *
      * @param view
      * @return View's width if list is horizontal, otherwise returns it's height
      */
@@ -455,37 +471,30 @@ public class ListView extends LinearLayout {
     }
 
     /**
-     *
      * @param position
      * @return View's size for given position
      */
     protected int getItemSize(int position) {
-        if (position >= mSizes.size())
-            for (int i = mSizes.size(); i <= position; i++) {
-                View view = getViewFor(i);
+        View view = getViewFor(position);
 
-                int size = getItemSize(view);
-                mSizes.add(size);
-            }
+        int size = getItemSize(view);
 
-        return mSizes.get(position);
+        return size;
     }
 
     @Override
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
 
-        ResourceLocation location = node.getResourceAttr(MineDroid.NS, "empty", null);
-        if (location != null) {
-            mEmptyDrawable = MineDroid.inflateDrawable(this, location);
-        }
+        mEmptyDrawable = node.getDrawableAttr(GuiManager.NS, "empty", style, null);
     }
 
     /**
      * Holder for list children
+     *
      * @param <T>
      */
-    public static abstract class Holder<T> implements ViewHolder<T>, Context {
+    public static abstract class Holder<T> extends Contexted implements ViewHolder<T> {
         /**
          * Controlled view
          */
@@ -502,26 +511,26 @@ public class ListView extends LinearLayout {
          * ListView that holds this ViewHolder
          */
         protected ListView mList;
-        protected Class R;
 
         public Holder(Context context) {
-            R = context.R();
+            super(context);
         }
 
         /**
-         *
          * @return Location of the View's XML source
          */
         protected abstract ResourceLocation getViewLocation();
 
         /**
          * Should populate view with values from given object
+         *
          * @param object
          */
         protected abstract void fill(T object);
 
         /**
          * Should accept the view to be populated
+         *
          * @param view
          */
         protected abstract void link(View view);
@@ -533,7 +542,6 @@ public class ListView extends LinearLayout {
         }
 
         /**
-         *
          * @return list item that is used by this ViewHolder
          */
         public T getObject() {
@@ -542,6 +550,7 @@ public class ListView extends LinearLayout {
 
         /**
          * Sets ListView that holds this ViewHolder
+         *
          * @param list
          */
         public void setList(ListView list) {
@@ -550,6 +559,7 @@ public class ListView extends LinearLayout {
 
         /**
          * Sets index of the item in the list
+         *
          * @param position
          */
         public void setPosition(int position) {
@@ -566,16 +576,11 @@ public class ListView extends LinearLayout {
         @Override
         public View getView() {
             if (mView == null) {
-                mView = MineDroid.inflateLayout(this, getViewLocation());
+                mView = GuiManager.inflateLayout(this, getViewLocation());
                 mView.setHolder(this);
             }
 
             return mView;
-        }
-
-        @Override
-        public Class R() {
-            return R;
         }
     }
 

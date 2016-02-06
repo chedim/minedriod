@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
@@ -22,6 +22,7 @@ public class LinearLayout extends ViewGroup {
 
     /**
      * Sets line orientation
+     *
      * @param orientation new line orientation
      */
     public void setOrientation(Orientation orientation) {
@@ -36,11 +37,15 @@ public class LinearLayout extends ViewGroup {
     @Override
     public Layout measure(Point boundaries) {
         Layout result = layout.clone();
-        result.setInnerWidth(0);
-        result.setInnerHeight(0);
+        if (result.width == Layout.WRAP_CONTENT) {
+            result.setInnerWidth(0);
+        }
+        if (result.height == Layout.WRAP_CONTENT) {
+            result.setInnerHeight(0);
+        }
         for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
-            Layout childLayout = child.getLayout();
+            Layout childLayout = child.getLayout().clone();
             if (!childLayout.isResolved()) {
                 // resolving layout
                 if (childLayout.shouldBeMeasured()) {
@@ -65,24 +70,32 @@ public class LinearLayout extends ViewGroup {
             }
 
             if (orientation == Orientation.HORIZONTAL) {
-                // adding item width & margins to ours.
-                result.width += childLayout.getOuterWidth();
                 // correcting our height to make all of elements fully visible
-                result.setInnerHeight(Math.max(childLayout.getOuterHeight(), result.getInnerHeight()));
+                if (layout.height == Layout.WRAP_CONTENT) {
+                    result.setInnerHeight(Math.max(childLayout.getOuterHeight(), result.getInnerHeight()));
+                }
+                if (layout.width == Layout.WRAP_CONTENT) {
+                    // adding item width & margins to ours.
+                    result.width += childLayout.getOuterWidth();
+                }
             } else {
                 // correcting our width to make all of elements fully visible
-                result.setInnerWidth(Math.max(childLayout.getOuterWidth(), result.getInnerWidth()));
-                // adding item height to ours
-                result.height += childLayout.getOuterHeight();
+                if (layout.width == Layout.WRAP_CONTENT) {
+                    result.setInnerWidth(Math.max(childLayout.getOuterWidth(), result.getInnerWidth()));
+                }
+                if (layout.height == Layout.WRAP_CONTENT) {
+                    // adding item height to ours
+                    result.height += childLayout.getOuterHeight();
+                }
             }
         }
 
         // applying limits from parent. Parent margins? That's his margins, so let him manage them.
-        if (boundaries != null) {
+        if (boundaries != null && result.width > -1) {
             if (boundaries.x > -1) {
                 result.setOuterWidth(Math.min(boundaries.x, result.getOuterWidth()));
             }
-            if (boundaries.y > -1) {
+            if (boundaries.y > -1 && result.height > -1) {
                 result.setOuterHeight(Math.min(boundaries.y, result.getOuterHeight()));
             }
         }
@@ -92,22 +105,21 @@ public class LinearLayout extends ViewGroup {
     }
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         // drawing our children
         Point target = position.add(resolvedLayout.padding.coords());
-        Point mySize = resolvedLayout.getInnerSize();
-        Point gravity = getGravityOffset(mySize);
-        for (int i=0; i< getChildrenCount(); i++) {
+        for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
             Layout childLayout = child.getResolvedLayout();
             Point childTarget = target.add(childLayout.margin.coords());
+            Point gravity = getGravityOffset(childLayout.getOuterSize());
             if (orientation == Orientation.HORIZONTAL) {
                 childTarget.y += gravity.y;
             } else {
                 childTarget.x += gravity.x;
             }
             child.setPosition(childTarget);
-            child.onDraw();
+            child.onDraw(partialTicks);
             if (orientation == Orientation.HORIZONTAL) {
                 target.x += childLayout.getOuterWidth();
             } else {
@@ -122,20 +134,33 @@ public class LinearLayout extends ViewGroup {
 
         // calculating items layouts
         Point areaLeft = layout.getInnerSize();
-        for (int i = 0; i< getChildrenCount(); i++) {
+        for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
             Layout childLayout = child.measure(areaLeft);
+            Layout origChildLayout = child.getLayout();
             if (orientation == Orientation.HORIZONTAL) {
-                childLayout.setOuterHeight(resolvedLayout.getInnerHeight());
-                if (childLayout.width == 0) {
+                if (origChildLayout.width == 0) {
                     childLayout.setOuterWidth(resolvedLayout.getInnerWidth() / weightSum * child.getLayoutWeight());
                 }
             }
             if (orientation == Orientation.VERTICAL) {
-                childLayout.setOuterWidth(resolvedLayout.getInnerWidth());
-                if (childLayout.height == 0) {
+                if (origChildLayout.height == 0) {
                     childLayout.setOuterHeight(resolvedLayout.getInnerHeight() / weightSum * child.getLayoutWeight());
                 }
+            }
+
+            if (childLayout.width == Layout.MATCH_PARENT) {
+                if (orientation == Orientation.HORIZONTAL)
+                    throw new RuntimeException("MATCH_PARENT width in HORIZONTAL LinearLayout makes no sense...");      // that's true!!
+                // making sure that this child will not affect our measure
+                childLayout.setOuterWidth(resolvedLayout.getInnerWidth());
+            }
+
+            if (childLayout.height == Layout.MATCH_PARENT) {
+                if (orientation == Orientation.VERTICAL)
+                    throw new RuntimeException("MATCH_PARENT height in VERTICAL LinearLayout makes no sense...");       // that's also true!!
+                // making sure that this child will not affect our measure
+                childLayout.setOuterHeight(resolvedLayout.getInnerHeight());
             }
 
             child.resolveLayout(childLayout);
@@ -173,7 +198,7 @@ public class LinearLayout extends ViewGroup {
     @Override
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
-        orientation = (Orientation) node.getEnumAttr(MineDroid.NS, "orientation", Orientation.VERTICAL);
+        orientation = (Orientation) node.getEnumAttr(GuiManager.NS, "orientation", style, Orientation.VERTICAL);
     }
 
     @Override

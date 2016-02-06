@@ -10,4 +10,5 @@
     <item name="list_view">@minedroid:style/list_view</item>
     <item name="linear_layout">@minedroid:style/linear_layout</item>
     <item name="relative_layout">@minedroid:style/relative_layout</item>
+    <item name="entity_view">@minedroid:style/entity_view</item>
 </style>

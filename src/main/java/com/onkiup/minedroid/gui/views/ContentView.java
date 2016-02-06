@@ -1,8 +1,10 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.drawables.DebugDrawable;
+import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.resources.Style;
@@ -18,7 +20,7 @@ public abstract class ContentView extends View {
     /**
      * Content gravity on Y axis
      */
-    protected VGravity vGravity = VGravity.CENTER;
+    protected VGravity vGravity = VGravity.TOP;
 
     public ContentView(Context context) {
         super(context);
@@ -65,7 +67,7 @@ public abstract class ContentView extends View {
         Point result = new Point(0, 0);
         Point me = resolvedLayout.getInnerSize();
         if (hGravity == HGravity.CENTER) result.x = me.x / 2 - size.x / 2;
-        else if (hGravity == HGravity.RIGHT) result.x = me.x = size.x;
+        else if (hGravity == HGravity.RIGHT) result.x = me.x - size.x;
 
         if (vGravity == VGravity.CENTER) result.y = me.y / 2 - size.y / 2;
         else if (vGravity == VGravity.BOTTOM) result.y = me.y - size.y;
@@ -74,11 +76,10 @@ public abstract class ContentView extends View {
     }
 
     @Override
-    public void onDraw() {
-        super.onDraw();
-
+    public void onDraw(float partialTicks) {
+        super.onDraw(partialTicks);
         setClipRect();
-        drawContents();
+        drawContents(partialTicks);
         resetClipRect();
     }
 
@@ -87,20 +88,31 @@ public abstract class ContentView extends View {
      */
     protected void setClipRect() {
         Rect inner = resolvedLayout.getInnerRect().move(position);
-        MineDroid.addClipRect(inner);
+        int f = GuiManager.getScale().getScaleFactor();
+//        inner.left -= f;
+//        inner.top -= f;
+//        inner.bottom += f;
+//        inner.right += f;
+        if (debug) {
+            DebugDrawable d = new DebugDrawable(new Color(0x6600ff00));
+            d.setSize(inner.getSize());
+            d.draw(inner.coords());
+        } else {
+            GuiManager.addClipRect(inner);
+        }
     }
 
     /**
      * Drops G_SCISSOR rectangle
      */
     protected void resetClipRect() {
-        MineDroid.restoreClipRect();
+        if (!debug) GuiManager.restoreClipRect();
     }
 
     /**
      * Draws view contents
      */
-    public abstract void drawContents();
+    public abstract void drawContents(float partialTicks);
 
     /**
      * Clears view contents
@@ -121,11 +133,8 @@ public abstract class ContentView extends View {
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
 
-        HGravity themeHGravity = (HGravity) style.getEnum("horizontal-gravity", HGravity.CENTER);
-        VGravity themeVGravity = (VGravity) style.getEnum("vertical-gravity", VGravity.CENTER);
-
-        setGravityHorizontal((HGravity) node.getEnumAttr(MineDroid.NS, "horizontal-gravity", themeHGravity));
-        setGravityVertical((VGravity) node.getEnumAttr(MineDroid.NS, "vertical-gravity", themeVGravity));
+        setGravityHorizontal((HGravity) node.getEnumAttr(GuiManager.NS, "horizontal-gravity", style, HGravity.LEFT));
+        setGravityVertical((VGravity) node.getEnumAttr(GuiManager.NS, "vertical-gravity", style, VGravity.TOP));
     }
 
     @Override

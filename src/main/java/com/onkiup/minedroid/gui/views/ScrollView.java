@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.MouseEvent;
@@ -23,9 +23,9 @@ public class ScrollView extends ContentView {
 
     public ScrollView(Context context) {
         super(context);
-        ResourceLocation rl = MineDroid.getTheme(context).getStyle("scroll_view").getResource("scrollbar_drawable", null);
+        ResourceLocation rl = GuiManager.getTheme(context).getStyle("scroll_view").getResource("scrollbar_drawable", null);
         if (rl != null) {
-            scrollDrawable = MineDroid.inflateDrawable(this, rl);
+            scrollDrawable = GuiManager.inflateDrawable(this, rl);
         }
     }
 
@@ -50,7 +50,7 @@ public class ScrollView extends ContentView {
     }
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         if (child == null) return;
 
         Layout childLayout = child.getResolvedLayout();
@@ -62,7 +62,7 @@ public class ScrollView extends ContentView {
 
         child.setPosition(position.add(resolvedLayout.getInnerRect().coords().sub(scroll))
                 .add(resolvedLayout.getInnerRect().coords()).add(childLayout.margin.coords()));
-        child.onDraw();
+        child.onDraw(partialTicks);
 
         // drawing scroller
         int scrollerHeight = (int) (resolvedLayout.getInnerHeight() * 1f / childLayout.getOuterHeight()
@@ -90,6 +90,7 @@ public class ScrollView extends ContentView {
     public void setChild(View view) {
         child = view;
         child.setParent(this);
+        child.setDebug(debug);
     }
 
     /**
@@ -123,16 +124,13 @@ public class ScrollView extends ContentView {
         for (XmlHelper childNode : children) {
             if (child != null) throw new RuntimeException("Too many children for a ScrollView");
             try {
-                setChild(MineDroid.processNode(childNode, theme));
+                setChild(GuiManager.processNode(childNode, theme));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
 
-        ResourceLocation rl = style.getResource("scrollbar_drawable", null);
-        if (rl != null) {
-            scrollDrawable = MineDroid.inflateDrawable(this, rl);
-        }
+        scrollDrawable = node.getDrawableAttr(GuiManager.NS, "scrollbar_drawable", style, null);
     }
 
     @Override

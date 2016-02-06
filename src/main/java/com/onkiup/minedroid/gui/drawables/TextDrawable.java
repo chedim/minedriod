@@ -1,10 +1,12 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.resources.ValueLink;
+import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
@@ -140,22 +142,25 @@ public class TextDrawable implements Drawable {
         }
 
         GL11.glPushMatrix();
+        View.resetBlending();
         GL11.glScalef(fontSize, fontSize, fontSize);
 
         // scaling coordinates
-        int left = (int) (where.x / fontSize);
-        int top = (int) (where.y / fontSize);
+        int left = (int) Math.round(where.x / fontSize);
+        int top = (int) Math.round(where.y / fontSize);
 
         // drawing text
         List<String> lines = fitString(text, size.x);
         for (String line : lines) {
             renderer.drawString(line.replaceAll("\\n+$", ""), left, top, (int) color);
-            top += charHeight * fontSize;
+            ColorDrawable d = new ColorDrawable(0xff0000);
+            d.setSize(new Point(2, 2));
+            d.draw(new Point(left, top));
+            top += Math.round(charHeight * fontSize);
         }
 
         // resetting output scale
         GL11.glScalef(1 / fontSize, 1 / fontSize, 1 / fontSize);
-        GL11.glPopMatrix();
     }
 
     @Override
@@ -179,10 +184,10 @@ public class TextDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Style theme) {
         Style s = theme.getStyle("text");
-        color = node.getColorAttr(MineDroid.NS, "color", Long.valueOf(s.getInt("color", 0)));
-        setText(node.getStringAttr(MineDroid.NS, "text", ""));
-        setTextSize(node.getFloatAttr(MineDroid.NS, "size", s.getFloat("fontSize", 1f)));
-        setSize(node.getSize(MineDroid.NS, getOriginalSize()));
+        color = node.getColorAttr(GuiManager.NS, "color", Long.valueOf(s.getInt("color", 0)));
+        setText(node.getStringAttr(GuiManager.NS, "text", ""));
+        setTextSize(node.getFloatAttr(GuiManager.NS, "size", s.getFloat("fontSize", 1f)));
+        setSize(node.getSize(GuiManager.NS, getOriginalSize()));
     }
 
     /**
@@ -214,7 +219,7 @@ public class TextDrawable implements Drawable {
     public Point calculateEndPoint(String text, int width) {
         List<String> lines = fitString(text, width);
         int lastLineWidth = getStringWidth(lines.get(lines.size() - 1));
-        return new Point(lastLineWidth, Math.round(charHeight * lines.size() * fontSize));
+        return new Point(lastLineWidth, (int) Math.round(charHeight * lines.size() * fontSize));
     }
 
     /**
@@ -322,7 +327,7 @@ public class TextDrawable implements Drawable {
      * @return Calculated width
      */
     public int getStringWidth(String text) {
-        int result = 0, currentLine = 0;
+        float currentLine = 0, result = 0;
         FontRenderer renderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
 
         for (int i = 0; i < text.length(); i++) {
@@ -335,7 +340,11 @@ public class TextDrawable implements Drawable {
             if (currentLine > result) result = currentLine;
         }
 
-        return result;
+        return Math.round(result);
+    }
+
+    public List<String> fitString(String text, int width) {
+        return fitString(text, width, fontSize);
     }
 
     /**
@@ -344,10 +353,10 @@ public class TextDrawable implements Drawable {
      * @param width Width limit
      * @return Splitted text
      */
-    public List<String> fitString(String text, int width) {
+    public List<String> fitString(String text, int width, float fontSize) {
         FontRenderer renderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
         List<String> result = new ArrayList<String>();
-        int lineWidth = 0;
+        float lineWidth = 0;
         String separators = " .,!:;)-=";
         StringBuilder line = new StringBuilder();
         if (text.length() == 0) {
@@ -357,12 +366,12 @@ public class TextDrawable implements Drawable {
 
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
-            int charWidth = renderer.getCharWidth(c);
+            float charWidth = renderer.getCharWidth(c) * fontSize;
             if (c == '\n') {
                 result.add(line.toString() + "\n");
                 line.setLength(0);
                 lineWidth = 0;
-            } else if (lineWidth + charWidth <= width) {
+            } else if (Math.floor(lineWidth + charWidth) <= width) {
                 line.append(c);
                 lineWidth += charWidth;
             } else {
@@ -395,6 +404,11 @@ public class TextDrawable implements Drawable {
         result.setTextSize(fontSize);
 
         return result;
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int size) {
+
     }
 
     public void setColor(long color) {

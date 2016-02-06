@@ -1,10 +1,2 @@
 <style xmlns="http://onkiup.com/minecraft/xml">
-    <item name="padding-left">0</item>
-    <item name="padding-top">0</item>
-    <item name="padding-right">0</item>
-    <item name="padding-bottom">0</item>
-    <item name="margin-left">0</item>
-    <item name="margin-top">0</item>
-    <item name="margin-right">0</item>
-    <item name="margin-bottom">0</item>
 </style>

@@ -1,9 +1,9 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
-import com.onkiup.minedroid.gui.drawables.TextDrawable;
+import com.onkiup.minedroid.gui.drawables.TrueTypeDrawable;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.resources.ValueLink;
@@ -12,13 +12,13 @@ import com.onkiup.minedroid.gui.resources.ValueLink;
  * Shows some text
  */
 public class TextView extends ContentView {
-    protected TextDrawable text = new TextDrawable("", 0);
+    protected TrueTypeDrawable text = new TrueTypeDrawable("", 0);
 
     public TextView(Context context) {
         super(context);
-        text.setTextSize(MineDroid.getTheme(context).getStyle(getThemeStyleName()).getFloat("fontSize", 1f));
-        vGravity = VGravity.CENTER;
-        hGravity = HGravity.CENTER;
+        text.setTextSize(GuiManager.getTheme(context).getStyle(getThemeStyleName()).getInt("fontSize", 14));
+        vGravity = VGravity.TOP;
+        hGravity = HGravity.LEFT;
     }
 
     public TextView(Context context, String text) {
@@ -47,12 +47,12 @@ public class TextView extends ContentView {
      * Sets font scale factor
      * @param size
      */
-    public void setFontSize(float size) {
+    public void setFontSize(int size) {
         text.setTextSize(size);
     }
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         Point textSize = getTextSize();
         text.setSize(textSize);
         Point offset = getGravityOffset(textSize);
@@ -72,6 +72,7 @@ public class TextView extends ContentView {
         Point textSize = text.getOriginalSize();
         result.setInnerWidth(Math.max(result.getInnerWidth(), textSize.x));
         result.setInnerHeight(Math.max(result.getInnerHeight(), textSize.y));
+//        FMLLog.info("Measured size for %s: (%d, %d)", text.getText(), result.getOuterWidth(), result.getOuterHeight());
         return result;
     }
 
@@ -121,16 +122,13 @@ public class TextView extends ContentView {
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
 
-        float themeTextSize = style.getFloat("fontSize", 1f);
-        int themeTextColor = style.getInt("color", 0);
-
-        String text = node.getLocalizedAttr(MineDroid.NS, "text", "");
+        String text = node.getLocalizedAttr(GuiManager.NS, "text", "");
         setText(text);
-        setTextSize(node.getFloatAttr(MineDroid.NS, "fontSize", themeTextSize));
-        setColor(node.getIntegerAttr(MineDroid.NS, "color", themeTextColor));
+        setTextSize(node.getIntegerAttr(GuiManager.NS, "fontSize", style, 14));
+        setColor(node.getColorAttr(GuiManager.NS, "color", style, 0l));
     }
 
-    public void setTextSize(Float fontSize) {
+    public void setTextSize(int fontSize) {
         text.setTextSize(fontSize);
     }
 

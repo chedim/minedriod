@@ -1,12 +1,12 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.Color;
 import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
-import net.minecraft.client.renderer.GlStateManager;
+import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 
@@ -42,12 +42,9 @@ public class ColorDrawable implements Drawable {
 
     @Override
     public void draw(Point where) {
+        View.resetBlending();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(color.red, color.green, color.blue, color.alpha);
         worldrenderer.startDrawingQuads();
 
         double left = where.x;
@@ -55,14 +52,12 @@ public class ColorDrawable implements Drawable {
         double right = where.x + size.x;
         double bottom = where.y + size.y;
 
+        worldrenderer.setColorRGBA_F(color.red, color.green, color.blue, color.alpha);
         worldrenderer.addVertex(left, bottom, 0.0D);
         worldrenderer.addVertex(right, bottom, 0.0D);
         worldrenderer.addVertex(right, top, 0.0D);
         worldrenderer.addVertex(left, top, 0.0D);
         tessellator.draw();
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
-
     }
 
     @Override
@@ -115,8 +110,8 @@ public class ColorDrawable implements Drawable {
 
     @Override
     public void inflate(XmlHelper xmlHelper, Style theme) {
-        setSize(xmlHelper.getSize(MineDroid.NS, new Point(0, 0)));
-        setColor(xmlHelper.getColorAttr(MineDroid.NS, "color", 0x00000000l));
+        setSize(xmlHelper.getSize(GuiManager.NS, new Point(0, 0)));
+        setColor(xmlHelper.getColorAttr(GuiManager.NS, "color", 0x00000000l));
     }
 
     @Override
@@ -124,5 +119,19 @@ public class ColorDrawable implements Drawable {
         ColorDrawable result = new ColorDrawable(color.clone());
         if (size != null) result.setSize(size.clone());
         return result;
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int w) {
+        if (this.size == null) return;
+        GLColor stop = color.clone();
+        stop.alpha = color.alpha / w;
+        RoundedCornerDrawable shadow = new RoundedCornerDrawable(stop, 0);
+        for (int i=1; i<w+1; i++) {
+            shadow.setColor(stop);
+            shadow.setRadius(i);
+            shadow.setSize(size.add(new Point(i*2, i*2)));
+            shadow.draw(where.add(new Point(-i, -i)));
+        }
     }
 }

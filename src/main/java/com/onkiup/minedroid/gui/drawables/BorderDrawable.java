@@ -1,6 +1,7 @@
 package com.onkiup.minedroid.gui.drawables;
 
 import com.onkiup.minedroid.gui.primitives.Color;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 
 /**

@@ -1,7 +1,8 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.util.ResourceLocation;
@@ -93,8 +94,8 @@ public class NinePatchDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Style theme) {
         try {
-            setDrawables(node.getResourceAttr(MineDroid.NS, "src", null));
-            setSize(node.getSize(MineDroid.NS, size));
+            setDrawables(node.getResourceAttr(GuiManager.NS, "src", null));
+            setSize(node.getSize(GuiManager.NS, size));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,5 +111,10 @@ public class NinePatchDrawable implements Drawable {
         if (size != null) result.setSize(size.clone());
 
         return result;
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int size) {
+
     }
 }

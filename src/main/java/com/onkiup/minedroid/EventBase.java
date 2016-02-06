@@ -1,4 +1,6 @@
-package com.onkiup.minedroid.gui.events;
+package com.onkiup.minedroid;
+
+import com.onkiup.minedroid.gui.events.Event;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -47,11 +49,13 @@ public class EventBase {
      * Fires event
      * @param type Event type class
      * @param args Event argument
+     * @return true if event had been handled
      */
-    public void fireEvent(Class type, Object args) {
-        if (!eventListeners.containsKey(type)) return;
+    public Boolean fireEvent(Class type, Object args) {
+        if (!eventListeners.containsKey(type)) return false;
         ArrayList<WeakReference<Event>> listeners = eventListeners.get(type);
         ArrayList<WeakReference<Event>> rm = new ArrayList<WeakReference<Event>>();
+        Boolean result = false;
         for (WeakReference<Event> reference: listeners) {
             Event listener = reference.get();
             if (listener == null) {
@@ -59,9 +63,11 @@ public class EventBase {
                 continue;
             }
             listener.handle(args);
+            result = true;
         }
 
         listeners.removeAll(rm);
+        return result;
     }
 
     /**

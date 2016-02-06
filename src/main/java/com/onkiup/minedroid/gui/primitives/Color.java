@@ -20,7 +20,9 @@ public class Color {
         blue = (int) (color & 255);
         green = (int) (color >> 8 & 255);
         red = (int) (color >> 16 & 255);
-        alpha = (int) (color >> 24 & 255);
+        if (color > 0xFFFFFF) {
+            alpha = (int) (color >> 24 & 255);
+        }
     }
 
     @Override

@@ -1,21 +1,20 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.EventBase;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
-import com.onkiup.minedroid.gui.drawables.DebugDrawable;
-import com.onkiup.minedroid.gui.drawables.Drawable;
-import com.onkiup.minedroid.gui.drawables.StateDrawable;
-import com.onkiup.minedroid.gui.drawables.TextDrawable;
-import com.onkiup.minedroid.gui.events.Event;
-import com.onkiup.minedroid.gui.events.EventBase;
-import com.onkiup.minedroid.gui.events.KeyEvent;
-import com.onkiup.minedroid.gui.events.MouseEvent;
+import com.onkiup.minedroid.gui.drawables.*;
+import com.onkiup.minedroid.gui.events.*;
 import com.onkiup.minedroid.gui.primitives.Color;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.resources.Style;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Parent class for all View elements.
@@ -56,7 +55,7 @@ public class View extends EventBase implements Context {
     /**
      * Mod context
      */
-    protected Class R;
+    protected Context context;
 
     /**
      * Associated with this View ViewHolder instance
@@ -73,16 +72,33 @@ public class View extends EventBase implements Context {
      */
     protected Style style;
 
+    /**
+     * Draggable flag
+     */
+    protected Boolean isDraggable = false;
+
+    /**
+     * View inside of this View can be dragged
+     */
+    protected Integer draggableRegion = -1;
+
+    protected int elevation = 0;
+    protected final static GLColor shadowColor = new GLColor(0f, 0f, 0f, 0.75f);
+
     public View(Context context) {
-        R = context.R();
+        this.context = context;
     }
 
     /**
      * Draws this view
      */
-    public void onDraw() {
+    public void onDraw(float partialTicks) {
+//        FMLLog.info("Drawing '%s' at %s", this, resolvedLayout.getOuterRect().move(position));
+        resetBlending();
         if (background != null) {
             background.setSize(resolvedLayout.getSize());
+            shadowColor.alpha = 0.6f;
+            if (elevation != 0) background.drawShadow(position, shadowColor, elevation);
             background.draw(position);
         }
 
@@ -93,12 +109,12 @@ public class View extends EventBase implements Context {
             border.draw(position);
 
             // size text
-            TextDrawable sizeText = new TextDrawable(resolvedLayout.getSize().toString(), 0xffff00ff);
-            sizeText.setTextSize(0.5f);
+            TrueTypeDrawable sizeText = new TrueTypeDrawable(resolvedLayout.getSize().toString(), 0xffff00ff);
+            sizeText.setTextSize(9);
 
-
-            sizeText.draw(position.add(new Point(2, sizeText.getSize().y * -1)));
+            sizeText.draw(position.add(new Point(2, 2)));
         }
+
     }
 
     /**
@@ -293,9 +309,13 @@ public class View extends EventBase implements Context {
         }
     }
 
+    public boolean isPositioned() {
+        return position != null;
+    }
+
     @Override
-    public Class R() {
-        return R;
+    public int contextId() {
+        return context.contextId();
     }
 
     /**
@@ -372,6 +392,7 @@ public class View extends EventBase implements Context {
          * @return View width with margins
          */
         public int getOuterWidth() {
+            if (width < 0) return margin.left + margin.right;
             return width + margin.left + margin.right;
         }
 
@@ -379,6 +400,7 @@ public class View extends EventBase implements Context {
          * @return View height with margins
          */
         public int getOuterHeight() {
+            if (height < 0) return margin.top + margin.bottom;
             return height + margin.top + margin.bottom;
         }
 
@@ -422,6 +444,7 @@ public class View extends EventBase implements Context {
          * @return View width without paddings and margins
          */
         public int getInnerWidth() {
+            if (width < 0) return 0;
             return width - padding.left - padding.right;
         }
 
@@ -429,6 +452,7 @@ public class View extends EventBase implements Context {
          * @return View height without paddings and margins
          */
         public int getInnerHeight() {
+            if (height < 0) return 0;
             return height - padding.top - padding.bottom;
         }
 
@@ -458,6 +482,23 @@ public class View extends EventBase implements Context {
          */
         public Rect getInnerRect() {
             return new Rect(new Point(padding.left, padding.top), getInnerSize().add(padding.coords()));
+        }
+
+        public Rect getOuterRect() {
+            return new Rect(new Point(0, 0), getOuterSize());
+        }
+
+        public boolean relatesParent() {
+            return width == MATCH_PARENT || height == MATCH_PARENT;
+        }
+
+        public void setParentSize(Point point) {
+            if (width == MATCH_PARENT) {
+                setOuterWidth(point.x);
+            }
+            if (height == MATCH_PARENT) {
+                setOuterHeight(point.y);
+            }
         }
     }
 
@@ -496,6 +537,22 @@ public class View extends EventBase implements Context {
 
     }
 
+    public interface OnDragStart extends Event<DragEvent> {
+
+    }
+
+    public interface OnDragEnd extends Event<DragEvent> {
+
+    }
+
+    public interface OnDrag extends Event<DragEvent> {
+
+    }
+
+    public interface OnDrop extends Event<DragEvent> {
+
+    }
+
     /**
      * Forces view to draw it's borders
      *
@@ -528,33 +585,31 @@ public class View extends EventBase implements Context {
      * @param theme Theme to apply
      */
     public void inflate(XmlHelper node, Style theme) {
-        setBackground(node.getDrawableAttr(MineDroid.NS, "background", null));
-        Point size = new Point(0, 0);
+        style = node.getStyleAttr(GuiManager.NS, "style", theme.getStyle(getThemeStyleName()));
+
+        setBackground(node.getDrawableAttr(GuiManager.NS, "background", style, null));
+        Point size = new Point(Layout.WRAP_CONTENT, Layout.WRAP_CONTENT);
         if (background != null) {
             size = background.getOriginalSize();
         }
 
         Layout layout = new Layout();
 
-        layout.width = node.getDimenAttr(MineDroid.NS, "width", size.x);
-        layout.height = node.getDimenAttr(MineDroid.NS, "height", size.y);
+        size = node.getSize(GuiManager.NS, style, size);
 
-        theme = theme.getStyle(getThemeStyleName());
+        layoutWeight = node.getIntegerAttr(GuiManager.NS, "weight", style, 1);
 
-        style = node.getStyleAttr(null, "style", null);
-        if (style != null) {
-            style.setFallbackTheme(theme);
-        } else {
-            style = theme;
+        layout.margin = node.getRectAttr(GuiManager.NS, "margin", style, null);
+        layout.padding = node.getRectAttr(GuiManager.NS, "padding", style, null);
+        layout.width = size.x;
+        layout.height = size.y;
+        if (isDraggable = node.getBoolAttr(GuiManager.NS, "draggable", style, false)) {
+            draggableRegion = node.getIdAttr(GuiManager.NS, "dragArea", style);
         }
-
-        Rect margin = style.getRect("margin"), padding = style.getRect("padding");
-
-        layout.margin = node.getRectAttr(MineDroid.NS, "margin", margin);
-        layout.padding = node.getRectAttr(MineDroid.NS, "padding", padding);
-
         setLayout(layout);
-        this.id = node.getIdAttr(MineDroid.NS, "id");
+        this.id = node.getIdAttr(GuiManager.NS, "id");
+        setDebug(node.getBoolAttr(GuiManager.NS, "debug", style, false));
+        this.elevation = node.getIntegerAttr(GuiManager.NS, "elevation", style, 0);
     }
 
     /**
@@ -646,5 +701,74 @@ public class View extends EventBase implements Context {
      */
     public Style getStyle() {
         return style;
+    }
+
+    /**
+     * @return true if element can be dragged
+     */
+    public boolean isDraggable() {
+        return isDraggable;
+    }
+
+    /**
+     * @return Id of View in which element can be dragged
+     */
+    public Integer getDraggableRegion() {
+        return draggableRegion;
+    }
+
+    /**
+     * Sets id of View in which element can be dragged
+     * @param id View id
+     */
+    public void setDraggableRegion(Integer id) {
+        draggableRegion = id;
+    }
+
+    public Point getPosition() {
+        return position.clone();
+    }
+
+    /**
+     * @return parent from which this element had been detached
+     */
+    public ContentView detach() {
+        ContentView parent = this.parent;
+        if (parent instanceof ViewGroup) {
+            ((ViewGroup) parent).removeChild(this);
+        } else {
+            parent.clear();
+        }
+        this.parent = null;
+        return parent;
+    }
+
+    /**
+     * Looks for a parent with given id
+     * @param id
+     * @return View if found, otherwise null
+     */
+    public View findParent(int id) {
+        View parent = getParent();
+        if (parent == null) return null;
+        if (parent.getId() == id) return parent;
+        return parent.findParent(id);
+    }
+
+    public void setElevation(int elevation) {
+        this.elevation = elevation;
+    }
+
+    public int getElevation() {
+        return elevation;
+    }
+
+    public static void resetBlending() {
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableLighting();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
     }
 }

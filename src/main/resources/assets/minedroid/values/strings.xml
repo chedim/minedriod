@@ -1,0 +1,7 @@
+<strings>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="test">test</string>
+    <string name="confirm_hint">press Y/N to respond</string>
+    <string name="alert_hint">click or press Y to dismiss</string>
+</strings>

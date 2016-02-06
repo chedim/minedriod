@@ -45,4 +45,9 @@ public class Point {
         result.y -= point.y;
         return result;
     }
+
+    public void max(Point o) {
+        x = Math.max(x, o.x);
+        y = Math.max(y, o.y);
+    }
 }
