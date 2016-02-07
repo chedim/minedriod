@@ -1,0 +1,18 @@
+<ScrollView
+    xmlns="http://onkiup.com/minecraft/xml"
+    width="match_parent" height="match_parent" margin="20">
+    <LinearLayout
+        width="match_parent" height="wrap_content">
+        <Button id="@id/close"
+                text="@string/close" width="wrap_content" height="wrap_content"/>
+        <CheckBox id="@id/checkbox"/>
+        <TextView width="match_parent" height="wrap_content"
+                  text="@string/you_defeated" color="FFFF0000"/>
+        <EditText id="@id/edit" width="100" height="100"/>
+        <ProgressView
+            id="@id/progress"
+            width="match_parent" height="10"/>
+        <ListView
+            id="@id/list" height="100" width="match_parent"/>
+    </LinearLayout>
+</ScrollView>
