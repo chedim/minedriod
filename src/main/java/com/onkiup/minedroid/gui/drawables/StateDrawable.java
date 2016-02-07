@@ -20,6 +20,7 @@ public class StateDrawable implements Drawable {
      * current displayed state
      */
     protected State state = State.DEFAULT;
+    private boolean debug;
 
     public StateDrawable() {
     }
@@ -110,5 +111,13 @@ public class StateDrawable implements Drawable {
     @Override
     public void drawShadow(Point where, GLColor color, int size) {
         drawables[state.ordinal()].drawShadow(where, color, size);
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        for (Drawable drawable : drawables) {
+            drawable.setDebug(debug);
+        }
     }
 }

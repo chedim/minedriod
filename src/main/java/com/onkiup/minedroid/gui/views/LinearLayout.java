@@ -21,6 +21,11 @@ public class LinearLayout extends ViewGroup {
     protected int weightSum;
 
     /**
+     * Space between the elements
+     */
+    protected int spacing;
+
+    /**
      * Sets line orientation
      *
      * @param orientation new line orientation
@@ -100,6 +105,13 @@ public class LinearLayout extends ViewGroup {
             }
         }
 
+        // elements spacing
+        if (orientation == Orientation.HORIZONTAL) {
+            result.setInnerWidth(result.getInnerWidth() + spacing * getChildrenCount());
+        } else {
+            result.setInnerHeight(result.getInnerHeight() + spacing * getChildrenCount());
+        }
+
         // WE DID IT!!! RETURNING PROFIT!!!111!
         return result;
     }
@@ -115,8 +127,10 @@ public class LinearLayout extends ViewGroup {
             Point gravity = getGravityOffset(childLayout.getOuterSize());
             if (orientation == Orientation.HORIZONTAL) {
                 childTarget.y += gravity.y;
+                childTarget.x += spacing * i;
             } else {
                 childTarget.x += gravity.x;
+                childTarget.y += spacing * i;
             }
             child.setPosition(childTarget);
             child.onDraw(partialTicks);
@@ -134,17 +148,20 @@ public class LinearLayout extends ViewGroup {
 
         // calculating items layouts
         Point areaLeft = layout.getInnerSize();
+        int space = spacing * getChildrenCount();
         for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
             Layout childLayout = child.measure(areaLeft);
             Layout origChildLayout = child.getLayout();
             if (orientation == Orientation.HORIZONTAL) {
                 if (origChildLayout.width == 0) {
-                    childLayout.setOuterWidth(resolvedLayout.getInnerWidth() / weightSum * child.getLayoutWeight());
+                    int inner = resolvedLayout.getInnerWidth() - space;
+                    childLayout.setOuterWidth(inner / weightSum * child.getLayoutWeight());
                 }
             }
             if (orientation == Orientation.VERTICAL) {
                 if (origChildLayout.height == 0) {
+                    int inner = resolvedLayout.getInnerHeight() - space;
                     childLayout.setOuterHeight(resolvedLayout.getInnerHeight() / weightSum * child.getLayoutWeight());
                 }
             }
@@ -199,6 +216,7 @@ public class LinearLayout extends ViewGroup {
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
         orientation = (Orientation) node.getEnumAttr(GuiManager.NS, "orientation", style, Orientation.VERTICAL);
+        spacing = node.getIntegerAttr(GuiManager.NS, "spacing", style, 0);
     }
 
     @Override

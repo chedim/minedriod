@@ -11,6 +11,7 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -217,14 +218,16 @@ public class ListView extends LinearLayout {
         super.removeAllChildren();
         mShownSize = 0;
         int mySize = getInnerSize();
-        for (int i = mFirstShown; i < mObjects.size(); i++) {
-            View v = getViewFor(i);
-            int size = getItemSize(v);
-            addChild(v);
-            mLastShown++;
-            mShownSize += size;
-            if (mShownSize - mOffset >= mySize) {
-                break;
+        if (mObjects != null) {
+            for (int i = mFirstShown; i < mObjects.size(); i++) {
+                View v = getViewFor(i);
+                int size = getItemSize(v);
+                addChild(v);
+                mLastShown++;
+                mShownSize += size;
+                if (mShownSize - mOffset >= mySize) {
+                    break;
+                }
             }
         }
     }
@@ -237,7 +240,7 @@ public class ListView extends LinearLayout {
      */
     protected void moveViewport(int offset) {
 
-        if (offset == 0) return;
+        if (offset == 0 || mObjects == null || mObjects.size() == 0) return;
 
         int newOffset = mOffset + offset;
         if (offset < 0) {

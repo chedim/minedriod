@@ -10,6 +10,7 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
 import com.onkiup.minedroid.gui.views.View;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,7 @@ public class Style implements Context {
             String name = item.getStringAttr(null, "name", null);
             if (name == null) continue;
             String value = item.getText();
-            if (value.charAt(0) == '@') {
+            if (!StringUtils.isEmpty(value) && value.charAt(0) == '@') {
                 props.put(name, ResourceManager.get(this, value));
             } else {
                 props.put(name, value);

@@ -34,7 +34,7 @@ public class BitmapDrawable implements Drawable {
      * Original image size
      */
     protected Point originalSize;
-
+    private boolean debug;
 
     public BitmapDrawable(ResourceLocation src) throws IOException, OutOfMemoryError {
         setDrawable(src);
@@ -146,5 +146,10 @@ public class BitmapDrawable implements Drawable {
     @Override
     public void drawShadow(Point where, GLColor color, int size) {
         return;
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

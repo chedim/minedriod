@@ -19,7 +19,6 @@ public class EditText extends TextView {
     protected int selectionStart, selectionEnd;
     protected Drawable cursor;
     protected Timer drawCursorTimer;
-    protected boolean multiline;
 
     protected static int[] nonPrintables = {
             0, 1, 14, 15, 28, 29, 42, 54, 56, 59, 60, 61, 62, 63, 64, 65,
@@ -223,8 +222,14 @@ public class EditText extends TextView {
         replaceSelectedText("");
     }
 
+    /**
+     * Processes ENTER key
+     * @param event
+     */
     private void key_28(KeyEvent event) {
-        replaceSelectedText("\n");
+        if (multiline) {
+            replaceSelectedText("\n");
+        }
     }
 
     private void replaceSelectedText(String with) {
@@ -252,38 +257,37 @@ public class EditText extends TextView {
     public void drawContents(float partialTicks) {
         // drawing the caret element
         Point textSize = getTextSize();
-        Point cursorPosition = position.add(resolvedLayout.getInnerRect().coords());
-        int charHeight = (int) text.getOriginalSize().y;
-        cursor.setSize(new Point(1, charHeight - 2));
-        Point end = text.calculatePosition(getText(), resolvedLayout.getInnerWidth(), selectionEnd)
-                .add(getGravityOffset(textSize));
-        Point cursorFix = new Point(0, 0);
-        if (end.x > resolvedLayout.getInnerWidth()) {
-            cursorFix.x = resolvedLayout.getInnerWidth() - end.x;
-            end.x = resolvedLayout.getInnerWidth();
-        } else if (end.x < 0) {
-            cursorFix.x = -end.x;
-            end.x = 0;
-        }
-
-        if (end.y > resolvedLayout.getInnerHeight()) {
-            cursorFix.y = resolvedLayout.getInnerHeight() - end.y;
-            end.y = resolvedLayout.getInnerHeight();
-        } else if (end.y - charHeight < 0) {
-            cursorFix.y = - (end.y - charHeight - 1);
-            end.y = charHeight;
-        }
-
-        if (drawCursor) {
-            cursorPosition = cursorPosition.add(end);
-            cursor.draw(cursorPosition.sub(new Point(0, charHeight + 1)));
-        }
 
         text.setSize(textSize);
         Point offset = getGravityOffset(textSize);
-        Point textPosition = position.add(offset).add(resolvedLayout.padding.coords()).add(cursorFix);
+        Point textPosition = position.add(offset).add(resolvedLayout.padding.coords());
         text.draw(textPosition);
 
+        if (drawCursor && isFocused()) {
+            Point cursorPosition = position.add(resolvedLayout.getInnerRect().coords());
+            int charHeight = text.getMaxCharHeight();
+            cursor.setSize(new Point(1, charHeight));
+            Point end = text.calculatePosition(getText(), resolvedLayout.getInnerWidth(), selectionEnd)
+                    .add(offset);
+            Point cursorFix = new Point(0, 0);
+            if (end.x > resolvedLayout.getInnerWidth()) {
+                cursorFix.x = resolvedLayout.getInnerWidth() - end.x;
+                end.x = resolvedLayout.getInnerWidth();
+            } else if (end.x < 0) {
+                cursorFix.x = -end.x;
+                end.x = 0;
+            }
+
+            if (end.y > resolvedLayout.getInnerHeight()) {
+                cursorFix.y = resolvedLayout.getInnerHeight() - end.y;
+                end.y = resolvedLayout.getInnerHeight();
+            } else if (end.y - charHeight < 0) {
+                cursorFix.y = - (end.y - charHeight - 1);
+                end.y = charHeight;
+            }
+            cursorPosition = cursorPosition.add(end);
+            cursor.draw(cursorPosition.sub(new Point(0, charHeight)).add(cursorFix));
+        }
     }
 
     @Override

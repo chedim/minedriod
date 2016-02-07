@@ -17,6 +17,7 @@ public class NinePatchDrawable implements Drawable {
     protected BitmapDrawable[][] drawables = new BitmapDrawable[3][3];
     protected Point size = new Point(0, 0);
     protected Point originalSize;
+    private boolean debug;
 
     public NinePatchDrawable() {
     }
@@ -25,10 +26,10 @@ public class NinePatchDrawable implements Drawable {
         setDrawables(location);
     }
 
-    public void setDrawables(ResourceLocation location)  throws IOException, OutOfMemoryError {
+    public void setDrawables(ResourceLocation location) throws IOException, OutOfMemoryError {
         String name = location.getResourcePath();
-        for (int x=0; x < 3; x++) {
-            for (int y=0; y<3; y++) {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
                 drawables[x][y] =
                         new BitmapDrawable(new ResourceLocation(location.getResourceDomain(),
                                 name + "/" + x + "." + y + ".png"));
@@ -104,7 +105,7 @@ public class NinePatchDrawable implements Drawable {
     public NinePatchDrawable clone() {
         NinePatchDrawable result = new NinePatchDrawable();
         for (int x = 0; x < 3; x++)
-            for (int y = 0; y <3; y++)
+            for (int y = 0; y < 3; y++)
                 if (drawables[x][y] != null)
                     result.drawables[x][y] = drawables[x][y].clone();
 
@@ -116,5 +117,15 @@ public class NinePatchDrawable implements Drawable {
     @Override
     public void drawShadow(Point where, GLColor color, int size) {
 
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                drawables[x][y].setDebug(debug);
+            }
+        }
     }
 }

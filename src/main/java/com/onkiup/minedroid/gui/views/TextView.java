@@ -14,6 +14,8 @@ import com.onkiup.minedroid.gui.resources.ValueLink;
 public class TextView extends ContentView {
     protected TrueTypeDrawable text = new TrueTypeDrawable("", 0);
 
+    protected boolean multiline;
+
     public TextView(Context context) {
         super(context);
         text.setTextSize(GuiManager.getTheme(context).getStyle(getThemeStyleName()).getInt("fontSize", 14));
@@ -70,10 +72,24 @@ public class TextView extends ContentView {
     public Layout measure(Point boundaries) {
         Layout result = super.measure(boundaries);
         Point textSize = text.getOriginalSize();
-        result.setInnerWidth(Math.max(result.getInnerWidth(), textSize.x));
-        result.setInnerHeight(Math.max(result.getInnerHeight(), textSize.y));
-//        FMLLog.info("Measured size for %s: (%d, %d)", text.getText(), result.getOuterWidth(), result.getOuterHeight());
+        if (layout.width == Layout.WRAP_CONTENT) {
+            result.setInnerWidth(textSize.x);
+        } else if (layout.width == Layout.MATCH_PARENT && boundaries != null) {
+            result.setOuterWidth(boundaries.x);
+        }
+
+        if (layout.height == Layout.WRAP_CONTENT) {
+            result.setInnerHeight(Math.max(textSize.y, text.getMaxCharHeight()));
+        } else if (layout.height == Layout.MATCH_PARENT && boundaries != null) {
+            result.setOuterHeight(boundaries.y);
+        }
         return result;
+    }
+
+    @Override
+    public void setDebug(boolean debugDraw) {
+        super.setDebug(debugDraw);
+        text.setDebug(debugDraw);
     }
 
     /**
@@ -122,10 +138,11 @@ public class TextView extends ContentView {
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
 
-        String text = node.getLocalizedAttr(GuiManager.NS, "text", "");
+        String text = node.getStringAttr(GuiManager.NS, "text", "");
         setText(text);
         setTextSize(node.getIntegerAttr(GuiManager.NS, "fontSize", style, 14));
         setColor(node.getColorAttr(GuiManager.NS, "color", style, 0l));
+        setMultiline(node.getBoolAttr(GuiManager.NS, "multiline", style, false));
     }
 
     public void setTextSize(int fontSize) {
@@ -137,12 +154,21 @@ public class TextView extends ContentView {
     }
 
     public long getColor() {
-        return text.getColor();
+        return text.getColor().getColor().raw();
     }
 
     @Override
     protected String getThemeStyleName() {
         return "text_view";
+    }
+
+    public boolean isMultiline() {
+        return multiline;
+    }
+
+    public void setMultiline(boolean multiline) {
+        this.multiline = multiline;
+        text.setMultiline(multiline);
     }
 }
 

@@ -2,6 +2,7 @@ package com.onkiup.minedroid.gui.views;
 
 import com.onkiup.minedroid.Context;
 import com.onkiup.minedroid.gui.GuiManager;
+import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.MouseEvent;
@@ -30,6 +31,14 @@ public class ScrollView extends ContentView {
     }
 
     @Override
+    public void setDebug(boolean debugDraw) {
+        super.setDebug(debugDraw);
+        if (child != null) {
+            child.setDebug(debugDraw);
+        }
+    }
+
+    @Override
     public void resolveLayout(Layout layout) {
         super.resolveLayout(layout);
         if (child == null) return;
@@ -47,6 +56,12 @@ public class ScrollView extends ContentView {
             childLayout.height = resolvedLayout.getInnerHeight() - margin.top - margin.bottom;
 
         child.resolveLayout(childLayout);
+    }
+
+    @Override
+    public void setOverlay(Overlay o) {
+        super.setOverlay(o);
+        child.setOverlay(o);
     }
 
     @Override

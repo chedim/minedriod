@@ -2,4 +2,6 @@
         xmlns="http://onkiup.com/minecraft/xml">
     <item name="horizontal-gravity">center</item>
     <item name="vertical-gravity">center</item>
+    <item name="width">wrap_content</item>
+    <item name="height">wrap_content</item>
 </style>

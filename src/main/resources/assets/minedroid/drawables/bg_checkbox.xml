@@ -1,0 +1,6 @@
+<State
+        xmlns:mc="http://onkiup.com/minecraft/xml">
+    <Border mc:color="ff21aae0" mc:radius="3"/>
+    <Border mc:state="hover" mc:color="ff61c7f7" mc:radius="3"/>
+    <Border mc:state="focused" mc:color="ff5faed5" mc:radius="3"/>
+</State>

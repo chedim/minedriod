@@ -37,13 +37,13 @@ public class BorderDrawable extends ColorDrawable {
         // right
         line.draw(where.add(new Point(0, size.y - thickness)));
 
-        ColorDrawable dot = new ColorDrawable(color.getColor());
-        dot.setSize(new Point(3, 3));
-
-        dot.draw(where.add(new Point(-1, -1)));                  // lt
-        dot.draw(where.add(new Point(size.x - 1, -1)));          // rt
-        dot.draw(where.add(new Point(size.x - 1, size.y - 1)));  // rb
-        dot.draw(where.add(new Point(-1, size.y - 1)));          // lb
+//        ColorDrawable dot = new ColorDrawable(color.getColor());
+//        dot.setSize(new Point(3, 3));
+//
+//        dot.draw(where.add(new Point(-1, -1)));                  // lt
+//        dot.draw(where.add(new Point(size.x - 1, -1)));          // rt
+//        dot.draw(where.add(new Point(size.x - 1, size.y - 1)));  // rb
+//        dot.draw(where.add(new Point(-1, size.y - 1)));          // lb
     }
 
     @Override
@@ -51,6 +51,11 @@ public class BorderDrawable extends ColorDrawable {
         BorderDrawable result = new BorderDrawable(color.getColor());
         if (size != null) result.setSize(size.clone());
         return result;
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        // no debug available
     }
 
     public void setThickness(int thickness) {

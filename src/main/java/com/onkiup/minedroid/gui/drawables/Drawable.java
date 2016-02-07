@@ -50,4 +50,5 @@ public interface Drawable {
      */
     void drawShadow(Point where, GLColor color, int size);
 
+    void setDebug(boolean debug);
 }

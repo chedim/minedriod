@@ -45,6 +45,9 @@ public class TextDrawable implements Drawable {
      */
     protected static int charHeight = 0;
 
+    private boolean debug;
+
+
     static {
         try {
 //            Field f = Minecraft.getMinecraft().fontRendererObj.getClass().getDeclaredField("locationFontTexture");
@@ -409,6 +412,11 @@ public class TextDrawable implements Drawable {
     @Override
     public void drawShadow(Point where, GLColor color, int size) {
 
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
     public void setColor(long color) {

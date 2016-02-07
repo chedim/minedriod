@@ -143,8 +143,12 @@ public class RelativeLayout extends ViewGroup {
     @Override
     public View.Layout measure(Point boundaries) {
         View.Layout result = layout.clone();
-        result.width = 0;
-        result.height = 0;
+        if (result.width == Layout.WRAP_CONTENT) {
+            result.width = 0;
+        }
+        if (result.width == Layout.WRAP_CONTENT) {
+            result.height = 0;
+        }
         for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
             Rect outer = getOuter(child);
@@ -153,18 +157,31 @@ public class RelativeLayout extends ViewGroup {
 
             Point oSize = outer.getSize();
 
-            if (outer.left + oSize.x >= 0) {
-                if (outer.left + oSize.x > result.getInnerWidth()) {
+            if (layout.width == Layout.WRAP_CONTENT) {
+                if (outer.left + oSize.x >= 0) {
+                    if (outer.left + oSize.x > result.getInnerWidth()) {
 
-                    result.setInnerWidth(outer.left + oSize.x);
+                        result.setInnerWidth(outer.left + oSize.x);
+                    }
                 }
             }
 
-            if (outer.top + oSize.y >= 0) {
-                if (outer.top + oSize.y > result.getInnerHeight()) {
+            if (layout.height == Layout.WRAP_CONTENT) {
+                if (outer.top + oSize.y >= 0) {
+                    if (outer.top + oSize.y > result.getInnerHeight()) {
 
-                    result.setInnerHeight(outer.top + oSize.y);
+                        result.setInnerHeight(outer.top + oSize.y);
+                    }
                 }
+            }
+        }
+
+        if (boundaries != null) {
+            if (layout.width == Layout.MATCH_PARENT) {
+                result.setOuterWidth(boundaries.x);
+            }
+            if (layout.height == Layout.MATCH_PARENT) {
+                result.setOuterHeight(boundaries.y);
             }
         }
 

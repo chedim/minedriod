@@ -15,12 +15,11 @@ buildscript {
         maven {
             name="onkiup"
 //            url = "https://raw.github.com/chedim/maven-repo/master/";
-            url = '../../../../maven-repo'
+            url = '../maven-repo'
         }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-//        classpath 'com.onkiup.gradle:minedroid:1.2-SNAPSHOT'
     }
 }
 
@@ -86,7 +85,18 @@ idea { module { inheritOutputDirs = true } }
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri('../../../maven-repo'))
+            repository(url: uri('../maven-repo'))
         }
     }
+}
+
+
+task deobfJar(type: Jar, dependsOn: 'jar') {
+    from "build/classes/main"
+    from "build/resources/main"
+    classifier "dev"
+}
+
+artifacts {
+    archives deobfJar
 }

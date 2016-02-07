@@ -147,7 +147,13 @@ public abstract class Overlay extends GuiScreen implements Context {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if (state == State.DISMISSED) {
-            if (mc.currentScreen == this) mc.thePlayer.closeScreen();
+            if (mc.currentScreen == this) {
+                if (mc.thePlayer != null) {
+                    mc.thePlayer.closeScreen();
+                } else {
+                    FMLLog.warning("No player :(");
+                }
+            }
             return;
         }
         if (state == State.INITIALIZING) {
@@ -224,6 +230,10 @@ public abstract class Overlay extends GuiScreen implements Context {
 
     public State getState() {
         return state;
+    }
+
+    public View getFocusedItem() {
+        return focusedItem;
     }
 
     /**
@@ -306,7 +316,7 @@ public abstract class Overlay extends GuiScreen implements Context {
                 event.type = View.OnKeyPress.class;
             }
 
-            FMLLog.info("KEY event: %s %s", event.type.getSimpleName(), typedChar);
+//            FMLLog.info("vent: %s %s", event.type.getSimpleName(), typedChar);
             focusedItem.handleKeyboardEvent(event);
         }
 
@@ -418,12 +428,12 @@ public abstract class Overlay extends GuiScreen implements Context {
                 dblClick.target = contentView;
                 dblClick.source = contentView;
                 contentView.handleMouseEvent(dblClick);
-                System.out.println("DBLCLICK sended");
+//                System.out.println("DBLCLICK sended");
                 lastMouseDown = null;
             } else {
                 clickWaiter = new ClickWaiter(event);
                 timer.delay(DBL_CLICK_TIMEOUT, clickWaiter);
-                System.out.println("Click scheduled");
+//                System.out.println("Click scheduled");
             }
         } else if (event.type == View.OnMouseMove.class
                 && event.target.isDraggable()
@@ -495,7 +505,7 @@ public abstract class Overlay extends GuiScreen implements Context {
             click.type = View.OnClick.class;
             click.source = contentView;
             contentView.handleMouseEvent(click);
-            System.out.println("CLICK sended");
+//            System.out.println("CLICK sended");
             clickWaiter = null;
             lastMouseDown = null;
         }

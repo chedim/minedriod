@@ -24,6 +24,7 @@ public class ColorDrawable implements Drawable {
      * Rectangle size
      */
     protected Point size;
+    private boolean debug;
 
     public ColorDrawable() {
     }
@@ -133,5 +134,10 @@ public class ColorDrawable implements Drawable {
             shadow.setSize(size.add(new Point(i*2, i*2)));
             shadow.draw(where.add(new Point(-i, -i)));
         }
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

@@ -294,7 +294,7 @@ public class StringCache {
 
         public int getScaledAdvance() {
             int f = GuiManager.getScale().getScaleFactor();
-            return (int) Math.ceil((advance) / (float)f);
+            return (int) Math.round((advance) / (float)f);
         }
 
         public double getScaledHeight() {
@@ -402,6 +402,10 @@ public class StringCache {
 
         public int getScaledAdvance() {
             return (int) Math.ceil(advance / (float) GuiManager.getScale().getScaleFactor());
+        }
+
+        public int getScaledWidth() {
+            return (int) Math.ceil(texture.width / (float) GuiManager.getScale().getScaleFactor());
         }
     }
 
@@ -517,6 +521,7 @@ public class StringCache {
         }
         View.resetBlending();
         GlStateManager.enableTexture2D();
+        float f = GuiManager.getScale().getScaleFactor();
 
         /* Make sure the entire string is cached before rendering and return its glyph representation */
         Entry entry = cacheString(str);
@@ -604,10 +609,10 @@ public class StringCache {
             }
 
             /* The divide by 2.0F is needed to align with the scaled GUI coordinate system; startX/startY are already scaled */
-            float x1 = startX + (glyphX) / 2.0F;
-            float x2 = startX + (glyphX + texture.width) / 2.0F;
-            float y1 = startY + (glyph.y) / 2.0F;
-            float y2 = startY + (glyph.y + texture.height) / 2.0F;
+            float x1 = startX + (glyphX) / f;
+            float x2 = startX + (glyphX + texture.width) / f;
+            float y1 = startY + (glyph.y) / f;
+            float y2 = startY + (glyph.y + texture.height) / f;
 
             tessellator.getWorldRenderer().addVertexWithUV(x1, y1, 0, texture.u1, texture.v1);
             tessellator.getWorldRenderer().addVertexWithUV(x1, y2, 0, texture.u1, texture.v2);
@@ -649,10 +654,10 @@ public class StringCache {
                 /* Draw underline under glyph if the style is enabled */
                 if ((renderStyle & ColorCode.UNDERLINE) != 0) {
                     /* The divide by 2.0F is needed to align with the scaled GUI coordinate system; startX/startY are already scaled */
-                    float x1 = startX + (glyph.x - glyphSpace) / 2.0F;
-                    float x2 = startX + (glyph.x + glyph.advance) / 2.0F;
-                    float y1 = startY + (UNDERLINE_OFFSET) / 2.0F;
-                    float y2 = startY + (UNDERLINE_OFFSET + UNDERLINE_THICKNESS) / 2.0F;
+                    float x1 = startX + (glyph.x - glyphSpace) / f;
+                    float x2 = startX + (glyph.x + glyph.advance) / f;
+                    float y1 = startY + (UNDERLINE_OFFSET) / f;
+                    float y2 = startY + (UNDERLINE_OFFSET + UNDERLINE_THICKNESS) / f;
 
                     tessellator.getWorldRenderer().addVertex(x1, y1, 0);
                     tessellator.getWorldRenderer().addVertex(x1, y2, 0);
@@ -663,10 +668,10 @@ public class StringCache {
                 /* Draw strikethrough in the middle of glyph if the style is enabled */
                 if ((renderStyle & ColorCode.STRIKETHROUGH) != 0) {
                     /* The divide by 2.0F is needed to align with the scaled GUI coordinate system; startX/startY are already scaled */
-                    float x1 = startX + (glyph.x - glyphSpace) / 2.0F;
-                    float x2 = startX + (glyph.x + glyph.advance) / 2.0F;
-                    float y1 = startY + (STRIKETHROUGH_OFFSET) / 2.0F;
-                    float y2 = startY + (STRIKETHROUGH_OFFSET + STRIKETHROUGH_THICKNESS) / 2.0F;
+                    float x1 = startX + (glyph.x - glyphSpace) / f;
+                    float x2 = startX + (glyph.x + glyph.advance) / f;
+                    float y1 = startY + (STRIKETHROUGH_OFFSET) / f;
+                    float y2 = startY + (STRIKETHROUGH_OFFSET + STRIKETHROUGH_THICKNESS) / f;
 
                     tessellator.getWorldRenderer().addVertex(x1, y1, 0);
                     tessellator.getWorldRenderer().addVertex(x1, y2, 0);

@@ -1,6 +1,7 @@
 package com.onkiup.minedroid.gui.drawables;
 
 import com.onkiup.minedroid.gui.primitives.Color;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 
 /**
@@ -36,6 +37,11 @@ public class DebugDrawable extends ColorDrawable {
         dot.draw(where.add(new Point(size.x - 1, -1)));          // rt
         dot.draw(where.add(new Point(size.x - 1, size.y - 1)));  // rb
         dot.draw(where.add(new Point(-1, size.y - 1)));          // lb
+        TrueTypeDrawable text = new TrueTypeDrawable();
+        text.setText(where + " — " + size);
+        text.setColor(color);
+        text.setSize(getOriginalSize());
+        text.draw(where.add(new Point(2, 2)));
     }
 
     @Override

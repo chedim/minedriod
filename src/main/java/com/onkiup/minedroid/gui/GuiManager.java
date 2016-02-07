@@ -1,19 +1,23 @@
 package com.onkiup.minedroid.gui;
 
+import java.io.InvalidClassException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.onkiup.minedroid.Context;
 import com.onkiup.minedroid.Modification;
 import com.onkiup.minedroid.R;
 import com.onkiup.minedroid.gui.betterfonts.FontRenderer;
 import com.onkiup.minedroid.gui.betterfonts.StringCache;
 import com.onkiup.minedroid.gui.drawables.Drawable;
-import com.onkiup.minedroid.gui.overlay.Alert;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.primitives.Rect;
-import com.onkiup.minedroid.gui.resources.*;
+import com.onkiup.minedroid.gui.resources.EnvParams;
+import com.onkiup.minedroid.gui.resources.ResourceManager;
+import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.views.View;
-import com.onkiup.minedroid.timer.ClientTask;
 import com.onkiup.minedroid.timer.Task;
-import com.onkiup.minedroid.timer.TickHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -23,11 +27,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.w3c.dom.Node;
-
-import java.io.InvalidClassException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Main MineDroid class
@@ -131,7 +130,7 @@ public class GuiManager {
     /**
      * Current GL_SCISSOR clip rect
      */
-    protected static Rect clip = new Rect(new Point(0, 0), getWindowSize());
+    protected static Rect clip;
 
     /**
      * Stack of GL_SCISSOR clip rects
@@ -144,7 +143,11 @@ public class GuiManager {
      * @param newClip GL_SCISSOR area
      */
     public static void addClipRect(Rect newClip) {
-        clips.add(clip);
+        if (clip == null) {
+            clip = new Rect(new Point(0, 0), getWindowSize());
+        } else {
+            clips.add(clip);
+        }
         newClip = newClip.and(clip);
         if (newClip == null) {
             // The new clip hasn't common pixels with the parent clip.
@@ -175,11 +178,15 @@ public class GuiManager {
      */
     public static void restoreClipRect() {
 //        System.out.println("-Clip: "+clip+" ("+clips.size()+")");
-        if (clips.size() > 0) clip = clips.remove(clips.size() - 1);
+        if (clips.size() > 0) {
+            clip = clips.remove(clips.size() - 1);
+            Point size = clip.getSize();
+            GL11.glScissor(scale(clip.left), getWindowSize().y - scale(clip.bottom), scale(size.x), scale(size.y));
+        } else {
+            clip = null;
+        }
 //        GL11.glViewport(clip.left, clip.top, clip.right, clip.bottom);
-        Point size = clip.getSize();
-        GL11.glScissor(scale(clip.left), getWindowSize().y - scale(clip.bottom), scale(size.x), scale(size.y));
-        if (clips.size() == 0) {
+        if (clip == null) {
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
         }
     }

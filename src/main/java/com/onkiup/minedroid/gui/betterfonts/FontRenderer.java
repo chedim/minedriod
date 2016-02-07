@@ -1,6 +1,9 @@
 package com.onkiup.minedroid.gui.betterfonts;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import net.minecraft.client.Minecraft;
 
 /**
  * Created by chedim on 8/7/15.
@@ -43,5 +46,15 @@ public class FontRenderer {
     public String trimStringToWidth(String str, int width, boolean reverse) {
         renderer.setDefaultFont(font, antiAliasEnabled);
         return renderer.trimStringToWidth(str, width, reverse);
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public FontMetrics getMetrics() {
+        BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = img.getGraphics();
+        return graphics.getFontMetrics(getFont());
     }
 }

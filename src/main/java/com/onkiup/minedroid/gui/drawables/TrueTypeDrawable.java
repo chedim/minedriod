@@ -1,32 +1,30 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.GuiManager;
-import com.onkiup.minedroid.gui.XmlHelper;
-import com.onkiup.minedroid.gui.betterfonts.FontRenderer;
-import com.onkiup.minedroid.gui.betterfonts.StringCache;
-import com.onkiup.minedroid.gui.primitives.*;
-import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.resources.Style;
-import com.onkiup.minedroid.gui.resources.ValueLink;
-import net.minecraft.client.renderer.GlStateManager;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.onkiup.minedroid.gui.GuiManager;
+import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.betterfonts.FontRenderer;
+import com.onkiup.minedroid.gui.betterfonts.StringCache;
+import com.onkiup.minedroid.gui.primitives.Color;
+import com.onkiup.minedroid.gui.primitives.GLColor;
+import com.onkiup.minedroid.gui.primitives.Point;
+import com.onkiup.minedroid.gui.resources.Style;
+import com.onkiup.minedroid.gui.resources.ValueLink;
+import net.minecraft.client.renderer.GlStateManager;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Draws Text
  */
-public class TrueTypeDrawable implements Drawable {
+public class TrueTypeDrawable extends ColorDrawable {
 
     /**
      * Text to draw
      */
     protected String text;
-    /**
-     * Drawing color
-     */
-    protected long color;
     /**
      * Font texture scale factor
      */
@@ -48,6 +46,7 @@ public class TrueTypeDrawable implements Drawable {
 
     protected FontRenderer renderer;
     protected static int[] colors;
+
     static {
         try {
 //            Field f = Minecraft.getMinecraft().fontRendererObj.getClass().getDeclaredField("locationFontTexture");
@@ -61,16 +60,30 @@ public class TrueTypeDrawable implements Drawable {
 
     }
 
+    private boolean debug;
+
     public TrueTypeDrawable() {
+        super();
         renderer = GuiManager.getBetterFonts();
         fontName = Font.MONOSPACED;
     }
 
-    public TrueTypeDrawable(String text, int color) {
+    public TrueTypeDrawable(GLColor color) {
         this();
+        setColor(color);
+    }
+
+    public TrueTypeDrawable(String text, GLColor color) {
+        this(color);
         setText(text);
-        if (color == 0) color = 0xff000000;
-        this.color = color;
+    }
+
+    public TrueTypeDrawable(String text, Color color) {
+        this(text, new GLColor(color));
+    }
+
+    public TrueTypeDrawable(String text, int raw) {
+        this(text, new Color(raw));
     }
 
     /**
@@ -152,16 +165,25 @@ public class TrueTypeDrawable implements Drawable {
         // drawing text
         List<String> lines = fitString(text, size.x);
         renderer.setDefaultFont(fontName, fontSize, true);
-//        DebugDrawable d = new DebugDrawable(new com.onkiup.minedroid.gui.primitives.Color(0x66ff0000));
+        DebugDrawable d = new DebugDrawable(new com.onkiup.minedroid.gui.primitives.Color(0x66ff0000));
+        int maxHeight = getMaxCharHeight();
+        int dBase = getBaseLine();
         for (String line : lines) {
-            String cleaned = line.replaceAll("\\n+$", "");
-            StringCache.Entry entry = renderer.renderString(cleaned, left, top, (int) color, false);
-//            d.setSize(new Point(entry.getScaledAdvance(), (int) entry.getScaledHeight()));
-//            d.draw(new Point(left, top));
-            top += entry.getScaledHeight();
+            if (!line.equals("\n")) {
+                String cleaned = line.replaceAll("\\n+$", "");
+                StringCache.Entry entry = renderer.cacheString(cleaned);
+                double base = entry.getScaledBase();
+                int drawTop = top + (int) (dBase - base);
+                entry = renderer.renderString(cleaned, left, drawTop, (int) color.getColor().raw(), false);
+                d.setSize(new Point(entry.getScaledAdvance(), (int) entry.getScaledHeight()));
+            }
+            if (debug) {
+                d.draw(new Point(left, top));
+            }
+            top += maxHeight;
         }
 
-        // resetting output scale
+//         resetting output scale
 //        GL11.glScalef(1 / fontSize, 1 / fontSize, 1 / fontSize);
 //        GL11.glPopMatrix();
         GlStateManager.disableTexture2D();
@@ -182,11 +204,26 @@ public class TrueTypeDrawable implements Drawable {
         renderer.setDefaultFont(fontName, fontSize, true);
         Point osize = new Point(0, 0);
         if (text != null) {
-            StringCache.Entry entry = renderer.cacheString(text);
-            osize.x = entry.getScaledAdvance();
-            osize.y = (int) entry.getScaledHeight();
+            String[] lines = text.split("\n");
+            for (String line : lines) {
+                StringCache.Entry entry = renderer.cacheString(line);
+                osize.x = Math.max(entry.getScaledAdvance(), osize.x);
+                osize.y += (int) entry.getScaledHeight();
+            }
         }
         return osize;
+    }
+
+    public Integer getMaxCharHeight() {
+        renderer.setDefaultFont(fontName, fontSize, true);
+        StringCache.Entry maxHeight = renderer.cacheString("|");
+        return (int) maxHeight.getScaledHeight();
+    }
+
+    public Integer getBaseLine() {
+        renderer.setDefaultFont(fontName, fontSize, true);
+        StringCache.Entry maxHeight = renderer.cacheString("|");
+        return (int) maxHeight.getScaledBase();
     }
 
     @Override
@@ -222,7 +259,7 @@ public class TrueTypeDrawable implements Drawable {
         if (lines.size() == 0) return result;
         renderer.setDefaultFont(fontName, fontSize, true);
         StringCache.Entry entry = null;
-        for (String line: lines) {
+        for (String line : lines) {
             entry = renderer.cacheString(line);
             result.y += entry.getScaledHeight();
         }
@@ -241,30 +278,29 @@ public class TrueTypeDrawable implements Drawable {
     public Point calculatePosition(String text, int width, int position) {
         List<String> lines = fitString(text, width);
         int currentPosition = 0;
-        Point result = new Point(0, 0);
         renderer.setDefaultFont(fontName, fontSize, true);
+        int lineHeight = getMaxCharHeight();
+        Point result = new Point(0, lineHeight);
+        FontMetrics metrics = renderer.getMetrics();
+        float f = GuiManager.getScale().getScaleFactor();
 
         if (position != 0) {
             for (int y = 0; y < lines.size(); y++) {
                 String line = lines.get(y);
-                StringCache.Entry entry = renderer.cacheString(line);
-                result.y += entry.getScaledHeight();
-                for (int x = 0; x < line.length(); x++) {
-                    char c = line.charAt(x);
-                    if (++currentPosition <= position) {
-                        if (c == '\n') {
-                            result.x = 0;
-                        } else {
-                            StringCache.Glyph glyph = entry.glyphs[x];
-                            result.x += glyph.getScaledAdvance();
-                        }
-                        if (currentPosition == position) {
-                            break;
-                        }
+                if (currentPosition + line.length() < position) {
+                    currentPosition += line.length();
+                    result.y += lineHeight;
+                } else {
+                    String part = line.substring(0, position - currentPosition);
+                    if (part.endsWith("\n")) {
+                        part = part.substring(0, part.length() - 1);
+                        result.y += lineHeight;
+                        result.x = 0;
+                    } else {
+                        result.x = (int) Math.ceil(metrics.stringWidth(part) / f);
                     }
+                    break;
                 }
-
-                if (currentPosition == position) break;
             }
         }
 
@@ -324,22 +360,37 @@ public class TrueTypeDrawable implements Drawable {
 
     /**
      * Allows/dissalows line breaks
+     *
      * @param multiline line breaks flag
      */
     public void setMultiline(boolean multiline) {
         this.multiline = multiline;
     }
 
-
     public List<String> fitString(String text, int width) {
-        return fitString(text, width, fontSize);
+        List<String> result = new ArrayList<String>();
+        String[] lines = StringUtils.splitByWholeSeparatorPreserveAllTokens(text, "\n");
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+            List<String> sub = fitString(line, width, fontSize);
+            if (i < lines.length - 1) {
+                if (sub.size() == 0) {
+                    sub.add("\n");
+                } else {
+                    sub.set(sub.size() - 1, sub.get(sub.size() - 1) + "\n");
+                }
+            }
+            result.addAll(sub);
+        }
+        return result;
     }
 
     protected List<String> linesCache;
 
     /**
      * Splits string to make it fit given width
-     * @param text Text to split
+     *
+     * @param text  Text to split
      * @param width Width limit
      * @return Splitted text
      */
@@ -351,15 +402,15 @@ public class TrueTypeDrawable implements Drawable {
         while (left < text.length()) {
             int fit = renderer.sizeStringToWidth(text.substring(left), width);
             if (fit == 0) break;
-            result.add(text.substring(left, left+fit));
+            result.add(text.substring(left, left + fit));
             left += fit;
         }
         return result;
     }
 
     @Override
-    public TextDrawable clone() {
-        TextDrawable result = new TextDrawable(text, (int) color);
+    public TrueTypeDrawable clone() {
+        TrueTypeDrawable result = new TrueTypeDrawable(text, color.clone());
         if (size != null) result.setSize(size);
         result.setTextSize(fontSize);
 
@@ -371,12 +422,13 @@ public class TrueTypeDrawable implements Drawable {
 
     }
 
-    public void setColor(long color) {
-        if (color == 0) color = 0xff000000;
-        this.color = color;
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
-    public long getColor() {
-        return color;
+    public void setColor(long color) {
+        if (color == 0) color = 0xff000000;
+        this.color = new GLColor(new Color(color));
     }
 }

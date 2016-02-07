@@ -257,6 +257,10 @@ public class View extends EventBase implements Context {
 
         if (getParent() != null)
             getParent().fireEvent(event.type, event);
+
+        if (this.isFocusable() && event.type == OnClick.class) {
+            focus();
+        }
     }
 
     /**
@@ -560,6 +564,9 @@ public class View extends EventBase implements Context {
      */
     public void setDebug(boolean debugDraw) {
         debug = debugDraw;
+        if (background != null) {
+            background.setDebug(debugDraw);
+        }
     }
 
     /**
@@ -585,6 +592,7 @@ public class View extends EventBase implements Context {
      * @param theme Theme to apply
      */
     public void inflate(XmlHelper node, Style theme) {
+        this.id = node.getIdAttr(GuiManager.NS, "id");
         style = node.getStyleAttr(GuiManager.NS, "style", theme.getStyle(getThemeStyleName()));
 
         setBackground(node.getDrawableAttr(GuiManager.NS, "background", style, null));
@@ -607,7 +615,6 @@ public class View extends EventBase implements Context {
             draggableRegion = node.getIdAttr(GuiManager.NS, "dragArea", style);
         }
         setLayout(layout);
-        this.id = node.getIdAttr(GuiManager.NS, "id");
         setDebug(node.getBoolAttr(GuiManager.NS, "debug", style, false));
         this.elevation = node.getIntegerAttr(GuiManager.NS, "elevation", style, 0);
     }
@@ -677,6 +684,11 @@ public class View extends EventBase implements Context {
      */
     public void focus() {
         getOverlay().focusItem(this);
+    }
+
+    public boolean isFocused() {
+        View focus = getOverlay().getFocusedItem();
+        return focus != null && focus == this;
     }
 
     /**

@@ -1,0 +1,4 @@
+<style parent="@minedroid:style/linear_layout"
+       xmlns="http://onkiup.com/minecraft/xml">
+    <item name="orientation">horizontal</item>
+</style>

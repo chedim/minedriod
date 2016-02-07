@@ -1,15 +1,13 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.MineDroid;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by chedim on 8/18/15.
@@ -17,6 +15,7 @@ import java.util.List;
 public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Drawable {
     protected Point size;
     protected Point originalSize;
+    private boolean debug;
 
     public LayerDrawable(int initialCapacity) {
         super(initialCapacity);
@@ -32,7 +31,7 @@ public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Dra
     @Override
     public void draw(Point where) {
         getOriginalSize();
-        for (Layer layer: this) {
+        for (Layer layer : this) {
             Point lw = where.add(new Point(layer.left, layer.top));
             layer.drawable.draw(lw);
         }
@@ -41,7 +40,7 @@ public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Dra
     @Override
     public void setSize(Point size) {
         this.size = size.clone();
-        for (Layer layer: this) {
+        for (Layer layer : this) {
             Point ls = size.sub(new Point(layer.left, layer.top)).sub(new Point(layer.right, layer.bottom));
             layer.drawable.setSize(ls);
         }
@@ -67,7 +66,7 @@ public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Dra
     public void inflate(XmlHelper node, Style theme) {
         originalSize = null;
         setSize(node.getSize(GuiManager.NS, new Point(0, 0)));
-        for (XmlHelper child: node.getChildren()) {
+        for (XmlHelper child : node.getChildren()) {
             Layer layer = new Layer();
             layer.drawable = child.getDrawableAttr(GuiManager.NS, "drawable", null);
             layer.top = child.getDimenAttr(GuiManager.NS, "top", 0);
@@ -82,7 +81,7 @@ public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Dra
     public Drawable clone() {
         LayerDrawable result = new LayerDrawable();
         result.setSize(size);
-        for (Layer layer: this) {
+        for (Layer layer : this) {
             Layer n = new Layer(layer.drawable.clone(), layer.left, layer.top, layer.right, layer.bottom);
             result.add(n);
         }
@@ -92,6 +91,14 @@ public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Dra
     @Override
     public void drawShadow(Point where, GLColor color, int size) {
 
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        for (Layer layer : this) {
+            layer.drawable.setDebug(debug);
+        }
     }
 
     public static class Layer {

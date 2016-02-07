@@ -1,3 +1,4 @@
 <style parent="@minedroid:style/text_view">
     <item name="background">@minedroid:drawable/bg_edit_text</item>
+    <item name="padding">3</item>
 </style>

@@ -24,7 +24,7 @@ public class TextureDrawable implements Drawable {
     protected ITextureObject texture;
     protected Point size, originalSize = new Point(16, 16);
     protected double tLeft, tTop, tRight, tBottom;
-
+    private boolean debug;
 
     public TextureDrawable(ITextureObject texture, double tLeft, double tTop, double tRight, double tBottom) {
         this.texture = texture;
@@ -94,6 +94,11 @@ public class TextureDrawable implements Drawable {
     @Override
     public void drawShadow(Point where, GLColor color, int size) {
 
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
     public void setTexture(ITextureObject texture) {

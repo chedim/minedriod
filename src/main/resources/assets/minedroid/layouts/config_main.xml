@@ -1,0 +1,7 @@
+<ScrollView xmlns="http://onkiup.com/minecraft/xml" width="match_parent" height="match_parent" padding="20">
+    <RelativeLayout width="match_parent" height="wrap_content">
+        <LinearLayout width="match_parent" height="wrap_content" orientation="vertical">
+            <Button id="@id/test" width="wrap_content" height="wrap_content" text="@string/test_window"/>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
