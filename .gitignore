@@ -4,3 +4,10 @@
 /.settings/
 /bin/
 /eclipse/
+/build/
+/config/
+/crash-reports/
+/logs/
+/mods/
+/saves/
+*.txt

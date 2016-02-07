@@ -2,10 +2,12 @@ package com.onkiup.minedroid.gui.events;
 
 import com.onkiup.minedroid.gui.views.View;
 
+import java.io.Serializable;
+
 /**
  * Holds information about key events
  */
-public class KeyEvent {
+public class KeyEvent  {
     /**
      * Event type class
      */

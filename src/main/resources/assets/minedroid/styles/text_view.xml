@@ -1,5 +1,7 @@
 <style parent="@minedroid:style/content_view"
         xmlns="http://onkiup.com/minecraft/xml">
-    <item name="fontSize">1</item>
+    <item name="fontSize">14</item>
     <item name="color">0</item>
+    <item name="horizontal-gravity">left</item>
+    <item name="vertical-gravity">top</item>
 </style>

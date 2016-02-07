@@ -1,0 +1,7 @@
+<style parent="@minedroid:style/content_view" xmlns="http://onkiup.com/minecraft/xml">
+    <item name="background">@minedroid:drawable/bg_checkbox</item>
+    <item name="check">@minedroid:drawable/check</item>
+    <item name="padding">1</item>
+    <item name="width">10</item>
+    <item name="height">10</item>
+</style>

@@ -1,7 +1,8 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +17,7 @@ public class NinePatchDrawable implements Drawable {
     protected BitmapDrawable[][] drawables = new BitmapDrawable[3][3];
     protected Point size = new Point(0, 0);
     protected Point originalSize;
+    private boolean debug;
 
     public NinePatchDrawable() {
     }
@@ -24,10 +26,10 @@ public class NinePatchDrawable implements Drawable {
         setDrawables(location);
     }
 
-    public void setDrawables(ResourceLocation location)  throws IOException, OutOfMemoryError {
+    public void setDrawables(ResourceLocation location) throws IOException, OutOfMemoryError {
         String name = location.getResourcePath();
-        for (int x=0; x < 3; x++) {
-            for (int y=0; y<3; y++) {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
                 drawables[x][y] =
                         new BitmapDrawable(new ResourceLocation(location.getResourceDomain(),
                                 name + "/" + x + "." + y + ".png"));
@@ -93,8 +95,8 @@ public class NinePatchDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Style theme) {
         try {
-            setDrawables(node.getResourceAttr(MineDroid.NS, "src", null));
-            setSize(node.getSize(MineDroid.NS, size));
+            setDrawables(node.getResourceAttr(GuiManager.NS, "src", null));
+            setSize(node.getSize(GuiManager.NS, size));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,12 +105,27 @@ public class NinePatchDrawable implements Drawable {
     public NinePatchDrawable clone() {
         NinePatchDrawable result = new NinePatchDrawable();
         for (int x = 0; x < 3; x++)
-            for (int y = 0; y <3; y++)
+            for (int y = 0; y < 3; y++)
                 if (drawables[x][y] != null)
                     result.drawables[x][y] = drawables[x][y].clone();
 
         if (size != null) result.setSize(size.clone());
 
         return result;
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int size) {
+
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                drawables[x][y].setDebug(debug);
+            }
+        }
     }
 }

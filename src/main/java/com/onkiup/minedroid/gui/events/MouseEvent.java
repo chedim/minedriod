@@ -3,6 +3,8 @@ package com.onkiup.minedroid.gui.events;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.views.View;
 
+import java.io.Serializable;
+
 /**
  * Holds information about mouse events
  */

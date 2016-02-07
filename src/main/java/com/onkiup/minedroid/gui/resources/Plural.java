@@ -1,6 +1,6 @@
 package com.onkiup.minedroid.gui.resources;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 
 /**
  * Holds information about plural strings
@@ -27,6 +27,6 @@ public class Plural {
      * @return plural value
      */
     public String getValue(int by) {
-        return values[MineDroid.getPluralLocalizer().quantify(by)];
+        return values[ResourceManager.getPluralLocalizer().quantify(by)];
     }
 }

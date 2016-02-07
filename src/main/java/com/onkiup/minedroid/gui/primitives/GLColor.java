@@ -40,4 +40,11 @@ public class GLColor {
     public Color getColor() {
         return new Color((int) (red * 255), (int) (green *255), (int) (blue * 255), (int) (alpha * 255));
     }
+
+    public void add(GLColor step) {
+        red += step.red;
+        blue += step.blue;
+        green += step.green;
+        alpha += step.alpha;
+    }
 }

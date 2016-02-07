@@ -1,12 +1,17 @@
 package com.onkiup.minedroid.gui.drawables;
 
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.SimpleTexture;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -14,17 +19,21 @@ import org.lwjgl.opengl.GL11;
  * Should draw a texture from a texture pack.
  * Not realized yet
  */
-@Deprecated
 public class TextureDrawable implements Drawable {
 
-    protected ResourceLocation src;
-    protected Point size, originalSize;
-    protected Point textureOffset;
+    protected ITextureObject texture;
+    protected Point size, originalSize = new Point(16, 16);
+    protected double tLeft, tTop, tRight, tBottom;
+    private boolean debug;
 
-    public TextureDrawable(ResourceLocation src) {
-        this.src = src;
+    public TextureDrawable(ITextureObject texture, double tLeft, double tTop, double tRight, double tBottom) {
+        this.texture = texture;
         this.size = new Point(255, 255);
         originalSize = size.clone();
+        this.tLeft = tLeft;
+        this.tTop = tTop;
+        this.tRight = tRight;
+        this.tBottom = tBottom;
     }
 
     @Override
@@ -37,15 +46,15 @@ public class TextureDrawable implements Drawable {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(src);
+        GlStateManager.bindTexture(texture.getGlTextureId());
         GlStateManager.enableTexture2D();
         worldrenderer.startDrawingQuads();
 
 
-        worldrenderer.addVertex(left, bottom, 0.0D);
-        worldrenderer.addVertex(right, bottom, 0.0D);
-        worldrenderer.addVertex(right, top, 0.0D);
-        worldrenderer.addVertex(left, top, 0.0D);
+        worldrenderer.addVertexWithUV(left, bottom, 0d, tLeft, tBottom);
+        worldrenderer.addVertexWithUV(right, bottom, 0d, tRight, tBottom);
+        worldrenderer.addVertexWithUV(right, top, 0.0D, tRight, tTop);
+        worldrenderer.addVertexWithUV(left, top, 0.0D, tLeft, tTop);
         tessellator.draw();
     }
 
@@ -66,10 +75,37 @@ public class TextureDrawable implements Drawable {
 
     @Override
     public void inflate(XmlHelper node, Style theme) {
-
+        size = node.getSize(GuiManager.NS, originalSize.clone());
+        try {
+            Integer textureId = node.getIntegerAttr(GuiManager.NS, "texture", null);
+        } catch (NumberFormatException e) {
+            ResourceLocation src = node.getResourceAttr(GuiManager.NS, "texture", null);
+            if (src != null) {
+                SimpleTexture texture = new SimpleTexture(src);
+//                texture.loadTexture();
+            }
+        }
     }
 
     public TextureDrawable clone() {
-        return null;
+        return new TextureDrawable(texture, tLeft, tTop, tRight, tBottom);
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int size) {
+
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public void setTexture(ITextureObject texture) {
+        this.texture = texture;
+    }
+
+    public ITextureObject getTexture() {
+        return texture;
     }
 }

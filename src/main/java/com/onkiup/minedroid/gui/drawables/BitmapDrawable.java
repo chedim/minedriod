@@ -1,11 +1,13 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +34,7 @@ public class BitmapDrawable implements Drawable {
      * Original image size
      */
     protected Point originalSize;
-
+    private boolean debug;
 
     public BitmapDrawable(ResourceLocation src) throws IOException, OutOfMemoryError {
         setDrawable(src);
@@ -70,8 +72,8 @@ public class BitmapDrawable implements Drawable {
 
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawingQuads();
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        worldrenderer.startDrawingQuads();
         worldrenderer.addVertexWithUV(right, bottom, 0, 1, 1);
         worldrenderer.addVertexWithUV(right, top, 0, 1, 0);
         worldrenderer.addVertexWithUV(left, top, 0, 0, 0);
@@ -81,6 +83,8 @@ public class BitmapDrawable implements Drawable {
 //        BorderDrawable overlay = new BorderDrawable(new Color(0x66ff0000));
 //        overlay.setSize(size);
 //        overlay.draw(where);
+        GlStateManager.enableTexture2D();
+        RenderHelper.enableStandardItemLighting();
     }
 
     /**
@@ -118,10 +122,10 @@ public class BitmapDrawable implements Drawable {
     @Override
     public void inflate(XmlHelper node, Style theme) {
         try {
-            setDrawable(node.getResourceAttr(MineDroid.NS, "background", null));
+            setDrawable(node.getResourceAttr(GuiManager.NS, "background", null));
             size = new Point(0, 0);
-            size.x = node.getDimenAttr(MineDroid.NS, "width", originalSize.x);
-            size.y = node.getDimenAttr(MineDroid.NS, "width", originalSize.y);
+            size.x = node.getDimenAttr(GuiManager.NS, "width", originalSize.x);
+            size.y = node.getDimenAttr(GuiManager.NS, "height", originalSize.y);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,5 +141,15 @@ public class BitmapDrawable implements Drawable {
         }
 
         return null;
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int size) {
+        return;
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

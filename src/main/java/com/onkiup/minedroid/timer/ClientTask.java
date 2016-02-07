@@ -1,9 +1,9 @@
-package com.onkiup.minedroid.gui;
+package com.onkiup.minedroid.timer;
 
 /**
  * Interface for game ticks based timer
  */
-public interface DelayedTask {
+public interface ClientTask {
     /**
      * Called when timer is done
      */

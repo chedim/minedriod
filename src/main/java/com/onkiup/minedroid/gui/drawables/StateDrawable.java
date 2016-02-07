@@ -1,7 +1,8 @@
 package com.onkiup.minedroid.gui.drawables;
 
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
+import com.onkiup.minedroid.gui.primitives.GLColor;
 import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 
@@ -19,6 +20,7 @@ public class StateDrawable implements Drawable {
      * current displayed state
      */
     protected State state = State.DEFAULT;
+    private boolean debug;
 
     public StateDrawable() {
     }
@@ -50,8 +52,8 @@ public class StateDrawable implements Drawable {
         List<XmlHelper> children = node.getChildren();
         for (XmlHelper child : children) {
             try {
-                State childState = (State) child.getEnumAttr(MineDroid.NS, "state", State.DEFAULT);
-                setDrawableForState(childState, MineDroid.processNodeDrawable(child));
+                State childState = (State) child.getEnumAttr(GuiManager.NS, "state", State.DEFAULT);
+                setDrawableForState(childState, GuiManager.processNodeDrawable(child));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -104,5 +106,18 @@ public class StateDrawable implements Drawable {
 
         result.state = state;
         return result;
+    }
+
+    @Override
+    public void drawShadow(Point where, GLColor color, int size) {
+        drawables[state.ordinal()].drawShadow(where, color, size);
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        for (Drawable drawable : drawables) {
+            drawable.setDebug(debug);
+        }
     }
 }

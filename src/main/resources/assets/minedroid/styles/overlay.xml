@@ -1,4 +1,4 @@
 <style>
     <item name="background">@minedroid:drawable/bg_overlay</item>
-    <item name="content_background">@minedroid:ninepatch/panel</item>
+    <item name="content_background">@minedroid:drawable/overlay</item>
 </style>

@@ -1,2 +1,3 @@
 <style parent="@minedroid:style/view_group">
+    <item name="spacing">2</item>
 </style>

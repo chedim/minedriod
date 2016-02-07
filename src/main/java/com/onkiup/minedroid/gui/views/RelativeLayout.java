@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.primitives.CenteredRect;
 import com.onkiup.minedroid.gui.primitives.Point;
@@ -121,16 +121,20 @@ public class RelativeLayout extends ViewGroup {
     }
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         Point zero = position.add(resolvedLayout.padding.coords());
         for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
             Rect outline = getOuter(child, true);
             if (outline instanceof CenteredRect) outline = ((CenteredRect) outline).getRect();
-
-            child.setPosition(zero.add(outline.coords()).add(child.getLayout().margin.coords()));
-            child.onDraw();
+            Point cp = zero.add(outline.coords()).add(child.getLayout().margin.coords());
+            child.setPosition(cp);
+            child.onDraw(partialTicks);
         }
+
+        // Now we have to clear the cache because between this and the next draw view sizes can change
+        measured.clear();
+        outers.clear();
     }
 
     protected HashMap<View, Layout> measured = new HashMap<View, Layout>();
@@ -138,24 +142,46 @@ public class RelativeLayout extends ViewGroup {
 
     @Override
     public View.Layout measure(Point boundaries) {
-        measured.clear();
-        outers.clear();
         View.Layout result = layout.clone();
+        if (result.width == Layout.WRAP_CONTENT) {
+            result.width = 0;
+        }
+        if (result.width == Layout.WRAP_CONTENT) {
+            result.height = 0;
+        }
         for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);
             Rect outer = getOuter(child);
+            if (outer.left < 0) outer.left = 0;
+            if (outer.top < 0) outer.top = 0;
+
             Point oSize = outer.getSize();
 
-            if (outer.left + oSize.x >= 0) {
-                if (outer.left + oSize.x > result.getInnerWidth()) {
-                    result.setInnerWidth(outer.left + oSize.x);
+            if (layout.width == Layout.WRAP_CONTENT) {
+                if (outer.left + oSize.x >= 0) {
+                    if (outer.left + oSize.x > result.getInnerWidth()) {
+
+                        result.setInnerWidth(outer.left + oSize.x);
+                    }
                 }
             }
 
-            if (outer.top + oSize.y >= 0) {
-                if (outer.top + oSize.y > result.getInnerHeight()) {
-                    result.setInnerHeight(outer.top + oSize.y);
+            if (layout.height == Layout.WRAP_CONTENT) {
+                if (outer.top + oSize.y >= 0) {
+                    if (outer.top + oSize.y > result.getInnerHeight()) {
+
+                        result.setInnerHeight(outer.top + oSize.y);
+                    }
                 }
+            }
+        }
+
+        if (boundaries != null) {
+            if (layout.width == Layout.MATCH_PARENT) {
+                result.setOuterWidth(boundaries.x);
+            }
+            if (layout.height == Layout.MATCH_PARENT) {
+                result.setOuterHeight(boundaries.y);
             }
         }
 
@@ -175,10 +201,14 @@ public class RelativeLayout extends ViewGroup {
                 View.Layout m = view.measure(null);
                 result.width = m.width;
                 result.height = m.height;
+
                 measured.put(view, result);
             } else {
                 measured.put(view, childLayout);
+
             }
+        } else {
+
         }
         return measured.get(view);
     }
@@ -216,6 +246,10 @@ public class RelativeLayout extends ViewGroup {
             this(layout.width, layout.height, layout.margin.clone(), layout.padding.clone());
         }
 
+        public Layout(Layout layout) {
+            this(layout.width, layout.height, layout.margin.clone(), layout.padding.clone());
+        }
+
         public boolean validate() {
             boolean error;
             error = alignLeft != null && alignCenter != null && alignRight != null;
@@ -239,6 +273,7 @@ public class RelativeLayout extends ViewGroup {
             }
 
             Rect rect = calculateOuterPosition(parent);
+
             calculateOuterSize(rect, parent);
 
             return rect;
@@ -246,6 +281,7 @@ public class RelativeLayout extends ViewGroup {
 
         private Rect calculateOuterSize(Rect rect, RelativeLayout parent) {
             View.Layout pl = parent.getResolvedLayout();
+
             if (pl == null) pl = parent.getLayout();
 
             if (width >= 0) {
@@ -256,15 +292,18 @@ public class RelativeLayout extends ViewGroup {
                     } else if (rect.right != MATCH_PARENT) {
                         rect.left = rect.right - getOuterWidth();
                     }
-                } else if (rect.right == UNSPECIFIED) {
+                } else if (rect.left == CENTER_PARENT) {
                     if (rect instanceof CenteredRect) {
                         rect.right = getOuterWidth() / 2;
                     } else {
-                        rect.right = rect.left + getOuterWidth();
+                        rect.right = getOuterWidth();
                     }
+                } else {
+                    rect.right = rect.left + getOuterWidth();
                 }
             } else if (width == MATCH_PARENT) {
                 if (pl.width > 0) rect.right = rect.left + pl.getInnerWidth();
+                if (toLeftOf != null) rect.right = getOuterRect(toLeftOf, parent).left;
             }
 
             if (height >= 0) {
@@ -275,15 +314,18 @@ public class RelativeLayout extends ViewGroup {
                     } else if (rect.bottom != MATCH_PARENT) {
                         rect.top = rect.bottom - getOuterHeight();
                     }
-                } else if (rect.bottom == UNSPECIFIED) {
+                } else if (rect.top == CENTER_PARENT) {
                     if (rect instanceof CenteredRect) {
                         rect.bottom = getOuterHeight() / 2;
                     } else {
-                        rect.bottom = rect.top + getOuterHeight();
+                        rect.bottom = getOuterHeight();
                     }
+                } else {
+                    rect.bottom = rect.top + getOuterHeight();
                 }
             } else if (height == MATCH_PARENT) {
                 if (pl.height > 0) rect.bottom = rect.top + pl.getInnerHeight();
+                if (above != null) rect.bottom = getOuterRect(above, parent).top;
             }
 
             return rect;
@@ -485,11 +527,11 @@ public class RelativeLayout extends ViewGroup {
 
     private Rect getOuter(View view, boolean real) {
         if (!outers.containsKey(view) || real) {
-            Layout measured;
-            measured = getMeasured(view);
+            Layout measured = getMeasured(view);
 
             measured.allowDeffered = !real;
             Rect outer = measured.getOuterRect(this);
+
             outers.put(view, outer);
         }
         return outers.get(view);
@@ -508,17 +550,17 @@ public class RelativeLayout extends ViewGroup {
         View child = super.inflateChild(node, theme);
 
         Layout layout = new Layout(child.getLayout());
-        layout.alignLeft = findViewById(node.getIdAttr(MineDroid.NS, "alignLeft"));
-        layout.toRightOf = findViewById(node.getIdAttr(MineDroid.NS, "toRightOf"));
-        layout.alignCenter = findViewById(node.getIdAttr(MineDroid.NS, "alignCenter"));
-        layout.alignRight = findViewById(node.getIdAttr(MineDroid.NS, "alignRight"));
-        layout.toLeftOf = findViewById(node.getIdAttr(MineDroid.NS, "toLeftOf"));
+        layout.alignLeft = findViewById(node.getIdAttr(GuiManager.NS, "alignLeft"));
+        layout.toRightOf = findViewById(node.getIdAttr(GuiManager.NS, "toRightOf"));
+        layout.alignCenter = findViewById(node.getIdAttr(GuiManager.NS, "alignCenter"));
+        layout.alignRight = findViewById(node.getIdAttr(GuiManager.NS, "alignRight"));
+        layout.toLeftOf = findViewById(node.getIdAttr(GuiManager.NS, "toLeftOf"));
 
-        layout.alignTop = findViewById(node.getIdAttr(MineDroid.NS, "alignTop"));
-        layout.below = findViewById(node.getIdAttr(MineDroid.NS, "below"));
-        layout.alignMiddle = findViewById(node.getIdAttr(MineDroid.NS, "alignMiddle"));
-        layout.alignBottom = findViewById(node.getIdAttr(MineDroid.NS, "alignBottom"));
-        layout.above = findViewById(node.getIdAttr(MineDroid.NS, "above"));
+        layout.alignTop = findViewById(node.getIdAttr(GuiManager.NS, "alignTop"));
+        layout.below = findViewById(node.getIdAttr(GuiManager.NS, "below"));
+        layout.alignMiddle = findViewById(node.getIdAttr(GuiManager.NS, "alignMiddle"));
+        layout.alignBottom = findViewById(node.getIdAttr(GuiManager.NS, "alignBottom"));
+        layout.above = findViewById(node.getIdAttr(GuiManager.NS, "above"));
         child.setLayout(layout);
 
         return child;

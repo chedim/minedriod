@@ -1,7 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.Overlay;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.events.MouseEvent;
@@ -27,7 +27,7 @@ public abstract class ViewGroup extends ContentView {
      */
     public void addChild(View child) {
         children.add(child);
-        child.setDebug(debug);
+        child.setDebug(debug||child.debug);
         child.setParent(this);
         child.setOverlay(getOverlay());
     }
@@ -39,7 +39,7 @@ public abstract class ViewGroup extends ContentView {
 
     public void addChildAt(int position, View child) {
         children.add(position, child);
-        child.setDebug(debug);
+        child.setDebug(debug||child.debug);
         child.setParent(this);
         child.setOverlay(getOverlay());
     }
@@ -147,7 +147,7 @@ public abstract class ViewGroup extends ContentView {
 
     public View inflateChild(XmlHelper node, Style theme) {
         try {
-            return MineDroid.processNode(node, theme);
+            return GuiManager.processNode(node, theme);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -191,5 +191,9 @@ public abstract class ViewGroup extends ContentView {
 
     public void removeAllChildren() {
         children.clear();
+    }
+
+    public Integer getChildPosition(View child) {
+        return children.indexOf(child);
     }
 }

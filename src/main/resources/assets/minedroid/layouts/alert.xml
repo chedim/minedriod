@@ -1,0 +1,7 @@
+<LinearLayout xmlns="http://onkiup.com/minecraft/xml"
+              width="wrap_content" height="wrap_content" padding="10" margin="5"
+              orientation="vertical" horizontal-gravity="right">
+    <TextView id="@id/message" width="wrap_content" height="wrap_content"/>
+    <TextView id="@id/hint" width="wrap_content" height="wrap_content"
+              fontSize="9" text="@minedroid:string/alert_hint" color="FFcccccc"/>
+</LinearLayout>

@@ -1,6 +1,6 @@
 package com.onkiup.minedroid.gui.holders;
 
-import com.onkiup.minedroid.gui.Context;
+import com.onkiup.minedroid.Context;
 import com.onkiup.minedroid.gui.views.ContentView;
 import com.onkiup.minedroid.gui.views.ListView;
 import com.onkiup.minedroid.gui.views.TextView;

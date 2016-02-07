@@ -1,0 +1,7 @@
+<LinearLayout xmlns="http://onkiup.com/minecraft/xml"
+                width="wrap_content" height="wrap_content" padding="10"
+                alignCenter="parent" alignMiddle="parent" orientation="vertical" horizontal-gravity="right">
+    <TextView id="@id/message" width="wrap_content" height="wrap_content"/>
+    <TextView id="@id/hint" width="wrap_content" height="wrap_content"
+              fontSize="8" text="@minedroid:string/confirm_hint"/>
+</LinearLayout>

@@ -1,14 +1,12 @@
 package com.onkiup.minedroid.gui.views;
 
-import com.onkiup.minedroid.gui.Context;
-import com.onkiup.minedroid.gui.MineDroid;
+import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.drawables.PartialDrawable;
 import com.onkiup.minedroid.gui.primitives.Point;
-import com.onkiup.minedroid.gui.resources.ResourceLink;
 import com.onkiup.minedroid.gui.resources.Style;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * Created by chedim on 5/31/15.
@@ -23,7 +21,7 @@ public class ProgressView extends ContentView {
     }
 
     @Override
-    public void drawContents() {
+    public void drawContents(float partialTicks) {
         float part = value / max;
         if (foreground instanceof PartialDrawable) {
             foreground.setSize(resolvedLayout.getInnerSize().clone());
@@ -46,15 +44,10 @@ public class ProgressView extends ContentView {
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
 
-        max = style.getInt("max", 100);
-        value = style.getInt("value", 50);
-        ResourceLocation fg = style.getResource("progress_drawable", null);
+        max = node.getIntegerAttr(GuiManager.NS, "max", style, 100);
+        value = node.getIntegerAttr(GuiManager.NS, "value", style, 50);
 
-        max = node.getIntegerAttr(MineDroid.NS, "max", max);
-        value = node.getIntegerAttr(MineDroid.NS, "value", value);
-        fg = node.getResourceAttr(MineDroid.NS, "progress_drawable", fg);
-
-        foreground = MineDroid.inflateDrawable(this, fg);
+        foreground = node.getDrawableAttr(GuiManager.NS, "progress_drawable", style, null);
     }
 
     @Override

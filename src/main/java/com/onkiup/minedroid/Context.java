@@ -1,11 +1,12 @@
-package com.onkiup.minedroid.gui;
+package com.onkiup.minedroid;
 
 /**
  * Module context interface
  */
 public interface Context {
     /**
-     * @return Module's R class
+     * @return Context id
      */
-    Class R();
+    int contextId();
+
 }
