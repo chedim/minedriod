@@ -1,6 +1,7 @@
 package com.onkiup.minedroid.gui.drawables;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import com.onkiup.minedroid.gui.primitives.Point;
 import com.onkiup.minedroid.gui.resources.Style;
 import com.onkiup.minedroid.gui.resources.ValueLink;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Draws Text
@@ -155,7 +158,8 @@ public class TrueTypeDrawable extends ColorDrawable {
         }
 
 //        GL11.glPushMatrix();
-//        GL11.glScalef(fontSize, fontSize, fontSize);
+        float scale = 1;// GuiManager.getDisplayScale();
+//        GL11.glScalef(1/scale, 1/scale, 1/scale);
 
         GlStateManager.enableTexture2D();
         // scaling coordinates
@@ -163,8 +167,8 @@ public class TrueTypeDrawable extends ColorDrawable {
         int top = (int) Math.round(where.y);
 
         // drawing text
-        List<String> lines = fitString(text, size.x);
-        renderer.setDefaultFont(fontName, fontSize, true);
+        List<String> lines = splitString(text);
+        setFont();
         DebugDrawable d = new DebugDrawable(new com.onkiup.minedroid.gui.primitives.Color(0x66ff0000));
         int maxHeight = getMaxCharHeight();
         int dBase = getBaseLine();
@@ -174,8 +178,10 @@ public class TrueTypeDrawable extends ColorDrawable {
                 StringCache.Entry entry = renderer.cacheString(cleaned);
                 double base = entry.getScaledBase();
                 int drawTop = top + (int) (dBase - base);
-                entry = renderer.renderString(cleaned, left, drawTop, (int) color.getColor().raw(), false);
-                d.setSize(new Point(entry.getScaledAdvance(), (int) entry.getScaledHeight()));
+                entry = renderer.renderString(cleaned, Math.round(left * scale), Math.round(drawTop * scale), (int) color.getColor().raw(), true);
+                if (entry != null && debug) {
+                    d.setSize(new Point(entry.getScaledAdvance(), (int) entry.getScaledHeight()));
+                }
             }
             if (debug) {
                 d.draw(new Point(left, top));
@@ -184,9 +190,13 @@ public class TrueTypeDrawable extends ColorDrawable {
         }
 
 //         resetting output scale
-//        GL11.glScalef(1 / fontSize, 1 / fontSize, 1 / fontSize);
+//        GL11.glScalef(scale, scale, scale);
 //        GL11.glPopMatrix();
         GlStateManager.disableTexture2D();
+    }
+
+    private void setFont() {
+        renderer.setDefaultFont(fontName, GuiManager.scale(fontSize), true);
     }
 
     @Override
@@ -201,27 +211,29 @@ public class TrueTypeDrawable extends ColorDrawable {
 
     @Override
     public Point getOriginalSize() {
-        renderer.setDefaultFont(fontName, fontSize, true);
+        setFont();
         Point osize = new Point(0, 0);
+        int lineHeight = getMaxCharHeight();
+
         if (text != null) {
             String[] lines = text.split("\n");
             for (String line : lines) {
-                StringCache.Entry entry = renderer.cacheString(line);
-                osize.x = Math.max(entry.getScaledAdvance(), osize.x);
-                osize.y += (int) entry.getScaledHeight();
+                int width = getStringWidth(line);
+                osize.x = Math.max(osize.x, width);
+                osize.y += lineHeight;
             }
         }
         return osize;
     }
 
     public Integer getMaxCharHeight() {
-        renderer.setDefaultFont(fontName, fontSize, true);
+        setFont();
         StringCache.Entry maxHeight = renderer.cacheString("|");
         return (int) maxHeight.getScaledHeight();
     }
 
     public Integer getBaseLine() {
-        renderer.setDefaultFont(fontName, fontSize, true);
+        setFont();
         StringCache.Entry maxHeight = renderer.cacheString("|");
         return (int) maxHeight.getScaledBase();
     }
@@ -255,9 +267,9 @@ public class TrueTypeDrawable extends ColorDrawable {
     public Point calculateEndPoint(String text, int width) {
         Point result = new Point(0, 0);
         if (text == null || text.length() == 0) return result;
-        List<String> lines = fitString(text, width);
+        List<String> lines = splitString(text);
         if (lines.size() == 0) return result;
-        renderer.setDefaultFont(fontName, fontSize, true);
+        setFont();
         StringCache.Entry entry = null;
         for (String line : lines) {
             entry = renderer.cacheString(line);
@@ -276,12 +288,11 @@ public class TrueTypeDrawable extends ColorDrawable {
      * @return Calculated coordinate
      */
     public Point calculatePosition(String text, int width, int position) {
-        List<String> lines = fitString(text, width);
+        List<String> lines = splitString(text);
         int currentPosition = 0;
-        renderer.setDefaultFont(fontName, fontSize, true);
+        setFont();
         int lineHeight = getMaxCharHeight();
         Point result = new Point(0, lineHeight);
-        FontMetrics metrics = renderer.getMetrics();
         float f = GuiManager.getScale().getScaleFactor();
 
         if (position != 0) {
@@ -297,7 +308,7 @@ public class TrueTypeDrawable extends ColorDrawable {
                         result.y += lineHeight;
                         result.x = 0;
                     } else {
-                        result.x = (int) Math.ceil(metrics.stringWidth(part) / f);
+                        result.x = (int) Math.ceil(getStringWidth(part));
                     }
                     break;
                 }
@@ -305,6 +316,20 @@ public class TrueTypeDrawable extends ColorDrawable {
         }
 
         return result;
+    }
+
+    public int getStringWidth(String string) {
+        setFont();
+        FontMetrics metrics = renderer.getMetrics();
+        float f = GuiManager.getScale().getScaleFactor();
+        return (int) Math.ceil(metrics.stringWidth(string) / f);
+    }
+
+    public int getCharWidth(char c) {
+        setFont();
+        FontMetrics metrics = renderer.getMetrics();
+        float f = GuiManager.getScale().getScaleFactor();
+        return (int) Math.ceil(metrics.charWidth(c) / f);
     }
 
     /**
@@ -315,7 +340,7 @@ public class TrueTypeDrawable extends ColorDrawable {
      * @return Text lines
      */
     public List<String> getTextLines(String text, int width) {
-        return fitString(text, width);
+        return splitString(text);
     }
 
     /**
@@ -328,7 +353,7 @@ public class TrueTypeDrawable extends ColorDrawable {
      */
     public List<String>[] getSplitLines(String text, int width, int position) {
         List[] result = new List[]{new ArrayList<String>(), new ArrayList<String>()};
-        List<String> lines = fitString(text, width);
+        List<String> lines = splitString(text);
         int index = 0;
         int currentPosition = 0;
         for (int i = 0; i < lines.size(); i++) {
@@ -367,20 +392,15 @@ public class TrueTypeDrawable extends ColorDrawable {
         this.multiline = multiline;
     }
 
-    public List<String> fitString(String text, int width) {
+    public List<String> splitString(String text) {
         List<String> result = new ArrayList<String>();
         String[] lines = StringUtils.splitByWholeSeparatorPreserveAllTokens(text, "\n");
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
-            List<String> sub = fitString(line, width, fontSize);
             if (i < lines.length - 1) {
-                if (sub.size() == 0) {
-                    sub.add("\n");
-                } else {
-                    sub.set(sub.size() - 1, sub.get(sub.size() - 1) + "\n");
-                }
+                line += "\n";
             }
-            result.addAll(sub);
+            result.add(line);
         }
         return result;
     }
@@ -397,7 +417,7 @@ public class TrueTypeDrawable extends ColorDrawable {
     public List<String> fitString(String text, int width, float fontSize) {
         if (linesCache != null) return linesCache;
         List<String> result = new ArrayList<String>();
-        renderer.setDefaultFont(fontName, (int) fontSize, true);
+        renderer.setDefaultFont(fontName, GuiManager.scale((int) fontSize), true);
         int left = 0;
         while (left < text.length()) {
             int fit = renderer.sizeStringToWidth(text.substring(left), width);
@@ -430,5 +450,52 @@ public class TrueTypeDrawable extends ColorDrawable {
     public void setColor(long color) {
         if (color == 0) color = 0xff000000;
         this.color = new GLColor(new Color(color));
+    }
+
+    public int getPosition(Point point) {
+        List<String> lines = splitString(text);
+        int charHeight = getMaxCharHeight();
+        int bottom = charHeight;
+        int position = 0;
+        for (int i=0; i<lines.size(); i++) {
+            String line = lines.get(i);
+            if (bottom > point.y || i == lines.size() - 1) {
+                // our line (or the last one)!
+                int width = getStringWidth(line);
+                if (width < point.x) {
+                    if (line.endsWith("\n")) {
+                        position--;
+                    }
+                    return position + line.length();    // -1 is for \n character
+                } else if (point.x < 0) {
+                    return position;
+                } else {
+                    char[] chars = line.toCharArray();
+                    width = 0;
+                    for (int j=0; j<chars.length; j++) {
+                        int w = getCharWidth(chars[j]);
+                        width += w;
+                        if (width > point.x) {
+                            int o = w - Math.abs(width - point.x);
+                            return position + Math.round(o / (float)w);
+                        }
+                        position++;
+                    }
+                }
+            } else {
+                position += line.length();
+            }
+        }
+
+        return position; // way out of the size of the string ^_^
+    }
+
+
+    public String getFontName() {
+        return fontName;
+    }
+
+    public void setFontName(String fontName) {
+        this.fontName = fontName;
     }
 }

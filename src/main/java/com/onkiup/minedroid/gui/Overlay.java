@@ -374,7 +374,7 @@ public abstract class Overlay extends GuiScreen implements Context {
         event.shift = shiftPressed;
         event.control = ctrlPressed;
 
-        if (Math.abs(event.wheel.y) > 120) event.wheel.y /= 10;
+        if (Math.abs(event.wheel.y) >= 120) event.wheel.y /= 10;
         event.button = Mouse.getEventButton();
         // checking if mouse matches contentView rectangle
         Rect rect = contentView.getRectangle();

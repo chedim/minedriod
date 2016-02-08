@@ -22,7 +22,7 @@ public class ProgressView extends ContentView {
 
     @Override
     public void drawContents(float partialTicks) {
-        float part = value / max;
+        float part = value / (float) max;
         if (foreground instanceof PartialDrawable) {
             foreground.setSize(resolvedLayout.getInnerSize().clone());
             ((PartialDrawable) foreground).setPart(part);
@@ -31,8 +31,16 @@ public class ProgressView extends ContentView {
             size.x *= part;
             foreground.setSize(size);
         }
-        Point p = getGravityOffset(foreground.getSize());
+        Point p = position.add(resolvedLayout.padding.coords()).add(getGravityOffset(foreground.getSize()));
         foreground.draw(p);
+    }
+
+    @Override
+    public void setDebug(boolean debugDraw) {
+        super.setDebug(debugDraw);
+        if (foreground != null) {
+            foreground.setDebug(debugDraw);
+        }
     }
 
     @Override
@@ -48,6 +56,7 @@ public class ProgressView extends ContentView {
         value = node.getIntegerAttr(GuiManager.NS, "value", style, 50);
 
         foreground = node.getDrawableAttr(GuiManager.NS, "progress_drawable", style, null);
+        foreground.setDebug(debug);
     }
 
     @Override

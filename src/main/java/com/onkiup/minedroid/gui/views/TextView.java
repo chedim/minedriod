@@ -1,5 +1,7 @@
 package com.onkiup.minedroid.gui.views;
 
+import java.awt.*;
+
 import com.onkiup.minedroid.Context;
 import com.onkiup.minedroid.gui.GuiManager;
 import com.onkiup.minedroid.gui.XmlHelper;
@@ -33,9 +35,7 @@ public class TextView extends ContentView {
      * @return Text size
      */
     protected Point getTextSize() {
-        Point originalSize = text.getOriginalSize();
-        int height = text.calculateEndPoint(resolvedLayout.getInnerWidth()).y;
-        return new Point(Math.min(originalSize.x, resolvedLayout.getInnerWidth()), height);
+        return text.getOriginalSize();
     }
 
     /**
@@ -143,6 +143,7 @@ public class TextView extends ContentView {
         setTextSize(node.getIntegerAttr(GuiManager.NS, "fontSize", style, 14));
         setColor(node.getColorAttr(GuiManager.NS, "color", style, 0l));
         setMultiline(node.getBoolAttr(GuiManager.NS, "multiline", style, false));
+        setFontName(node.getStringAttr(GuiManager.NS, "fontName", style, "Verdana"));
     }
 
     public void setTextSize(int fontSize) {
@@ -169,6 +170,14 @@ public class TextView extends ContentView {
     public void setMultiline(boolean multiline) {
         this.multiline = multiline;
         text.setMultiline(multiline);
+    }
+
+    public void setFontName(String fontName) {
+        text.setFontName(fontName);
+    }
+
+    public String getFontName() {
+        return text.getFontName();
     }
 }
 

@@ -200,12 +200,15 @@ public class ListView extends LinearLayout {
         if (event.type == OnScroll.class && !event.cancel) {
             moveViewport(-event.wheel.y);
             int inner = getInnerSize();
+            event.cancel = true;
             if (mShownSize - mOffset < inner) {
                 mOffset = mShownSize - inner;
+                event.cancel = false;
             }
 
             if (mOffset < 0) {
                 mOffset = 0;
+                event.cancel = false;
             }
         }
 

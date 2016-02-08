@@ -1,4 +1,7 @@
 <style parent="@minedroid:style/content_view">
     <item name="background">@minedroid:drawable/bg_progress_view</item>
     <item name="progress_drawable">@minedroid:drawable/fg_progress_view</item>
+    <item name="horizontal-gravity">left</item>
+    <item name="vertical-gravity">top</item>
+    <item name="height">20</item>
 </style>

@@ -36,8 +36,9 @@ public final class R {
 		public final static int pardon = 268435479;
 		public final static int hint = 268435480;
 		public final static int test = 268435481;
-		public final static int debug = 268435482;
-		public final static int edit_multiline = 268435483;
+		public final static int text = 268435482;
+		public final static int debug = 268435483;
+		public final static int edit_multiline = 268435484;
 	}
 
 	public final static class string {
@@ -68,6 +69,7 @@ public final class R {
 		public final static ResourceLink item_vassal = new ResourceLink(MODID, "layouts", "item_vassal.xml", new EnvParams[] { new EnvParams(null, null, null, null)});
 		public final static ResourceLink minedroid_test = new ResourceLink(MODID, "layouts", "minedroid_test.xml", new EnvParams[] { new EnvParams(null, null, null, null), new EnvParams(null, null, null, null)});
 		public final static ResourceLink alert = new ResourceLink(MODID, "layouts", "alert.xml", new EnvParams[] { new EnvParams(null, null, null, null)});
+		public final static ResourceLink holder_string = new ResourceLink(MODID, "layouts", "holder_string.xml", new EnvParams[] { new EnvParams(null, null, null, null)});
 		public final static ResourceLink attacker_vassal_proposal = new ResourceLink(MODID, "layouts", "attacker_vassal_proposal.xml", new EnvParams[] { new EnvParams(null, null, null, null)});
 		public final static ResourceLink profile = new ResourceLink(MODID, "layouts", "profile.xml", new EnvParams[] { new EnvParams(null, null, null, null)});
 		public final static ResourceLink become_vassal = new ResourceLink(MODID, "layouts", "become_vassal.xml", new EnvParams[] { new EnvParams(null, null, null, null)});

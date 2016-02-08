@@ -166,14 +166,14 @@ public class LinearLayout extends ViewGroup {
                 }
             }
 
-            if (childLayout.width == Layout.MATCH_PARENT) {
+            if (origChildLayout.width == Layout.MATCH_PARENT) {
                 if (orientation == Orientation.HORIZONTAL)
                     throw new RuntimeException("MATCH_PARENT width in HORIZONTAL LinearLayout makes no sense...");      // that's true!!
                 // making sure that this child will not affect our measure
                 childLayout.setOuterWidth(resolvedLayout.getInnerWidth());
             }
 
-            if (childLayout.height == Layout.MATCH_PARENT) {
+            if (origChildLayout.height == Layout.MATCH_PARENT) {
                 if (orientation == Orientation.VERTICAL)
                     throw new RuntimeException("MATCH_PARENT height in VERTICAL LinearLayout makes no sense...");       // that's also true!!
                 // making sure that this child will not affect our measure

@@ -19,6 +19,7 @@
 
 package com.onkiup.minedroid.gui.betterfonts;
 
+import com.onkiup.minedroid.gui.GuiManager;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
@@ -28,6 +29,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -75,9 +77,10 @@ public class GlyphCache
 
     /** Transparent (alpha zero) white background color for use with BufferedImage.clearRect(). */
     private static Color BACK_COLOR = new Color(255, 255, 255, 0);
+    private final float scale;
 
     /** The point size at which every OpenType font is rendered. */
-    private int fontSize = 18;
+    private int fontSize = 36;
 
     /** If true, then enble anti-aliasing when rendering the font glyph */
     private boolean antiAliasEnabled = false;
@@ -164,6 +167,10 @@ public class GlyphCache
      */
     private int cacheLineHeight = 0;
 
+    public float getScale() {
+        return scale;
+    }
+
     /**
      * This class holds information for a glyph about its pre-rendered image in an OpenGL texture. The texture coordinates in
      * this class are normalized in the standard 0.0 - 1.0 OpenGL range.
@@ -198,6 +205,7 @@ public class GlyphCache
      */
     public GlyphCache()
     {
+        scale = GuiManager.getDisplayScale();
         /* Set background color for use with clearRect() */
         glyphCacheGraphics.setBackground(BACK_COLOR);
 
@@ -358,6 +366,7 @@ public class GlyphCache
      */
     void cacheGlyphs(Font font, char text[], int start, int limit, int layoutFlags)
     {
+
         /* Create new GlyphVector so glyphs can be moved around (kerning workaround; see below) without affecting caller */
         GlyphVector vector = layoutGlyphVector(font, text, start, limit, layoutFlags);
 
@@ -486,8 +495,8 @@ public class GlyphCache
              */
             Entry entry = new Entry();
             entry.textureName = textureName;
-            entry.width = rect.width;
-            entry.height = rect.height;
+            entry.width = Math.round(rect.width);
+            entry.height = Math.round(rect.height);
             entry.u1 = ((float) rect.x) / TEXTURE_WIDTH;
             entry.v1 = ((float) rect.y) / TEXTURE_HEIGHT;
             entry.u2 = ((float) (rect.x + rect.width)) / TEXTURE_WIDTH;
@@ -608,8 +617,8 @@ public class GlyphCache
                 GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, imageBuffer);
 
         /* Explicitely disable mipmap support becuase updateTexture() will only update the base level 0 */
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
     }
 
     /**

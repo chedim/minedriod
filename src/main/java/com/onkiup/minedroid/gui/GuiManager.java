@@ -1,6 +1,8 @@
 package com.onkiup.minedroid.gui;
 
+import java.awt.*;
 import java.io.InvalidClassException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +67,6 @@ public class GuiManager {
      * Main Minecraft thread
      */
     protected static Thread mainThread;
-
 
     /**
      * Initialized MineDroid
@@ -197,8 +198,8 @@ public class GuiManager {
      * @param context Mod context
      * @param source  XML file location
      * @return View
-     * @deprecated
      * @see ResourceManager#inflateLayout(Context, ResourceLocation, Style)
+     * @deprecated
      */
     public static View inflateLayout(Context context, ResourceLocation source) {
         return ResourceManager.inflateLayout(context, source, getTheme(context));
@@ -210,8 +211,8 @@ public class GuiManager {
      * @param context Mod context
      * @param source  Xml location
      * @return XmlHelper
-     * @deprecated
      * @see ResourceManager#getXmlHelper(Context, ResourceLocation)
+     * @deprecated
      */
     public static XmlHelper getXmlHelper(Context context, ResourceLocation source) {
         return ResourceManager.getXmlHelper(context, source);
@@ -228,8 +229,8 @@ public class GuiManager {
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws InvalidClassException
-     * @deprecated
      * @see ResourceManager#processNode(Context, Node, Style)
+     * @deprecated
      */
     public static View processNode(Context context, Node node, Style theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         return ResourceManager.processNode(new XmlHelper(context, node), theme);
@@ -245,8 +246,8 @@ public class GuiManager {
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws InvalidClassException
-     * @deprecated
      * @see ResourceManager#processNode(XmlHelper, Style)
+     * @deprecated
      */
     public static View processNode(XmlHelper node, Style theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         return ResourceManager.processNode(node, theme);
@@ -262,8 +263,8 @@ public class GuiManager {
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws InvalidClassException
-     * @deprecated
      * @see ResourceManager#processNodeDrawable(Context, Node)
+     * @deprecated
      */
     public static Drawable processNodeDrawable(Context context, Node node) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException {
         return ResourceManager.processNodeDrawable(new XmlHelper(context, node));
@@ -278,8 +279,8 @@ public class GuiManager {
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws InvalidClassException
-     * @deprecated
      * @see ResourceManager#processNodeDrawable(XmlHelper)
+     * @deprecated
      */
     public static Drawable processNodeDrawable(XmlHelper node) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException {
         return ResourceManager.processNodeDrawable(node);
@@ -291,8 +292,8 @@ public class GuiManager {
      * @param context Mod context
      * @param rl      Drawable context
      * @return Drawable
-     * @deprecated
      * @see ResourceManager#inflateDrawable(Context, ResourceLocation, Style)
+     * @deprecated
      */
     public static Drawable inflateDrawable(Context context, ResourceLocation rl) {
         return ResourceManager.inflateDrawable(context, rl, getTheme(context));
@@ -335,8 +336,8 @@ public class GuiManager {
      *
      * @param v Minecraft version
      * @return Integer|null
-     * @deprecated
      * @see ResourceManager#getMCVersion(String)
+     * @deprecated
      */
     public static Integer getMCVersion(String v) {
         return ResourceManager.getMCVersion(v);
@@ -350,6 +351,10 @@ public class GuiManager {
         Style theme = themes.get(context.contextId());
         if (theme == null) theme = R.style.theme;
         return theme;
+    }
+
+    public static int scaleFont(int fontSize) {
+        return Math.round(scale(fontSize) * getDisplayScale());
     }
 
     private static class OverlayRunnable implements Task.Client {
@@ -380,4 +385,29 @@ public class GuiManager {
         return new FontRenderer(fontRenderer);
     }
 
+    public static float getDisplayScale() {
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        final GraphicsDevice device = env.getDefaultScreenDevice();
+
+        try {
+            Field field = device.getClass().getDeclaredField("scale");
+
+            if (field != null) {
+                field.setAccessible(true);
+                Object scale = field.get(device);
+
+                if (scale instanceof Integer) {
+                    return ((Integer) scale) * 1f;
+                }
+            }
+        } catch (Exception ignore) {
+        }
+
+        final Float scaleFactor = (Float) Toolkit.getDefaultToolkit().getDesktopProperty("apple.awt.contentScaleFactor");
+        if (scaleFactor != null) {
+            return scaleFactor;
+        }
+
+        return 1f;
+    }
 }

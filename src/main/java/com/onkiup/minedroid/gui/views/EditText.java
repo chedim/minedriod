@@ -4,6 +4,7 @@ import com.onkiup.minedroid.Context;
 import com.onkiup.minedroid.gui.drawables.ColorDrawable;
 import com.onkiup.minedroid.gui.drawables.Drawable;
 import com.onkiup.minedroid.gui.events.KeyEvent;
+import com.onkiup.minedroid.gui.events.MouseEvent;
 import com.onkiup.minedroid.gui.primitives.Point;
 
 import java.lang.reflect.Method;
@@ -19,6 +20,7 @@ public class EditText extends TextView {
     protected int selectionStart, selectionEnd;
     protected Drawable cursor;
     protected Timer drawCursorTimer;
+    protected Point scroll = new Point(0, 0);
 
     protected static int[] nonPrintables = {
             0, 1, 14, 15, 28, 29, 42, 54, 56, 59, 60, 61, 62, 63, 64, 65,
@@ -55,6 +57,7 @@ public class EditText extends TextView {
                 }
                 processInput(event);
             }
+            scrollToCursor();
         }
     }
 
@@ -77,11 +80,12 @@ public class EditText extends TextView {
         int max = getText().length();
         if (selectionStart > max) selectionStart = max;
         if (selectionEnd > max) selectionEnd = max;
-        System.out.println("Cursor position: "+selectionEnd);
+        System.out.println("Cursor position: " + selectionEnd);
     }
 
     /**
      * handles Up key
+     *
      * @param event Keyboard event
      */
     private void key_200(KeyEvent event) {
@@ -117,6 +121,7 @@ public class EditText extends TextView {
 
     /**
      * Handles left key
+     *
      * @param event Keyboard event
      */
     private void key_203(KeyEvent event) {
@@ -127,6 +132,7 @@ public class EditText extends TextView {
 
     /**
      * Handles right key
+     *
      * @param event Keyboard event
      */
     private void key_205(KeyEvent event) {
@@ -137,6 +143,7 @@ public class EditText extends TextView {
 
     /**
      * Handles down key
+     *
      * @param event Keyboard event
      */
     private void key_208(KeyEvent event) {
@@ -187,6 +194,7 @@ public class EditText extends TextView {
 
     /**
      * Handles home key
+     *
      * @param event Keyboard event
      */
     private void key_199(KeyEvent event) {
@@ -198,6 +206,7 @@ public class EditText extends TextView {
 
     /**
      * Handles end key
+     *
      * @param event Keyboard event
      */
     private void key_207(KeyEvent event) {
@@ -224,6 +233,7 @@ public class EditText extends TextView {
 
     /**
      * Processes ENTER key
+     *
      * @param event
      */
     private void key_28(KeyEvent event) {
@@ -236,7 +246,7 @@ public class EditText extends TextView {
         String text = getText();
         String left = text.substring(0, selectionStart);
         String right = text.substring(selectionEnd);
-        text = left+with+right;
+        text = left + with + right;
         selectionStart += with.length();
         selectionEnd = selectionStart;
         setText(text);
@@ -255,43 +265,96 @@ public class EditText extends TextView {
 
     @Override
     public void drawContents(float partialTicks) {
-        // drawing the caret element
         Point textSize = getTextSize();
+        int charHeight = text.getMaxCharHeight();
+        Point cursorPosition = getRawCursorPosition();
+        Point padding = resolvedLayout.padding.coords();
+        Point offset = getGravityOffset(textSize);
+        cursor.setSize(new Point(1, charHeight));
 
         text.setSize(textSize);
-        Point offset = getGravityOffset(textSize);
-        Point textPosition = position.add(offset).add(resolvedLayout.padding.coords());
+        Point textPosition = position.add(offset).add(padding).sub(scroll);
+
         text.draw(textPosition);
 
         if (drawCursor && isFocused()) {
-            Point cursorPosition = position.add(resolvedLayout.getInnerRect().coords());
-            int charHeight = text.getMaxCharHeight();
-            cursor.setSize(new Point(1, charHeight));
-            Point end = text.calculatePosition(getText(), resolvedLayout.getInnerWidth(), selectionEnd)
-                    .add(offset);
-            Point cursorFix = new Point(0, 0);
-            if (end.x > resolvedLayout.getInnerWidth()) {
-                cursorFix.x = resolvedLayout.getInnerWidth() - end.x;
-                end.x = resolvedLayout.getInnerWidth();
-            } else if (end.x < 0) {
-                cursorFix.x = -end.x;
-                end.x = 0;
-            }
+            cursor.draw(cursorPosition.add(position).add(padding));
+        }
+    }
 
-            if (end.y > resolvedLayout.getInnerHeight()) {
-                cursorFix.y = resolvedLayout.getInnerHeight() - end.y;
-                end.y = resolvedLayout.getInnerHeight();
-            } else if (end.y - charHeight < 0) {
-                cursorFix.y = - (end.y - charHeight - 1);
-                end.y = charHeight;
-            }
-            cursorPosition = cursorPosition.add(end);
-            cursor.draw(cursorPosition.sub(new Point(0, charHeight)).add(cursorFix));
+    public Point getRawCursorPosition() {
+        int charHeight = text.getMaxCharHeight();
+        Point cursorPosition = new Point(0, -charHeight);
+        Point end = text.calculatePosition(getText(), resolvedLayout.getInnerWidth(), selectionEnd);
+        cursorPosition = cursorPosition.add(end).sub(scroll);
+        return cursorPosition;
+    }
+
+    private void scrollToCursor() {
+        Point meSize = resolvedLayout.getInnerSize();
+        Point cursorPosition = getRawCursorPosition();
+        int charHeight = text.getMaxCharHeight();
+        if (cursorPosition.x > meSize.x - 1) {
+            int move = meSize.x - 1 - cursorPosition.x;
+            scroll.x -= move;
+        } else if (cursorPosition.x < 0) {
+            int move = -cursorPosition.x;
+            scroll.x -= move;
+        }
+
+        if (cursorPosition.y + charHeight > meSize.y) {
+            int move = meSize.y - cursorPosition.y - charHeight;
+            scroll.y -= move;
+        } else if (cursorPosition.y < 0) {
+            int move = -cursorPosition.y;
+            scroll.y -= move;
         }
     }
 
     @Override
     protected String getThemeStyleName() {
         return "edit_text";
+    }
+
+    @Override
+    public void handleMouseEvent(MouseEvent event) {
+        if (event.type == OnScroll.class) {
+            Point textSize = getTextSize();
+            Point meSize = resolvedLayout.getInnerSize();
+            this.scroll = this.scroll.sub(event.wheel);
+            event.cancel = true;
+
+            int scrollableX = Math.max(0, textSize.x - meSize.x);
+            if (this.scroll.x < 0) {
+                event.cancel = false;
+                event.wheel.x += this.scroll.x;
+                this.scroll.x = 0;
+            } else if (this.scroll.x > scrollableX) {
+                event.cancel = false;
+                event.wheel.x += scrollableX - this.scroll.y;
+                this.scroll.x = scrollableX;
+            }
+
+            int scrollableY = Math.max(0, textSize.y - meSize.y);
+            if (this.scroll.y < 0) {
+                event.cancel = false;
+                event.wheel.y += this.scroll.y;
+                this.scroll.y = 0;
+            } else if (this.scroll.y > scrollableY) {
+                event.cancel = false;
+                event.wheel.y += scrollableY - this.scroll.y;
+                this.scroll.y = scrollableY;
+            }
+        } else if (event.type == OnClick.class) {
+            focus();
+            selectionStart = selectionEnd = getPosition(event.coords);
+            event.cancel = true;
+        } else {
+            super.handleMouseEvent(event);
+        }
+    }
+
+    private int getPosition(Point coords) {
+        return text.getPosition(coords.sub(position).add(scroll).sub(resolvedLayout.padding.coords()));
     }
 }

@@ -435,7 +435,7 @@ public class StringCache {
         glyphCache = new GlyphCache();
 
         /* Pre-cache the ASCII digits to allow for fast glyph substitution */
-        cacheDightGlyphs();
+//        cacheDightGlyphs();
     }
 
     /**
@@ -453,7 +453,7 @@ public class StringCache {
         colorTable = colors;
 
         /* Pre-cache the ASCII digits to allow for fast glyph substitution */
-        cacheDightGlyphs();
+//        cacheDightGlyphs();
     }
 
     /**
@@ -521,6 +521,7 @@ public class StringCache {
         }
         View.resetBlending();
         GlStateManager.enableTexture2D();
+        float scale = GuiManager.getDisplayScale();
         float f = GuiManager.getScale().getScaleFactor();
 
         /* Make sure the entire string is cached before rendering and return its glyph representation */
@@ -605,6 +606,8 @@ public class StringCache {
                 tessellator.getWorldRenderer().setColorRGBA(color >> 16 & 0xff, color >> 8 & 0xff, color & 0xff, color >> 24 & 0xff);
 
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.textureName);
+                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
                 boundTextureName = texture.textureName;
             }
 
@@ -684,7 +687,6 @@ public class StringCache {
             tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
         }
-
 
         /* Return total horizontal advance (slightly wider than the bounding box, but close enough for centering strings) */
         return entry;
@@ -1109,7 +1111,7 @@ public class StringCache {
 
         /* Break the string up into segments, where each segment can be displayed using a single font */
         while (start < limit) {
-            Font font = glyphCache.lookupFont(text, start, limit, style);
+            Font font = currentFont.deriveFont(style); // glyphCache.lookupFont(text, start, limit, style);
             int next = font.canDisplayUpTo(text, start, limit);
 
             /* canDisplayUpTo returns -1 if the entire string range is supported by this font */
@@ -1160,6 +1162,7 @@ public class StringCache {
 
         /* Creating a GlyphVector takes care of all language specific OpenType glyph substitutions and positionings */
         GlyphVector vector = glyphCache.layoutGlyphVector(font, text, start, limit, layoutFlags);
+        float scale = glyphCache.getScale();
 
         /*
          * Extract all needed information for each glyph from the GlyphVector so it won't be needed for actual rendering.

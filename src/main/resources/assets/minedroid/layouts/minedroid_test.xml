@@ -1,25 +1,34 @@
 <ScrollView
         xmlns="http://onkiup.com/minecraft/xml"
         width="match_parent" height="match_parent" margin="20">
-    <LinearLayout
-            width="match_parent" height="wrap_content">
-        <RelativeLayout
-                width="match_parent" height="wrap_content" vertical-gravity="center">
-            <Focus target="@id/debug" alignLeft="parent" width="wrap_content" height="wrap_content">
-                <CheckBox id="@id/debug"/>
-                <TextView text="draw debug"/>
-            </Focus>
-            <Button id="@id/close" alignRight="parent"
-                    text="@string/close" width="wrap_content" height="wrap_content"/>
-        </RelativeLayout>
-        <TextView width="match_parent" height="wrap_content"
-                  text="@string/you_defeated" color="FFFF0000"/>
-        <EditText id="@id/edit" width="100" height="wrap_content"/>
-        <EditText id="@id/edit_multiline" width="100" height="100" multiline="true"/>
-        <ProgressView
-                id="@id/progress"
-                width="match_parent" height="10"/>
-        <ListView
-                id="@id/list" height="100" width="match_parent"/>
-    </LinearLayout>
+        <LinearLayout alignTop="parent" spacing="5" margin="10"
+                width="match_parent" height="wrap_content">
+            <RelativeLayout
+                    width="match_parent" height="wrap_content" vertical-gravity="center">
+                <Focus target="@id/debug" alignLeft="parent" width="wrap_content" height="wrap_content">
+                    <CheckBox id="@id/debug"/>
+                    <TextView text="draw debug"/>
+                </Focus>
+                <Button id="@id/close" alignRight="parent"
+                        text="@string/close" width="wrap_content" height="wrap_content"/>
+            </RelativeLayout>
+            <TextView width="wrap_content" height="wrap_content"
+                      text="@string/you_defeated" color="FFFF0000"/>
+            <LinearLayout orientation="horizontal" spacing="5" vertical-gravity="top"
+                          width="match_parent" height="wrap_content">
+                <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@id/edit">
+                    <TextView width="wrap_content" height="wrap_content" text="One-line editor:"/>
+                    <EditText id="@id/edit" width="match_parent" height="wrap_content"/>
+                </Focus>
+                <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@id/edit_multiline">
+                    <TextView width="wrap_content" height="wrap_content" text="Multi-line editor:"/>
+                    <EditText id="@id/edit_multiline" width="match_parent" height="50" multiline="true"/>
+                </Focus>
+            </LinearLayout>
+            <ProgressView
+                    id="@id/progress" alignBottom="parent"
+                    width="200" height="20"/>
+            <ListView
+                    id="@id/list" height="40" width="100"/>
+        </LinearLayout>
 </ScrollView>

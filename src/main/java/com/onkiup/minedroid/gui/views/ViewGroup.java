@@ -116,7 +116,10 @@ public abstract class ViewGroup extends ContentView {
             }
         }
 
-        if (childEvent != null && childEvent.cancel) return;
+        if (childEvent != null && childEvent.cancel) {
+            event.cancel = true;
+            return;
+        }
 
         if (!event.cancel && getParent() != null) getParent().fireEvent(event.type, event);
     }
