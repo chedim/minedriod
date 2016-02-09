@@ -189,7 +189,7 @@ public class TextDrawable implements Drawable {
         Style s = theme.getStyle("text");
         color = node.getColorAttr(GuiManager.NS, "color", Long.valueOf(s.getInt("color", 0)));
         setText(node.getStringAttr(GuiManager.NS, "text", ""));
-        setTextSize(node.getFloatAttr(GuiManager.NS, "size", s.getFloat("fontSize", 1f)));
+        setTextSize(node.getFloatAttr(GuiManager.NS, "size", s.getFloat("size", 1f)));
         setSize(node.getSize(GuiManager.NS, getOriginalSize()));
     }
 

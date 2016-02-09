@@ -1,4 +1,4 @@
-<strings>
+<strings xmlns="http://onkiup.com/minecraft/xml">
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="test">test</string>

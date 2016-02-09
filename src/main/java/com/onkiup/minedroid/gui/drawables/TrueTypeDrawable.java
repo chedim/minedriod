@@ -243,7 +243,8 @@ public class TrueTypeDrawable extends ColorDrawable {
         Style s = theme.getStyle("text");
         setColor(node.getColorAttr(GuiManager.NS, "color", Long.valueOf(s.getInt("color", 0))));
         setText(node.getStringAttr(GuiManager.NS, "text", ""));
-        setTextSize(node.getIntegerAttr(GuiManager.NS, "size", s.getInt("fontSize", 14)));
+        setTextSize(node.getIntegerAttr(GuiManager.NS, "size", s.getInt("size", 14)));
+        setFontName(node.getStringAttr(GuiManager.NS, "font", s.getString("font", "Verdana")));
         setSize(node.getSize(GuiManager.NS, getOriginalSize()));
     }
 

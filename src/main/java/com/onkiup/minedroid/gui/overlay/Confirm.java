@@ -1,14 +1,11 @@
 package com.onkiup.minedroid.gui.overlay;
 
 import com.onkiup.minedroid.MineDroid;
-import com.onkiup.minedroid.R;
 import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.R;
 import com.onkiup.minedroid.gui.Notification;
 import com.onkiup.minedroid.gui.NotificationManager;
 import com.onkiup.minedroid.gui.events.KeyEvent;
-import com.onkiup.minedroid.gui.events.MouseEvent;
-import com.onkiup.minedroid.gui.resources.ResourceManager;
-import com.onkiup.minedroid.gui.resources.ValueLink;
 import com.onkiup.minedroid.gui.views.*;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;

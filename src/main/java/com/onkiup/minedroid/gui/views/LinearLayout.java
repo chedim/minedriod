@@ -42,11 +42,12 @@ public class LinearLayout extends ViewGroup {
     @Override
     public Layout measure(Point boundaries) {
         Layout result = layout.clone();
+        int space = spacing * getChildrenCount();
         if (result.width == Layout.WRAP_CONTENT) {
-            result.setInnerWidth(0);
+            result.setInnerWidth(space);
         }
         if (result.height == Layout.WRAP_CONTENT) {
-            result.setInnerHeight(0);
+            result.setInnerHeight(space);
         }
         for (int i = 0; i < getChildrenCount(); i++) {
             View child = getChildAt(i);

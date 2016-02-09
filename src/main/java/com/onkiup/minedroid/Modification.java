@@ -294,4 +294,8 @@ public abstract class Modification implements Context {
     private void stopServer() {
 
     }
+
+    private void nothing() {
+
+    }
 }

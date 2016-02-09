@@ -22,7 +22,7 @@
                 </Focus>
                 <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@id/edit_multiline">
                     <TextView width="wrap_content" height="wrap_content" text="Multi-line editor:"/>
-                    <EditText id="@id/edit_multiline" width="match_parent" height="50" multiline="true"/>
+                     <EditText id="@id/edit_multiline" width="match_parent" height="50" multiline="true"/>
                 </Focus>
             </LinearLayout>
             <ProgressView

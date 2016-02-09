@@ -1,8 +1,8 @@
 package com.onkiup.minedroid.gui.overlay;
 
 import com.onkiup.minedroid.MineDroid;
-import com.onkiup.minedroid.R;
 import com.onkiup.minedroid.Context;
+import com.onkiup.minedroid.R;
 import com.onkiup.minedroid.gui.Notification;
 import com.onkiup.minedroid.gui.NotificationManager;
 import com.onkiup.minedroid.gui.events.KeyEvent;

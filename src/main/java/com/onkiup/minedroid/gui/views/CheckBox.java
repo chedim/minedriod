@@ -61,6 +61,7 @@ public class CheckBox extends ContentView {
     public void inflate(XmlHelper node, Style theme) {
         super.inflate(node, theme);
         check = node.getDrawableAttr(GuiManager.NS, "check", style, null);
+        value = node.getBoolAttr(GuiManager.NS, "value", style, false);
     }
 
     @Override
