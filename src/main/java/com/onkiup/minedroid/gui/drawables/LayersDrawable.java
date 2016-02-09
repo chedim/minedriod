@@ -12,19 +12,19 @@ import com.onkiup.minedroid.gui.resources.Style;
 /**
  * Created by chedim on 8/18/15.
  */
-public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Drawable {
+public class LayersDrawable extends ArrayList<LayersDrawable.Layer> implements Drawable {
     protected Point size;
     protected Point originalSize;
     private boolean debug;
 
-    public LayerDrawable(int initialCapacity) {
+    public LayersDrawable(int initialCapacity) {
         super(initialCapacity);
     }
 
-    public LayerDrawable() {
+    public LayersDrawable() {
     }
 
-    public LayerDrawable(Collection<? extends Layer> c) {
+    public LayersDrawable(Collection<? extends Layer> c) {
         super(c);
     }
 
@@ -79,7 +79,7 @@ public class LayerDrawable extends ArrayList<LayerDrawable.Layer> implements Dra
 
     @Override
     public Drawable clone() {
-        LayerDrawable result = new LayerDrawable();
+        LayersDrawable result = new LayersDrawable();
         result.setSize(size);
         for (Layer layer : this) {
             Layer n = new Layer(layer.drawable.clone(), layer.left, layer.top, layer.right, layer.bottom);
