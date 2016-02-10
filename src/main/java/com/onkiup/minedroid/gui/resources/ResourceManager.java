@@ -187,6 +187,10 @@ public class ResourceManager {
      */
     public static View processNode(XmlHelper node, Style theme) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException, NoSuchMethodException, InvocationTargetException {
         String name = node.getNode().getNodeName();
+        if (name.contains(":")) {
+            name = name.substring(name.indexOf(":") + 1);
+        }
+
         if (!name.contains(".")) {
             name = "com.onkiup.minedroid.gui.views." + name;
         }
@@ -231,6 +235,9 @@ public class ResourceManager {
      */
     public static Drawable processNodeDrawable(XmlHelper node) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvalidClassException {
         String name = node.getName();
+        if (name.contains(":")) {
+            name = name.substring(name.indexOf(":") + 1);
+        }
         if (!name.contains(".")) {
             name = "com.onkiup.minedroid.gui.drawables." + name + "Drawable";
         }

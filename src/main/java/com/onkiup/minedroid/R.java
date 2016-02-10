@@ -22,6 +22,16 @@ public final class R {
 		public final static int list = 268435465;
 	}
 
+	public final static class string {
+		public final static ValueLink cancel = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "Cancel") });
+		public final static ValueLink test_window = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "Minedroid Test") });
+		public final static ValueLink test = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "test") });
+		public final static ValueLink alert_hint = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "click or press Y to dismiss") });
+		public final static ValueLink confirm_hint = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "press Y/N to respond") });
+		public final static ValueLink ok = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "Ok") });
+		public final static ValueLink close = new ValueLink(new EnvValue[] { new EnvValue(null, null, null, null, "close") });
+	}
+
 	public final static class layout {
 		public final static ResourceLink minedroid_test = new ResourceLink(MODID, "layouts", "minedroid_test.xml", new EnvParams[] { new EnvParams(null, null, null, null)});
 		public final static ResourceLink alert = new ResourceLink(MODID, "layouts", "alert.xml", new EnvParams[] { new EnvParams(null, null, null, null)});

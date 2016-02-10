@@ -5,22 +5,22 @@
                 width="match_parent" height="wrap_content">
             <RelativeLayout
                     width="match_parent" height="wrap_content" vertical-gravity="center">
-                <Focus target="@id/debug" alignLeft="parent" width="wrap_content" height="wrap_content">
+                <Focus target="@minedroid:id/debug" alignLeft="parent" width="wrap_content" height="wrap_content">
                     <CheckBox id="@id/debug"/>
                     <TextView text="draw debug"/>
                 </Focus>
                 <Button id="@id/close" alignRight="parent"
-                        text="@string/close" width="wrap_content" height="wrap_content"/>
+                        text="@minedroid:string/close" width="wrap_content" height="wrap_content"/>
             </RelativeLayout>
             <TextView width="wrap_content" height="wrap_content"
-                      text="@string/you_defeated" color="FFFF0000"/>
+                      text="@minedroid:string/you_defeated" color="FFFF0000"/>
             <LinearLayout orientation="horizontal" spacing="5" vertical-gravity="top"
                           width="match_parent" height="wrap_content">
-                <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@id/edit">
+                <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@minedroid:id/edit">
                     <TextView width="wrap_content" height="wrap_content" text="One-line editor:"/>
                     <EditText id="@id/edit" width="match_parent" height="wrap_content"/>
                 </Focus>
-                <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@id/edit_multiline">
+                <Focus orientation="vertical" spacing="5" width="0" height="wrap_content" target="@minedroid:id/edit_multiline">
                     <TextView width="wrap_content" height="wrap_content" text="Multi-line editor:"/>
                      <EditText id="@id/edit_multiline" width="match_parent" height="50" multiline="true"/>
                 </Focus>
